@@ -6,8 +6,14 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 17:51:50 by bdudley           #+#    #+#             */
-/*   Updated: 2019/11/08 18:03:03 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/11/08 19:15:48 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void
+#include "corewar.h"
+
+void error(int err)
+{
+	perror("Error");
+	exit(1);
+}

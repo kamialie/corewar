@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 13:34:54 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/08 16:36:53 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/11/08 18:36:07 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 int	main(int argc , char *argv[])
 {
+	t_info		info;
+
 	init_arena();
-	read_arg(argc, argv);
+	read_arg(&info, argc, argv);
 	return (0);
 }

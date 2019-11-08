@@ -8,10 +8,12 @@ LIBFT_DIR = ../libft
 
 #FLAGS = -Wall -Wextra -Werror
 
-INCLUDE = -I include -I ../libft
+INCLUDE = -I include/ -I ../libft
 
 SRC = main.c \
-	  arena.c
+	  arena.c \
+	  read.c \
+	  error.c
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 

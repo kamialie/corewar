@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 15:10:22 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/08 17:35:53 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/11/08 19:47:13 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 typedef struct	s_info
 {
 	int			dump;
+	header_t	players[MAX_PLAYERS];
 }				t_info;
 
 # include <stdio.h>
@@ -34,5 +35,7 @@ typedef struct	s_info
 
 void	init_arena(void);
 
-void	read_arg(int argc, char *argv[]);
+void	read_arg(t_info *info, int argc, char *argv[]);
+
+void	error(int err);
 #endif
