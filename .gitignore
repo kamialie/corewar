@@ -52,7 +52,7 @@ Mkfile.old
 dkms.conf
 
 # Project execs
-vm/corewar
+virtual_machine/corewar
 
 # Clion
 .idea
