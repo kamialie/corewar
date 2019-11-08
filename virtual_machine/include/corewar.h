@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   corewar.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 15:10:22 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/08 15:17:45 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/11/08 17:35:53 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,18 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+# include <errno.h>
+# include "libft.h"
+# include "op.h"
+
+# define DUMP "-dump"
+# define N "-n"
 
 // TEMPORARY
+typedef struct	s_info
+{
+	int			dump;
+}				t_info;
 
 # include <stdio.h>
 
@@ -24,4 +34,5 @@
 
 void	init_arena(void);
 
+void	read_arg(int argc, char *argv[]);
 #endif
