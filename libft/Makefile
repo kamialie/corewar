@@ -6,7 +6,7 @@
 #    By: jgoyette <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/09 16:03:19 by jgoyette          #+#    #+#              #
-#    Updated: 2018/12/11 14:40:54 by jgoyette         ###   ########.fr        #
+#    Updated: 2019/11/08 18:01:52 by rgyles           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,8 +35,8 @@ $(NAME): $(OBJS)
 	@ar rc $(NAME) $(OBJS)
 	@ranlib $(NAME)
 
-.o: .c $(INCLUDES)/libft.h
-	gcc $(CFLAGS) -c $? -o $@ -I$(INCLUDES)
+%.o: %.c $(INCLUDES)/libft.h
+	@gcc $(CFLAGS) -c $< -o $@ -I$(INCLUDES)
 
 clean:
 	@/bin/rm -f $(OBJS)
