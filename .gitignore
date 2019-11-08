@@ -53,3 +53,8 @@ dkms.conf
 
 # Project execs
 vm/corewar
+
+# Clion
+.idea
+CMakeLists.txt
+cmake-build-debug
