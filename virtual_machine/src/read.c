@@ -6,44 +6,74 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 16:27:43 by bdudley           #+#    #+#             */
-/*   Updated: 2019/11/10 15:05:45 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/11/10 17:10:23 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include "corewar.h"
 
+unsigned int	get_magic(t_info *info, int fd)
+{
+	unsigned int	magic;
+	unsigned int	buf;
 
+	buf = 0;
+	magic = 0;
+	if (read(fd, &buf, 4) == -1)
+		error(4); //Ошибка, пустой файл или директория, недостаточно данных
+	magic += ((buf & 0xff) << (8 * 3));
+	magic += ((buf & 0xff00) << (8 * 1));
+	magic += ((buf & 0xff0000) >> (8 * 1));
+	magic += ((buf & 0xff000000) >> (8 * 3));
+	if (magic != COREWAR_EXEC_MAGIC)
+		error(5); //Ошибка, этот файл не бинарный
+	return (magic);
+}
+
+unsigned int	get_prog_size(t_info *info, int fd)
+{
+	unsigned int	prog_size;
+	unsigned int	buf;
+
+	buf = 0;
+	prog_size = 0;
+	if (read(fd, &buf, 4) == -1)
+		error(4); //Ошибка чтения, недостаточно данных
+	prog_size += ((buf & 0xff) << (8 * 3));
+	prog_size += ((buf & 0xff00) << (8 * 1));
+	prog_size += ((buf & 0xff0000) >> (8 * 1));
+	prog_size += ((buf & 0xff000000) >> (8 * 3));
+	return (prog_size);
+}
+
+//Считывает бинарный файл в структуру
 void			read_file(t_info *info, char *file_name, int number)
 {
 	int				fd;
-	unsigned int	magic;
-	unsigned int	tmp;
-
 
 	if ((fd = open(file_name, O_RDONLY)) == -1)
 		error(0); //Ошибка, файл не открылся
 	if (number >= 0 && (info->players)[number].magic == COREWAR_EXEC_MAGIC)
 		error(3); //Ошибка, чемпион с таким идентификатором уже есть
-	else
+	if (number < 0)
 	{
 		number = 0;
 		while ((info->players)[number].magic == COREWAR_EXEC_MAGIC)
 			++number;
 	}
-	//(info->players)[number].magic = get_magic(info, );
-	if (read(fd, &magic, 4) == -1)
-		error(4); //Ошибка, пустой файл или директория
-	tmp = 0;
-	tmp += ((magic & 0xff) << (8 * 3));
-	tmp += ((magic & 0xff00) << (8 * 1));
-	tmp += ((magic & 0xff0000) >> (8 * 1));
-	tmp += ((magic & 0xff000000) >> (8 * 3));
-
-	printf("magic %u and %u\n", tmp, COREWAR_EXEC_MAGIC);
+	(info->players)[number].magic = get_magic(info, fd);
+	if (read(fd, (info->players)[number].prog_name, PROG_NAME_LENGTH) == -1)
+		error(4); //Ошибка чтения, недостаточно данных
+	if (lseek(fd, 4, SEEK_CUR) == -1)
+		error(4); //Ошибка чтения, недостаточно данных
+	(info->players)[number].prog_size = get_prog_size(info, fd);
+	if (read(fd, (info->players)[number].comment, COMMENT_LENGTH) == -1)
+		error(4); //Ошибка чтения, недостаточно данных
+	if (lseek(fd, 4, SEEK_CUR) == -1)
+		error(4); //Ошибка чтения, недостаточно данных
 	close(fd);
 }
-
 
 //Проверяет, что все чемпионы имеют расширение .cor
 static int		count_champion(t_info *info, int argc, char *argv[])

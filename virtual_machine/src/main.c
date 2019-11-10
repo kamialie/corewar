@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 13:34:54 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/10 11:44:42 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/11/10 16:56:50 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,11 @@ int	main(int argc , char *argv[])
 	init_arena();
 	init_info(&info);
 	read_arg(&info, argc, argv);
+	int i;
+	i = -1;
+	while (++i < MAX_PLAYERS)
+	{
+		printf("%d) name : |%s| comment : |%s| prog_size : |%d|\n", i + 1, (info.players)[i].prog_name, (info.players)[i].comment, (info.players)[i].prog_size);
+	}
 	return (0);
 }
