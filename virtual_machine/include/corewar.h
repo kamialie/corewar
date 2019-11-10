@@ -21,6 +21,7 @@
 
 # define DUMP "-dump"
 # define N "-n"
+# define COR ".cor"
 
 // TEMPORARY
 typedef struct	s_info

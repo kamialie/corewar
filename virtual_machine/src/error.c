@@ -14,6 +14,7 @@
 
 void error(int err)
 {
-	perror("Error");
+	printf("%d", err);
+	perror("Error ");
 	exit(1);
 }
