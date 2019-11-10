@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 16:27:43 by bdudley           #+#    #+#             */
-/*   Updated: 2019/11/10 17:10:23 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/11/10 18:19:03 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,24 @@ unsigned int	get_prog_size(t_info *info, int fd)
 	prog_size += ((buf & 0xff00) << (8 * 1));
 	prog_size += ((buf & 0xff0000) >> (8 * 1));
 	prog_size += ((buf & 0xff000000) >> (8 * 3));
+	if (prog_size > CHAMP_MAX_SIZE)
+		error(5); //Ошибка, файл превышает допустимый объем для чемпиона
 	return (prog_size);
 }
 
+//Заполняет арену
+void			read_arena(t_info *info, int fd, int number, int count)
+{
+	unsigned int 	shift;
+
+	shift = (MEM_SIZE / count) * number;
+	if (read(fd, info->arena + shift, CHAMP_MAX_SIZE) == -1)
+		error(6); //Ошибка, недостаточно данных
+
+}
+
 //Считывает бинарный файл в структуру
-void			read_file(t_info *info, char *file_name, int number)
+void			read_file(t_info *info, char *file_name, int number, int count)
 {
 	int				fd;
 
@@ -72,6 +85,7 @@ void			read_file(t_info *info, char *file_name, int number)
 		error(4); //Ошибка чтения, недостаточно данных
 	if (lseek(fd, 4, SEEK_CUR) == -1)
 		error(4); //Ошибка чтения, недостаточно данных
+	read_arena(info, fd, number, count);
 	close(fd);
 }
 
@@ -120,7 +134,7 @@ void			read_arg(t_info *info, int argc, char *argv[])
 		{
 			if ((number = ft_atoi(argv[++i])) < 1 || number > count)
 				error(1); // Ошибка, после n указан невалидный аргумент(число меньше 1  или больше поданного количества чемпионов)
-			read_file(info, argv[++i], number - 1);
+			read_file(info, argv[++i], number - 1, count);
 		}
 	}
 	i = 0;
@@ -131,6 +145,6 @@ void			read_arg(t_info *info, int argc, char *argv[])
 		else if (!ft_strcmp(argv[i], N) && i + 2 < argc)
 			i += 2;
 		else
-			read_file(info, argv[i], -1);
+			read_file(info, argv[i], -1, count);
 	}
 }

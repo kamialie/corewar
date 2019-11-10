@@ -13,8 +13,6 @@
 //TODO collect line to buffer for output, instead of each pair seperately
 
 #include "corewar.h"
-#include "op.h"
-#include "libft.h"
 
 void	print_bit(unsigned char bit)
 {
