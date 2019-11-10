@@ -13,7 +13,7 @@ INCLUDE = -I include/ -I ../libft
 SRC = main.c \
 	  arena.c \
 	  read.c \
-	  error.c
+	  error.c \
 	  print_arena.c
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
