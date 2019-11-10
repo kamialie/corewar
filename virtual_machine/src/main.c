@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 13:34:54 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/10 16:56:50 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/11/10 18:16:11 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void 	init_info(t_info *info)
 {
 	int		i;
 
+	info->arena = (unsigned char *)malloc(MEM_SIZE); //check NULL
+	ft_bzero(info->arena, MEM_SIZE);
 	info->dump = -1;
 	i = -1;
 	while (++i < MAX_PLAYERS)
@@ -31,14 +33,8 @@ int	main(int argc , char *argv[])
 {
 	t_info		info;
 
-	init_arena();
 	init_info(&info);
 	read_arg(&info, argc, argv);
-	int i;
-	i = -1;
-	while (++i < MAX_PLAYERS)
-	{
-		printf("%d) name : |%s| comment : |%s| prog_size : |%d|\n", i + 1, (info.players)[i].prog_name, (info.players)[i].comment, (info.players)[i].prog_size);
-	}
+	print_arena(info.arena);
 	return (0);
 }
