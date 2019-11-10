@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 15:09:32 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/08 18:36:07 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/11/10 17:29:26 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,22 @@
 
 void	init_arena(void)
 {
-	char arena;
+	unsigned char	ch;
+	unsigned char	*arena;
 
-	ft_putchar('a');
-	arena = (char)malloc(MEM_SIZE);
-	printf("Initializing arena\n");
+	arena = (unsigned char *)malloc(MEM_SIZE);
+	
+	//TMP
+	arena[0] = 0x0f;
+	arena[1] = 0x12;
+	unsigned char high;
+	unsigned char low;
+	high = (arena[1] & 0xf0) >> 4;
+	low = arena[1] & 0xf;
+	//printf("%x%x\n", high, low);
+
+	//print_row_label(35);
+	//END
+	//printf("initializing arena\n");
+	print_arena(arena);
 }

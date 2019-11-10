@@ -58,3 +58,6 @@ virtual_machine/corewar
 .idea
 CMakeLists.txt
 cmake-build-debug
+
+# Vim
+*.swp
