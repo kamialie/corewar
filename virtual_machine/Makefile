@@ -11,7 +11,8 @@ LIBFT_DIR = ../libft
 INCLUDE = -I include -I ../libft
 
 SRC = main.c \
-	  arena.c
+	  arena.c \
+	  print_arena.c
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 

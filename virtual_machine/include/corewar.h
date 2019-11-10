@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 15:10:22 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/08 15:17:45 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/11/10 17:21:57 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,6 @@
 // END
 
 void	init_arena(void);
+void	print_arena(unsigned char *arena);
 
 #endif
