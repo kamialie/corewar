@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 15:10:22 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/10 18:09:38 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/11/13 16:11:30 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,5 @@ void	print_arena(unsigned char *arena);
 void	read_arg(t_info *info, int argc, char *argv[]);
 
 void	error(int err);
+
 #endif

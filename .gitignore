@@ -54,6 +54,9 @@ dkms.conf
 # Project execs
 virtual_machine/corewar
 
+# SDL
+virtual_machine/SDL2-2.0.10
+
 # Clion
 .idea
 CMakeLists.txt
