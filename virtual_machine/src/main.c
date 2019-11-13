@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 13:34:54 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/13 16:11:19 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/11/13 16:44:18 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,21 @@ static int	init_sdl(t_sdl *sdl)
 		printf("SDL_Init Error: %s\n", SDL_GetError());
 		return (1);
 	}
-	sdl->win = SDL_CreateWindow("Corewar",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,1024,500,SDL_WINDOW_SHOWN);
-	if (sdl->win == NULL)
+	sdl->window = SDL_CreateWindow("Corewar",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,1536,1024,SDL_WINDOW_SHOWN);
+	if (sdl->window == NULL)
 	{
 		printf("SDL_CreateWindow Error: %s\n", SDL_GetError());
 		return (1);
 	}
-	sdl->surface = SDL_GetWindowSurface(sdl->win);
+	sdl->surface = SDL_GetWindowSurface(sdl->window);
 	if (sdl->surface == NULL)
 	{
 		printf("SDL_GetWindowSurface Error: %s\n", SDL_GetError());
 		return (1);
 	}
-	SDL_FillRect(sdl->surface, NULL, SDL_MapRGB( sdl->surface->format, 0x0, 0x0, 0x0));
-	//sdl.img_data = (int *)sdl.surface->pixels;
-	SDL_UpdateWindowSurface(sdl->win);
+	sdl->img_data = (int *)sdl->surface->pixels;
+	ft_bzero(sdl->img_data, 1536 * 1024 * 4);
+	//SDL_FillRect(sdl->surface, NULL, SDL_MapRGB( sdl->surface->format, 0xff, 0x0, 0x0));
 	return (0);
 }
 
@@ -65,7 +65,6 @@ int	main(int argc , char *argv[])
 	//print_arena(info.arena);
 	if (init_sdl(&sdl))
 		return (1);
-	event_handler(&sdl);
-	SDL_Quit();
+	draw(&sdl);
 	return (0);
 }

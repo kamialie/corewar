@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   visual.h                                           :+:      :+:    :+:   */
+/*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/13 16:09:49 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/13 16:36:50 by rgyles           ###   ########.fr       */
+/*   Created: 2019/11/13 16:25:36 by rgyles            #+#    #+#             */
+/*   Updated: 2019/11/13 16:44:24 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef VISUAL_H
-# define VISUAL_H
+#include "visual.h"
 
-# include "SDL.h"
-
-typedef struct	s_sdl
+void	draw(t_sdl *sdl)
 {
-	SDL_Window	*window;
-	SDL_Surface	*surface;
-	int			*img_data;
-}				t_sdl;
-
-void	draw(t_sdl *sdl);
-void	event_handler(t_sdl *sdl);
-
-#endif
+	SDL_UpdateWindowSurface(sdl->window);
+	event_handler(sdl);
+	SDL_FreeSurface(sdl->surface);
+	SDL_DestroyWindow(sdl->window);
+	SDL_Quit();
+}

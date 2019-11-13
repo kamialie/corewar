@@ -13,9 +13,9 @@ INCLUDE = -I include/ -I ../libft -I SDL2-2.0.10/include
 SDL = -L SDL2-2.0.10/build/lib -l SDL2
 
 SRC = main.c \
-	  arena.c \
 	  read.c \
 	  error.c \
+	  draw.c \
 	  event_handler.c \
 	  print_arena.c
 
