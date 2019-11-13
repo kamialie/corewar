@@ -14,7 +14,9 @@ SRC = main.c \
 	  arena.c \
 	  read.c \
 	  error.c \
-	  print_arena.c
+	  print_arena.c \
+	  processes.c \
+	  gladiatorial_fight.c
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 

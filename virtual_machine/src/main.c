@@ -6,11 +6,24 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 13:34:54 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/12 18:16:13 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/11/13 17:19:52 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
+
+void	present_champion(header_t *players)
+{
+	int i;
+
+	i = -1;
+	printf("Introducing contestants...\n");
+	while (++i < MAX_PLAYERS && players[i].magic == COREWAR_EXEC_MAGIC)
+	{
+		printf("* Player %d, weighing %d bytes, %s (%s) !\n", i + 1,
+				players[i].prog_size, players[i].prog_name, players[i].comment);
+	}
+}
 
 void 	init_info(t_info *info)
 {
@@ -39,12 +52,10 @@ int	main(int argc , char *argv[])
 
 	init_info(&info);
 	read_arg(&info, argc, argv);
-	create_processes(info);
-	int i;
-	while (i < info.count_process)
-	{
-		printf("%d")
-	}
-	print_arena(info.arena);
+	present_champion(info.players);
+	create_processes(&info);
+	gladiatorial_fight(&info);
+	printf("Good!\n");
+	//print_arena(info.arena);
 	return (0);
 }

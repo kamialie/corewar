@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 15:10:22 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/12 19:40:02 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/11/13 20:05:20 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,9 @@ typedef struct	s_info
 void		print_arena(unsigned char *arena);
 
 void		read_arg(t_info *info, int argc, char *argv[]);
-void		create_processes(t_info info);
+void		create_processes(t_info *info);
+void		delete_elem(t_processes **processes, t_info *info);
+void		gladiatorial_fight(t_info *info);
 
 void		error(int err);
 #endif
