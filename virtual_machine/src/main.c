@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 13:34:54 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/13 16:44:18 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/11/13 16:58:08 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ static int	init_sdl(t_sdl *sdl)
 	sdl->img_data = (int *)sdl->surface->pixels;
 	ft_bzero(sdl->img_data, 1536 * 1024 * 4);
 	//SDL_FillRect(sdl->surface, NULL, SDL_MapRGB( sdl->surface->format, 0xff, 0x0, 0x0));
+	TTF_Init();
 	return (0);
 }
 
