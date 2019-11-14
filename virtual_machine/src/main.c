@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 13:34:54 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/13 17:19:52 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/11/14 20:04:11 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	main(int argc , char *argv[])
 	present_champion(info.players);
 	create_processes(&info);
 	gladiatorial_fight(&info);
-	printf("Good!\n");
+	printf("Contestant %d, %s, has won !\n", info.last_live, (info.players)[info.last_live - 1].prog_name);
 	//print_arena(info.arena);
 	return (0);
 }

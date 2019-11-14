@@ -6,16 +6,31 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 17:20:05 by bdudley           #+#    #+#             */
-/*   Updated: 2019/11/13 20:30:34 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/11/14 20:28:54 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
+void		take_actions(t_processes *prs)
+{
+	if (prs->cc_op == 0)  //получаем код следущей операции и если она валидна записываем количество циклов
+	{
+		prs->code_op = *(prs->ptr);
+		if (*(prs->ptr) > 0 && *(prs->ptr) < 17)
+			prs->cc_op = g_op_tab[prs->code_op - 1].cycle_for_exec;
+	}
+	if (prs->cc_op > 0) //уменьшаем количество циклов ожидания
+		--prs->cc_op;
+	if (prs->cc_op == 0) //выполняем операцию
+	{
+
+	}
+}
+
 void		kick_noobs(t_info *info, int *check)
 {
 	t_processes		*ptr;
-
 
 	ptr = info->processes;
 	while (ptr)
@@ -37,15 +52,22 @@ void		kick_noobs(t_info *info, int *check)
 
 void		gladiatorial_fight(t_info *info)
 {
-	int 	i;
-	int		check;
+	int 		i;
+	int			check;
+	t_processes	*prs;
 
 	check = 0;
+	prs = info->processes;
 	while (info->processes)
 	{
 		i = -1;
 		while (++i <= info->cycle_to_die)
 		{
+			while (prs)
+			{
+				take_actions(prs);
+				prs = prs->next;
+			}
 			++info->count_cycles;
 		}
 		kick_noobs(info, &check);
