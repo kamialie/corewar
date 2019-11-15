@@ -6,14 +6,14 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 16:27:43 by bdudley           #+#    #+#             */
-/*   Updated: 2019/11/10 18:19:03 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/11/12 18:05:11 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include "corewar.h"
 
-unsigned int	get_magic(t_info *info, int fd)
+unsigned int	get_magic(t_info *info, int fd) //static
 {
 	unsigned int	magic;
 	unsigned int	buf;
@@ -31,7 +31,7 @@ unsigned int	get_magic(t_info *info, int fd)
 	return (magic);
 }
 
-unsigned int	get_prog_size(t_info *info, int fd)
+unsigned int	get_prog_size(t_info *info, int fd) //static
 {
 	unsigned int	prog_size;
 	unsigned int	buf;
@@ -50,7 +50,7 @@ unsigned int	get_prog_size(t_info *info, int fd)
 }
 
 //Заполняет арену
-void			read_arena(t_info *info, int fd, int number, int count)
+void			read_arena(t_info *info, int fd, int number, int count) //static
 {
 	unsigned int 	shift;
 
@@ -61,7 +61,7 @@ void			read_arena(t_info *info, int fd, int number, int count)
 }
 
 //Считывает бинарный файл в структуру
-void			read_file(t_info *info, char *file_name, int number, int count)
+void			read_file(t_info *info, char *file_name, int number, int count) //static
 {
 	int				fd;
 
@@ -114,6 +114,8 @@ static int		count_champion(t_info *info, int argc, char *argv[])
 		else
 			error(2); //Ошибка, невалидный чемпион(нет расширения .cor)
 	}
+	info->last_live = count;
+	info->count_process = count;
 	return (count);
 }
 

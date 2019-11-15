@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 15:10:22 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/13 16:11:30 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/11/15 18:18:21 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,104 @@
 # define COR ".cor"
 
 // TEMPORARY
-typedef struct	s_info
-{
-	int				dump;
-	header_t		players[MAX_PLAYERS];
-	unsigned char	*arena;
-}				t_info;
-
 # include <stdio.h>
-
 // END
 
-void	print_arena(unsigned char *arena);
+//cc - count cycle
+typedef struct	s_processes
+{
+	int					cc_live; //цикл, в котором была последний раз выполнена live
+	int					cc_op : 11; //количество циклов, оставшееся до исполнения операции
+	int 				carry : 1; //флаг, для некоторых операций
+	int					code_op : 5; //код операции
+	unsigned char		*ptr; //местоположение каретки на арене
+	int 				c_byte_op : 4; //сколько перешагнуть до следущей операции
+	char 				reg[REG_NUMBER * REG_SIZE];
+	struct s_processes	*next;
+	struct s_processes	*prev; //???
+}				t_processes;
 
-void	read_arg(t_info *info, int argc, char *argv[]);
+typedef struct	s_info
+{
+	int				dump; //количество циклов, на котором требуется напечатать арену
+	header_t		players[MAX_PLAYERS]; //массив чемпионов
+	unsigned char	*arena;
+	t_processes		*processes;
+	int 			count_process;
+	int 			last_live; //игрок, который последним сказал, что он жив
+	int 			count_cycles; //количество циклов прошедших с начала игры
+	int				cycle_to_die; //длительность периода проверки
+	int 			count_live; //количество выполнынных live за последний период
+	int 			count_check; //количество проведенных проверок
+}				t_info;
 
-void	error(int err);
+typedef struct	s_op
+{
+	char					*name;
+	unsigned int			count_args : 2;
+	unsigned char			args_types[3];
+	unsigned int			code : 5; //код операции
+	unsigned int			cycle_for_exec : 11; //циклы ожидания для каждой операции
+	char					*comment;
+	unsigned int			change_carry : 1; //изменяет ли данная операция флаг carry
+	unsigned int			args_types_code : 1;  //код типов аругементов
+	unsigned char			t_dir_size : 3; //размер типа T_DIR для данной операции
+	void					(*func)(t_info *); // указатель на функцию с данной операцией
+}				t_op;
+
+void		read_arg(t_info *info, int argc, char *argv[]);
+void		error(int err);
+void		create_processes(t_info *info);
+void		delete_elem(t_processes **processes, t_info *info);
+void		gladiatorial_fight(t_info *info);
+void		print_arena(unsigned char *arena);
+
+/*
+** Функции, на которые указывает структура g_op_tab
+*/
+
+void		live_op(t_info *info);
+void		ld_op(t_info *info);
+void		st_op(t_info *info);
+void		add_op(t_info *info);
+void		sub_op(t_info *info);
+void		and_op(t_info *info);
+void		or_op(t_info *info);
+void		xor_op(t_info *info);
+void		zjmp_op(t_info *info);
+void		ldi_op(t_info *info);
+void		sti_op(t_info *info);
+void		fork_op(t_info *info);
+void		lld_op(t_info *info);
+void		lldi_op(t_info *info);
+void		lfork_op(t_info *info);
+void		aff_op(t_info *info);
+
+
+static t_op	g_op_tab[16] =
+		{
+				{"live", 1, {T_DIR}, 1, 10, "alive", 0, 0, 4, &live_op},
+				{"ld", 2, {T_DIR | T_IND, T_REG}, 2, 5, "load", 1, 1, 4, &ld_op},
+				{"st", 2, {T_REG, T_IND | T_REG}, 3, 5, "store", 1, 1, 4, &st_op},
+				{"add", 3, {T_REG, T_REG, T_REG}, 4, 10, "addition", 1, 1, 4, &add_op},
+				{"sub", 3, {T_REG, T_REG, T_REG}, 5, 10, "soustraction", 1, 1, 4, &sub_op},
+				{"and", 3, {T_REG | T_DIR | T_IND, T_REG | T_IND | T_DIR, T_REG}, 6, 6,
+						"et (and  r1, r2, r3   r1&r2 -> r3", 1, 1, 4, &and_op},
+				{"or", 3, {T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG}, 7, 6,
+						"ou  (or   r1, r2, r3   r1 | r2 -> r3", 1, 1, 4, &or_op},
+				{"xor", 3, {T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG}, 8, 6,
+						"ou (xor  r1, r2, r3   r1^r2 -> r3", 1, 1, 4, &xor_op},
+				{"zjmp", 1, {T_DIR}, 9, 20, "jump if zero", 0, 0, 2, &zjmp_op},
+				{"ldi", 3, {T_REG | T_DIR | T_IND, T_DIR | T_REG, T_REG}, 10, 25,
+						"load index", 1, 1, 2, &ldi_op},
+				{"sti", 3, {T_REG, T_REG | T_DIR | T_IND, T_DIR | T_REG}, 11, 25,
+						"store index", 1, 1, 2, &sti_op},
+				{"fork", 1, {T_DIR}, 12, 800, "fork", 0, 0, 2, &fork_op},
+				{"lld", 2, {T_DIR | T_IND, T_REG}, 13, 10, "long load", 1, 1, 4, &lld_op},
+				{"lldi", 3, {T_REG | T_DIR | T_IND, T_DIR | T_REG, T_REG}, 14, 50,
+						"long load index", 1, 1, 2, &lldi_op},
+				{"lfork", 1, {T_DIR}, 15, 1000, "long fork", 0, 0, 2, &lfork_op},
+				{"aff", 1, {T_REG}, 16, 2, "aff", 1, 1, 4, &aff_op}
+		};
 
 #endif
