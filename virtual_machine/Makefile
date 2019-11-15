@@ -48,7 +48,7 @@ all: $(SDL_BUILD)
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(LIB) $(SDL_BUILD) $(SDL_TTF_BUILD)
+$(NAME): $(LIB) $(SDL_BUILD) $(SDL_TTF_BUILD) $(OBJ)
 	@echo "$(BLUE)Linking Corewar...$(NC)"
 	@gcc $(FLAGS) $(LIB) $(SDL) $(SDL_TTF) -o $(NAME) $(OBJ)
 	@echo "$(GREEN)Corewar is ready!$(NC)"
