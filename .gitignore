@@ -54,8 +54,10 @@ dkms.conf
 # Project execs
 virtual_machine/corewar
 
-# SDL
+# SDL, SDL_TTF, freetype
 virtual_machine/SDL2-2.0.10
+virtual_machine/SDL_ttf
+virtual_machine/freetype-2.4.9
 
 # Clion
 .idea
