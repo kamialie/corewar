@@ -16,7 +16,12 @@ SRC = main.c \
 	  error.c \
 	  print_arena.c \
 	  processes.c \
-	  gladiatorial_fight.c
+	  gladiatorial_fight.c \
+	  lld_lldi_lfork_aff.c \
+	  live_ld_st_add.c \
+	  zjmp_ldi_sti_fork.c \
+	  sub_and_or_xor.c \
+
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
