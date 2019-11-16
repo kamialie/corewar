@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 17:09:14 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/10 17:24:37 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/11/16 20:41:25 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	print_arena_row(unsigned char *arena, int row)
 
 	total = (row + 1) * 32;
 	i = total - 32;
-	print_bit((arena[i] & 0xf) >> 4);
+	print_bit((arena[i] & 0xf0) >> 4);
 	print_bit(arena[i] & 0xf);
 	while (i++ < total)
 	{

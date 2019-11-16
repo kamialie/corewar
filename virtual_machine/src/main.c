@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 13:34:54 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/16 17:04:29 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/11/16 19:48:22 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	main(int argc , char *argv[])
 	read_arg(&info, argc, argv);
 	if (init_sdl(&sdl))
 		return (1);
-	draw(&sdl);
+	draw(&sdl, info.arena);
 	present_champion(info.players);
 	create_processes(&info);
 	gladiatorial_fight(&info);
