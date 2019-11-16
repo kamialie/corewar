@@ -6,7 +6,7 @@
 #    By: rgyles <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/16 14:20:48 by rgyles            #+#    #+#              #
-#    Updated: 2019/11/16 15:18:49 by rgyles           ###   ########.fr        #
+#    Updated: 2019/11/16 16:35:12 by rgyles           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,13 +45,10 @@ LIB = ../libft/libft.a
 
 PWD = $(shell pwd)
 
-#SDL_BUILD = SDL2-2.0.10/build
 SDL_BUILD = sdl/sdl_build
 
-#FREETYPE_BUILD = freetype-2.4.9/build
 FREETYPE_BUILD = sdl/freetype_build
 
-#SDL_TTF_BUILD = SDL_ttf/build
 SDL_TTF_BUILD = sdl/sdl_ttf_build
 
 RED = \033[0;31m
@@ -85,8 +82,8 @@ $(SDL_BUILD):
 	@echo "$(BLUE)Configuring SDL build...$(NC)"
 	@cd $(SDL_BUILD) ; ../SDL2-2.0.10/configure --prefix=$(PWD)/$(SDL_BUILD) > /dev/null
 	@echo "$(BLUE)Building SDL...$(NC)"
-	make -C $(SDL_BUILD)
-	make -C $(SDL_BUILD) install
+	@make -C $(SDL_BUILD) > /dev/null 2>&1
+	@make -C $(SDL_BUILD) install > /dev/null 2>&1
 	@echo "$(GREEN)SDL is ready!$(NC)"
 
 $(SDL_TTF_BUILD): $(FREETYPE_BUILD) 
@@ -95,18 +92,20 @@ $(SDL_TTF_BUILD): $(FREETYPE_BUILD)
 	@mkdir $(SDL_TTF_BUILD)
 	@echo "$(BLUE)Configuring SDL_ttf build...$(NC)"
 	@cd $(SDL_TTF_BUILD) ; export SDL_CONFIG="$(PWD)/$(SDL_BUILD)/sdl2-config" ; ../SDL_ttf/configure --prefix="$(PWD)/$(SDL_TTF_BUILD)" --with-freetype-prefix="$(PWD)/$(FREETYPE_BUILD)" > /dev/null
-	make -C $(SDL_TTF_BUILD)
-	make -C $(SDL_TTF_BUILD) install
+	@echo "$(BLUE)Building SDL_ttf...$(NC)"
+	@make -C $(SDL_TTF_BUILD) > /dev/null 2>&1
+	@make -C $(SDL_TTF_BUILD) install > /dev/null 2>&1
 	@echo "$(GREEN)SDL_ttf is ready!$(NC)"
 
 $(FREETYPE_BUILD):
-	@echo "$(BLUE)Extracting SDL...$(NC)"
+	@echo "$(BLUE)Extracting freetype...$(NC)"
 	@tar -xf sdl/freetype-2.4.9.tar.bz2 -C sdl
 	@mkdir $(FREETYPE_BUILD)
-	@echo "$(BLUE)Configuring SDL build...$(NC)"
+	@echo "$(BLUE)Configuring freetype build...$(NC)"
 	@cd $(FREETYPE_BUILD) ; ../freetype-2.4.9/configure --prefix=$(PWD)/$(FREETYPE_BUILD) > /dev/null
-	make -C $(FREETYPE_BUILD)
-	make -C $(FREETYPE_BUILD) install
+	@echo "$(BLUE)Building freetype...$(NC)"
+	@make -C $(FREETYPE_BUILD) > /dev/null 2>&1
+	@make -C $(FREETYPE_BUILD) install > /dev/null 2>&1
 	@echo "$(GREEN)freetype is ready!$(NC)"
 
 clean:
@@ -128,5 +127,6 @@ re: fclean all
 
 test:
 	@echo "smth" ; echo "that"
+	@rm kk 2> /dev/null >&2
 
 .PHONY: all clean fclean re
