@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 15:10:22 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/15 18:18:21 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/11/16 19:25:48 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # define N "-n"
 # define COR ".cor"
 
+# define IND(x) x - 1
 // TEMPORARY
 # include <stdio.h>
 // END
@@ -34,7 +35,7 @@ typedef struct	s_processes
 	int					cc_op : 11; //количество циклов, оставшееся до исполнения операции
 	int 				carry : 1; //флаг, для некоторых операций
 	int					code_op : 5; //код операции
-	unsigned char		*ptr; //местоположение каретки на арене
+	int 				index : 14; //местоположение каретки на арене
 	int 				c_byte_op : 4; //сколько перешагнуть до следущей операции
 	char 				reg[REG_NUMBER * REG_SIZE];
 	struct s_processes	*next;
@@ -66,7 +67,7 @@ typedef struct	s_op
 	unsigned int			change_carry : 1; //изменяет ли данная операция флаг carry
 	unsigned int			args_types_code : 1;  //код типов аругементов
 	unsigned char			t_dir_size : 3; //размер типа T_DIR для данной операции
-	void					(*func)(t_info *); // указатель на функцию с данной операцией
+	void					(*func)(t_info *, t_processes **); // указатель на функцию с данной операцией
 }				t_op;
 
 void		read_arg(t_info *info, int argc, char *argv[]);
@@ -80,22 +81,22 @@ void		print_arena(unsigned char *arena);
 ** Функции, на которые указывает структура g_op_tab
 */
 
-void		live_op(t_info *info);
-void		ld_op(t_info *info);
-void		st_op(t_info *info);
-void		add_op(t_info *info);
-void		sub_op(t_info *info);
-void		and_op(t_info *info);
-void		or_op(t_info *info);
-void		xor_op(t_info *info);
-void		zjmp_op(t_info *info);
-void		ldi_op(t_info *info);
-void		sti_op(t_info *info);
-void		fork_op(t_info *info);
-void		lld_op(t_info *info);
-void		lldi_op(t_info *info);
-void		lfork_op(t_info *info);
-void		aff_op(t_info *info);
+void		live_op(t_info *info, t_processes **processes);
+void		ld_op(t_info *info, t_processes **processes);
+void		st_op(t_info *info, t_processes **processes);
+void		add_op(t_info *info, t_processes **processes);
+void		sub_op(t_info *info, t_processes **processes);
+void		and_op(t_info *info, t_processes **processes);
+void		or_op(t_info *info, t_processes **processes);
+void		xor_op(t_info *info, t_processes **processes);
+void		zjmp_op(t_info *info,  t_processes **processes);
+void		ldi_op(t_info *info, t_processes **processes);
+void		sti_op(t_info *info, t_processes **processes);
+void		fork_op(t_info *info, t_processes **processes);
+void		lld_op(t_info *info, t_processes **processes);
+void		lldi_op(t_info *info, t_processes **processes);
+void		lfork_op(t_info *info, t_processes **processes);
+void		aff_op(t_info *info, t_processes **processes);
 
 
 static t_op	g_op_tab[16] =

@@ -6,11 +6,11 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 13:34:54 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/15 18:17:18 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/11/16 16:30:00 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "visual.h"
+//#include "visual.h"
 #include "corewar.h"
 
 void	present_champion(header_t *players)
@@ -47,42 +47,44 @@ void 	init_info(t_info *info)
 	}
 }
 
-static int	init_sdl(t_sdl *sdl)
-{
-	if (SDL_Init(SDL_INIT_VIDEO) != 0)
-	{
-		printf("SDL_Init Error: %s\n", SDL_GetError());
-		return (1);
-	}
-	sdl->window = SDL_CreateWindow("Corewar",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,WIN_WIDTH,WIN_HEIGHT,SDL_WINDOW_SHOWN);
-	if (sdl->window == NULL)
-	{
-		printf("SDL_CreateWindow Error: %s\n", SDL_GetError());
-		return (1);
-	}
-	/*sdl->surface = SDL_GetWindowSurface(sdl->window);
-	if (sdl->surface == NULL)
-	{
-		printf("SDL_GetWindowSurface Error: %s\n", SDL_GetError());
-		return (1);
-	}
-	sdl->img_data = (int *)sdl->surface->pixels;
-	ft_bzero(sdl->img_data, WIN_WIDTH * WIN_HEIGHT * 4);
-	//SDL_FillRect(sdl->surface, NULL, SDL_MapRGB( sdl->surface->format, 0xff, 0x0, 0x0));*/
-	
-	return (0);
-}
+//static int	init_sdl(t_sdl *sdl)
+//{
+//	if (SDL_Init(SDL_INIT_VIDEO) != 0)
+//	{
+//		printf("SDL_Init Error: %s\n", SDL_GetError());
+//		return (1);
+//	}
+//	sdl->window = SDL_CreateWindow("Corewar",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,WIN_WIDTH,WIN_HEIGHT,SDL_WINDOW_SHOWN);
+//	if (sdl->window == NULL)
+//	{
+//		printf("SDL_CreateWindow Error: %s\n", SDL_GetError());
+//		return (1);
+//	}
+//	/*sdl->surface = SDL_GetWindowSurface(sdl->window);
+//	if (sdl->surface == NULL)
+//	{
+//		printf("SDL_GetWindowSurface Error: %s\n", SDL_GetError());
+//		return (1);
+//	}
+//	sdl->img_data = (int *)sdl->surface->pixels;
+//	ft_bzero(sdl->img_data, WIN_WIDTH * WIN_HEIGHT * 4);
+//	//SDL_FillRect(sdl->surface, NULL, SDL_MapRGB( sdl->surface->format, 0xff, 0x0, 0x0));*/
+//
+//	return (0);
+//}
 
 int	main(int argc , char *argv[])
 {
 	t_info		info;
-	t_sdl		sdl;
+//	t_sdl		sdl;
 
+	if (argc < 2)
+		error(8); //Ошибка, нет игроков
 	init_info(&info);
 	read_arg(&info, argc, argv);
-	if (init_sdl(&sdl))
-		return (1);
-	draw(&sdl);
+	//if (init_sdl(&sdl))
+	//	return (1);
+	//draw(&sdl);
 	present_champion(info.players);
 	create_processes(&info);
 	gladiatorial_fight(&info);

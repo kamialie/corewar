@@ -12,22 +12,22 @@
 
 #include "corewar.h"
 
-void		lld_op(t_info *info)
+void		lld_op(t_info *info, t_processes **processes)
 {
 
 }
 
-void		lldi_op(t_info *info)
+void		lldi_op(t_info *info, t_processes **processes)
 {
 
 }
 
-void		lfork_op(t_info *info)
+void		lfork_op(t_info *info, t_processes **processes)
 {
 
 }
 
-void		aff_op(t_info *info)
+void		aff_op(t_info *info, t_processes **processes)
 {
 
 }

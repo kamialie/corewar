@@ -12,22 +12,22 @@
 
 #include "corewar.h"
 
-void		zjmp_op(t_info *info)
+void		zjmp_op(t_info *info, t_processes **processes)
 {
 
 }
 
-void		ldi_op(t_info *info)
+void		ldi_op(t_info *info, t_processes **processes)
 {
 
 }
 
-void		sti_op(t_info *info)
+void		sti_op(t_info *info, t_processes **processes)
 {
 
 }
 
-void		fork_op(t_info *info)
+void		fork_op(t_info *info, t_processes **processes)
 {
 
 }
