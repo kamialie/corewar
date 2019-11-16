@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 13:34:54 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/15 18:17:18 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/11/16 17:04:29 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static int	init_sdl(t_sdl *sdl)
 		printf("SDL_CreateWindow Error: %s\n", SDL_GetError());
 		return (1);
 	}
-	/*sdl->surface = SDL_GetWindowSurface(sdl->window);
+	sdl->surface = SDL_GetWindowSurface(sdl->window);
 	if (sdl->surface == NULL)
 	{
 		printf("SDL_GetWindowSurface Error: %s\n", SDL_GetError());
@@ -68,8 +68,6 @@ static int	init_sdl(t_sdl *sdl)
 	}
 	sdl->img_data = (int *)sdl->surface->pixels;
 	ft_bzero(sdl->img_data, WIN_WIDTH * WIN_HEIGHT * 4);
-	//SDL_FillRect(sdl->surface, NULL, SDL_MapRGB( sdl->surface->format, 0xff, 0x0, 0x0));*/
-	
 	return (0);
 }
 
