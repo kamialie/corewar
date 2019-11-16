@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 16:25:36 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/14 18:32:41 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/11/16 15:24:56 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 void	draw(t_sdl *sdl)
 {
 	TTF_Init();
-	TTF_Font* sans = TTF_OpenFont("OpenSans-Regular.ttf", 24);
+	TTF_Font* sans = TTF_OpenFont("sdl/fonts/OpenSans-Regular.ttf", 24);
 	SDL_Color white = {255, 255, 255};
 	SDL_Surface* message = TTF_RenderText_Solid(sans, "some text", white);
 
