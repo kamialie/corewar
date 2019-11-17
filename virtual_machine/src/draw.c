@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 16:25:36 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/16 20:45:37 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/11/17 17:30:28 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	draw_vertical_line(int x, int h, int *img_data)
 	int	y;
 
 	y = 0;
+	h -= 11;
 	while (y < h)
 	{
 		img_data[y * WIN_WIDTH + x] = 0xFF;
@@ -31,6 +32,7 @@ void	draw_horizontal_line(int y, int w, int	*img_data)
 	int	x;
 
 	x = 0;
+	w -= 455;
 	while (x < w)
 	{
 		img_data[y * WIN_WIDTH + x] = 0xFF;
@@ -42,22 +44,24 @@ void	draw_arena_grid(t_sdl *sdl, unsigned char *arena)
 {
 
 	int i;
-	int a;
+	int w;
+	int h;
 	int count;
 
 	i = 1;
-	a = 30;
-	count = 33;
+	w = 21;
+	h = 17;
+	count = 65;
 	while (i < count)
 	{
-		draw_vertical_line(i * a, sdl->surface->h, sdl->img_data);
+		draw_vertical_line(i * w, sdl->surface->h, sdl->img_data);
 		++i;
 	}
 	i = 1;
-	count = 33;
+	count = 65;
 	while (i < count)
 	{
-		draw_horizontal_line(i * a, sdl->surface->w, sdl->img_data);
+		draw_horizontal_line(i * h, sdl->surface->w, sdl->img_data);
 		++i;
 	}
 }
@@ -98,29 +102,40 @@ char	print_nibble(unsigned char nibble) // nibble is 4 bits!
 		return ('f');
 }
 
-void	print_byte(unsigned char byte, int x, int y, TTF_Font *font, SDL_Color color, t_sdl *sdl)
+/*
+** render single byte:
+** divide byte into nibbles, get the corresponding base 16 symbols, form a string
+** render text using TTF, set coordinates, copy to window surface, free orginal surface created by TTF
+*/
+/*void	draw_byte(unsigned char byte, t_render *info, t_sdl *sdl)
 {
 	char cell[3];
 	SDL_Surface	*text_surface;
-	SDL_Rect rect;
+	//SDL_Rect rect;
 
-	printf("byte - %d\n", byte);
-	//printf("nibble_one - %d\n", ((byte & 0xf0) >> 4));
+	//printf("byte - %d\n", byte);
 	cell[0] = print_nibble((byte & 0xf0) >> 4);
 	cell[1] = print_nibble(byte & 0xf);
 	cell[2] = '\0';
-	text_surface = TTF_RenderText_Solid(font, cell, color);
-	rect = (SDL_Rect) {0, 0, x, y};
-	SDL_BlitSurface(text_surface, NULL, sdl->surface, &rect);
-}
+	text_surface = TTF_RenderText_Solid(info->font, cell, info->color);
+	//rect = (SDL_Rect) {0, 0, x, y};
+	SDL_BlitSurface(text_surface, NULL, sdl->surface, info->rect);
+	SDL_FreeSurface(text_surface);
+}*/
 
-/*void	output_arena_row(unsigned char *arena, int row, t_sdl *sdl)
+/*void	output_arena_row(unsigned char *arena, int row, t_render *info, t_sdl *sdl)
 {
 	int	i;
-	int	row;
+	int	last;
 
-	total = (row + 1) * 32;
-	i = total - 32;
+	last = (row + 1) * 64;
+	i = last - 64;
+	draw_byte((arena[i] & 0xf0) >> 4, 0, 0, font, color, sdl);
+	draw_byte(arena[i] & 0xf0);
+	while (i++ < last)
+	{
+
+
 }*/
 
 void	draw(t_sdl *sdl, unsigned char *arena)
@@ -131,29 +146,29 @@ void	draw(t_sdl *sdl, unsigned char *arena)
 	TTF_Init(); //int sdl_ttf
 	TTF_Font* font = TTF_OpenFont("sdl/fonts/OpenSans-Regular.ttf", 22); //open font
 	SDL_Color white = {255, 255, 255}; //set color
+	SDL_Color red = {255, 0, 0}; //set color
 
-	SDL_Surface* message = TTF_RenderText_Solid(font, "some text", white); // render text
-	SDL_Rect dsrect = {0, 0, tw, th}; //set square where to draw the message
-	//SDL_BlitSurface(message, NULL, sdl->surface, &dsrect); // copy from message to the surface
-	//printf("w - %d h - %d\n", message->w, message->h);
+	//SDL_Surface* message = TTF_RenderText_Solid(font, "some text", white); // render text
+	//SDL_Rect dsrect = {0, 0, tw, th}; //set square where to draw the message
 
-	message = TTF_RenderText_Solid(font, "8a", white);
-	dsrect = (SDL_Rect) {30, 30, tw, th};
-	SDL_BlitSurface(message, NULL, sdl->surface, &dsrect);
+	//message = TTF_RenderText_Solid(font, "8a", white);
+	//dsrect = (SDL_Rect) {30, 30, tw, th};
+	//SDL_BlitSurface(message, NULL, sdl->surface, &dsrect);
 
 	printf("tw - %d th - %d\n", tw, th);
 
+	//draw_vertical_line(10, WIN_HEIGHT, sdl->img_data);
 	draw_arena_grid(sdl, arena);
 
 	//void	print_byte(int byte, int x, int y, TTF_Font *font, SDL_Color color, t_sdl *sdl)
-	print_byte(0xf0, 30, 30, font, white, sdl);
+	//draw_byte(0xf0, 30, 30, font, white, sdl);
 
 	SDL_UpdateWindowSurface(sdl->window); //draw surface
 
 	event_handler(sdl); // loop
 
-	SDL_DestroyWindow(sdl->window);
 	TTF_CloseFont(font); //free memory used by font
+	SDL_DestroyWindow(sdl->window);
 	SDL_Quit();
 }
 

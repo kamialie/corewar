@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 16:09:49 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/16 20:28:56 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/11/17 17:18:27 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include "SDL.h"
 # include "SDL_ttf.h"
 
-# define WIN_HEIGHT 1024
-# define WIN_WIDTH 1536
+# define WIN_HEIGHT 1100
+# define WIN_WIDTH 1800
 
 typedef struct	s_sdl
 {
@@ -26,11 +26,12 @@ typedef struct	s_sdl
 	int			*img_data;
 }				t_sdl;
 
-typedef struct	s_font
+typedef struct	s_render
 {
+	SDL_Rect	rect;
 	TTF_Font	*font;
 	SDL_Color	*color;
-}				t_font;
+}				t_render;
 
 
 void	draw(t_sdl *sdl, unsigned char *arena);

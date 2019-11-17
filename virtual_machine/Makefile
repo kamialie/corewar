@@ -6,7 +6,7 @@
 #    By: rgyles <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/16 14:20:48 by rgyles            #+#    #+#              #
-#    Updated: 2019/11/16 16:35:12 by rgyles           ###   ########.fr        #
+#    Updated: 2019/11/17 17:15:51 by rgyles           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,17 +29,20 @@ SDL_TTF = -L sdl/sdl_ttf_build/lib -l SDL2_ttf
 SRC = main.c \
 	  read.c \
 	  error.c \
-	  draw.c \
-	  event_handler.c \
 	  print_arena.c \
 	  processes.c \
 	  gladiatorial_fight.c \
 	  lld_lldi_lfork_aff.c \
 	  live_ld_st_add.c \
 	  zjmp_ldi_sti_fork.c \
-	  sub_and_or_xor.c \
+	  sub_and_or_xor.c
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
+
+VISUAL_SRC = draw.c \
+			 event_handler.c
+
+VISUAL_OBJ = $(addprefix $(OBJ_DIR)/, $(VISUAL_SRC:.c=.o))
 
 LIB = ../libft/libft.a
 
@@ -58,13 +61,17 @@ NC = \033[0m
 
 all: $(NAME)
 
-$(NAME): $(LIB) $(SDL_BUILD) $(SDL_TTF_BUILD) $(OBJ)
+$(NAME): $(LIB) $(SDL_BUILD) $(SDL_TTF_BUILD) $(OBJ) $(VISUAL_OBJ)
 	@echo "$(BLUE)Linking Corewar...$(NC)"
-	@gcc $(FLAGS) $(LIB) $(SDL) $(SDL_TTF) -o $(NAME) $(OBJ)
+	@gcc $(FLAGS) $(LIB) $(SDL) $(SDL_TTF) -o $(NAME) $(OBJ) $(VISUAL_OBJ)
 	@echo "$(GREEN)Corewar is ready!$(NC)"
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c include/corewar.h | $(OBJ_DIR)
 	gcc $(FLAGS) $(INCLUDE) -o $@ -c $<
+
+$(OBJ_DIR)/main.o: include/visual.h
+
+$(VISUAL_OBJ): include/visual.h
 
 $(OBJ_DIR):
 	@echo "$(GREEN)Object directory is created!$(NC)"

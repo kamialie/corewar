@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 13:34:54 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/16 19:48:22 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/11/17 17:12:40 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	init_sdl(t_sdl *sdl)
 		printf("SDL_Init Error: %s\n", SDL_GetError());
 		return (1);
 	}
-	sdl->window = SDL_CreateWindow("Corewar",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,WIN_WIDTH,WIN_HEIGHT,SDL_WINDOW_SHOWN);
+	sdl->window = SDL_CreateWindow("Corewar", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIN_WIDTH, WIN_HEIGHT, SDL_WINDOW_SHOWN);
 	if (sdl->window == NULL)
 	{
 		printf("SDL_CreateWindow Error: %s\n", SDL_GetError());
