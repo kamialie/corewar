@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 15:10:22 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/15 18:18:21 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/11/17 19:54:28 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # define DUMP "-dump"
 # define N "-n"
 # define COR ".cor"
+# define LINE_SIZE 97
 
 // TEMPORARY
 # include <stdio.h>

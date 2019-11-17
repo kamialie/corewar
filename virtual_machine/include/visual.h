@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 16:09:49 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/17 17:18:27 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/11/17 19:04:31 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@
 # define WIN_HEIGHT 1100
 # define WIN_WIDTH 1800
 
+# define NIBBLE_X_SHIFT 3
+# define NIBBLE_Y_SHIFT 2
+
+# define NIBBLE_WIDTH 21
+# define NIBBLE_HEIGHT 17
+
 typedef struct	s_sdl
 {
 	SDL_Window	*window;
@@ -29,8 +35,8 @@ typedef struct	s_sdl
 typedef struct	s_render
 {
 	SDL_Rect	rect;
+	SDL_Color	color;
 	TTF_Font	*font;
-	SDL_Color	*color;
 }				t_render;
 
 

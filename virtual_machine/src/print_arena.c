@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 17:09:14 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/16 20:41:25 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/11/17 20:09:17 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,46 @@
 
 #include "corewar.h"
 
-void	print_bit(unsigned char bit)
+char	get_nibble(unsigned char bit)
 {
 	if (bit < 10)
-		ft_putchar(bit + 48);
+		return (bit + 48);
 	else if (bit == 10)
-		ft_putchar('a');
+		return('a');
 	else if (bit == 11)
-		ft_putchar('b');
+		return('b');
 	else if (bit == 12)
-		ft_putchar('c');
+		return('c');
 	else if (bit == 13)
-		ft_putchar('d');
+		return('d');
 	else if (bit == 14)
-		ft_putchar('e');
-	else if (bit == 15)
-		ft_putchar('f');
+		return('e');
+	else
+		return('f');
+}
+
+/*
+** label is short int (2 bytes)
+** print each 4 bits seperatly using char pointer
+*/
+void	print_row_label(unsigned short int row_label)
+{
+	unsigned char	*num;
+	char	label[9];
+	char	*str;
+
+	num = (unsigned char *)&row_label;
+	str = label;
+	*str++ = '0';
+	*str++ = 'x';
+	*str++ = get_nibble((*(num + 1) & 0xf0) >> 4);
+	*str++ = get_nibble(*(num + 1) & 0xf);
+	*str++ = get_nibble((*num & 0xf0) >> 4);
+	*str++ = get_nibble(*num & 0xf);
+	*str++ = ':';
+	*str++ = ' ';
+	*str = '\0';
+	ft_putstr(label);
 }
 
 /*
@@ -39,37 +63,27 @@ void	print_bit(unsigned char bit)
 */
 void	print_arena_row(unsigned char *arena, int row)
 {
-	int i;
-	int	total;
+	int 	i;
+	int		last;
+	char	line[LINE_SIZE];
+	char	*str;
 
-	total = (row + 1) * 32;
-	i = total - 32;
-	print_bit((arena[i] & 0xf0) >> 4);
-	print_bit(arena[i] & 0xf);
-	while (i++ < total)
+	last = (row + 1) * 32;
+	i = last - 32;
+	str = line;
+	*str++ = get_nibble((arena[i] & 0xf0) >> 4);
+	*str++ = get_nibble(arena[i] & 0xf);
+	while (++i < last)
 	{
-		ft_putchar(' ');
-		print_bit((arena[i] & 0xf0) >> 4);
-		print_bit(arena[i] & 0xf);
+		*str++ = ' ';
+		*str++ = get_nibble((arena[i] & 0xf0) >> 4);
+		*str++ = get_nibble(arena[i] & 0xf);
 	}
+	*str++ = '\n';
+	*str = '\0';
+	ft_putstr(line);
 }
 
-/*
-** label is short int (2 bytes)
-** print each 4 bits seperatly using char pointer
-*/
-void	print_row_label(unsigned short int row_label)
-{
-	unsigned char	*label;
-
-	label = (unsigned char *)&row_label;
-	ft_putstr("0x");
-	print_bit((*(label + 1) & 0xf0) >> 4);
-	print_bit(*(label + 1) & 0xf);
-	print_bit((*label & 0xf0) >> 4);
-	print_bit(*label & 0xf);
-	ft_putstr(": ");
-}
 
 void	print_arena(unsigned char *arena)
 {
@@ -83,12 +97,10 @@ void	print_arena(unsigned char *arena)
 	print_row_label(row_label);
 	row_label += 32;
 	print_arena_row(arena, row);
-	ft_putchar('\n');
 	while (row++ < total)
 	{
 		print_row_label(row_label);
 		row_label += 32;
 		print_arena_row(arena, row);
-		ft_putchar('\n');
 	}
 }
