@@ -45,7 +45,7 @@ void		add_elem(t_processes **processes, int index, int number_player)
 	new->next = NULL;
 	new->prev = NULL;
 	new->carry = 0;
-	new->index = index;
+	new->index = index % MEM_SIZE;
 	ft_bzero(new->reg, REG_NUMBER * REG_SIZE);
 	(new->reg)[REG_SIZE - 4] += (number_player & 0xff);
 	(new->reg)[REG_SIZE - 3] += (number_player & 0xff00);

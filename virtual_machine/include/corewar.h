@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 15:10:22 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/16 19:25:48 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/11/17 15:03:57 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,31 +72,38 @@ typedef struct	s_op
 
 void		read_arg(t_info *info, int argc, char *argv[]);
 void		error(int err);
-void		create_processes(t_info *info);
-void		delete_elem(t_processes **processes, t_info *info);
 void		gladiatorial_fight(t_info *info);
 void		print_arena(unsigned char *arena);
+
+
+/*
+** Создание и удаление кареток
+*/
+
+void		create_processes(t_info *info);
+void		add_elem(t_processes **processes, int index, int number_player);
+void		delete_elem(t_processes **processes, t_info *info);
 
 /*
 ** Функции, на которые указывает структура g_op_tab
 */
 
-void		live_op(t_info *info, t_processes **processes);
-void		ld_op(t_info *info, t_processes **processes);
-void		st_op(t_info *info, t_processes **processes);
-void		add_op(t_info *info, t_processes **processes);
-void		sub_op(t_info *info, t_processes **processes);
-void		and_op(t_info *info, t_processes **processes);
-void		or_op(t_info *info, t_processes **processes);
-void		xor_op(t_info *info, t_processes **processes);
-void		zjmp_op(t_info *info,  t_processes **processes);
-void		ldi_op(t_info *info, t_processes **processes);
-void		sti_op(t_info *info, t_processes **processes);
-void		fork_op(t_info *info, t_processes **processes);
-void		lld_op(t_info *info, t_processes **processes);
-void		lldi_op(t_info *info, t_processes **processes);
-void		lfork_op(t_info *info, t_processes **processes);
-void		aff_op(t_info *info, t_processes **processes);
+void		live_op(t_info *info, t_processes **prs);
+void		ld_op(t_info *info, t_processes **prs);
+void		st_op(t_info *info, t_processes **prs);
+void		add_op(t_info *info, t_processes **prs);
+void		sub_op(t_info *info, t_processes **prs);
+void		and_op(t_info *info, t_processes **prs);
+void		or_op(t_info *info, t_processes **prs);
+void		xor_op(t_info *info, t_processes **prs);
+void		zjmp_op(t_info *info,  t_processes **prs);
+void		ldi_op(t_info *info, t_processes **prs);
+void		sti_op(t_info *info, t_processes **prs);
+void		fork_op(t_info *info, t_processes **prs);
+void		lld_op(t_info *info, t_processes **prs);
+void		lldi_op(t_info *info, t_processes **prs);
+void		lfork_op(t_info *info, t_processes **prs);
+void		aff_op(t_info *info, t_processes **prs);
 
 
 static t_op	g_op_tab[16] =

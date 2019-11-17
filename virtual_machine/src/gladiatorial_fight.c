@@ -29,7 +29,7 @@ void		take_actions(t_info *info, t_processes *prs)
 		if ((info->arena)[prs->index] >= 0 && (info->arena)[prs->index] < 17)
 			g_op_tab[IND((info->arena)[prs->index])].func(info, &prs);
 		else
-			prs->index = ++(prs->index) % MEM_SIZE;
+			prs->index = (++(prs->index)) % MEM_SIZE;
 	}
 }
 
