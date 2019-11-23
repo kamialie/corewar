@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 15:10:22 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/17 19:54:28 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/11/23 19:23:28 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void		error(int err);
 void		create_processes(t_info *info);
 void		delete_elem(t_processes **processes, t_info *info);
 void		gladiatorial_fight(t_info *info);
+char		get_nibble(unsigned char nibble);
 void		print_arena(unsigned char *arena);
 
 /*

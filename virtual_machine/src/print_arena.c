@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 17:09:14 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/17 20:09:17 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/11/23 19:23:48 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 #include "corewar.h"
 
-char	get_nibble(unsigned char bit)
+//exists in draw.c
+/*char	get_nibble(unsigned char bit)
 {
 	if (bit < 10)
 		return (bit + 48);
@@ -30,7 +31,7 @@ char	get_nibble(unsigned char bit)
 		return('e');
 	else
 		return('f');
-}
+}*/
 
 /*
 ** label is short int (2 bytes)

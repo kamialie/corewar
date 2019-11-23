@@ -6,13 +6,35 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 16:25:36 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/23 16:34:24 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/11/23 21:01:04 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "SDL_ttf.h"
 #include "visual.h"
 #include "libft.h"
+
+/*SDL_Color	choose_color(int i)
+{
+	int	limits[8];
+
+	ft_bzero(limits, 8 * 4);
+	limits[1] = 100;
+	
+	if (num_of_players >= 1)
+	{
+		if (i >= 0 && i <= limits[1])
+			return ((SDL_Color) {255, 255, 0});
+		if (num_of_players >= 2)
+		{
+			if (i >= limits[2] && i <= limits[3]) 
+				return ((SDL_Color) {0, 0, 255});
+			if (num_of_players >= 3)
+			{
+		}
+	}
+	return ((SDL_Color) {255, 255, 255});
+}*/
 
 /*void	draw_arena_grid(t_sdl *sdl, unsigned char *arena)
 {
@@ -43,7 +65,7 @@
 /*
  * nibble is 4 bits!
 */
-char	print_nibble(unsigned char nibble)
+char	get_nibble(unsigned char nibble)
 {
 	//printf("number - %d\n", (int)nibble);
 	if (nibble < 10)
@@ -72,8 +94,8 @@ void	draw_byte(unsigned char byte, t_render *info, SDL_Surface *surface)
 	char cell[3];
 	SDL_Surface	*text_surface;
 
-	cell[0] = print_nibble((byte & 0xf0) >> 4);
-	cell[1] = print_nibble(byte & 0xf);
+	cell[0] = get_nibble((byte & 0xf0) >> 4);
+	cell[1] = get_nibble(byte & 0xf);
 	cell[2] = '\0';
 	text_surface = TTF_RenderText_Blended(info->font, cell, info->color);
 	SDL_BlitSurface(text_surface, NULL, surface, &info->rect);
@@ -115,14 +137,47 @@ void	draw_arena(unsigned char *arena, t_render render_info, SDL_Surface *surface
 		i_last = (row + 1) * 64;
 		i = i_last - 64;
 		render_info.rect.x = NIBBLE_X_SHIFT;
+		//render_info.color = choose_color(i);
 		draw_byte(i, &render_info, surface);
 		while (++i < i_last)
 		{
 			render_info.rect.x += NIBBLE_WIDTH;
+			//render_info.color = choose_color(i);
 			draw_byte(i, &render_info, surface);
 		}
 		render_info.rect.y += NIBBLE_HEIGHT;
 		++row;
+	}
+}
+
+void	draw_range(unsigned char *arena, t_render *render_info, SDL_Surface *surface, int i, int end)
+{
+	int i_last;
+	int	row;
+
+	row = i / 64;
+	i_last = (row + 1) * 64;
+	render_info->rect.x = NIBBLE_X_SHIFT + NIBBLE_WIDTH * (i % 64);
+	render_info->rect.y = NIBBLE_Y_SHIFT + NIBBLE_HEIGHT * (i / 64);
+	while (1)
+	{
+		//render_info.color = choose_color(i);
+		//draw_byte(i, render_info, surface);
+		while (i < i_last)
+		{
+			printf("i - %d\n", i);
+			if (i == end)
+				return ;
+			draw_byte(i, render_info, surface);
+			render_info->rect.x += NIBBLE_WIDTH;
+			//render_info.color = choose_color(i);
+			++i;
+		}
+		render_info->rect.y += NIBBLE_HEIGHT;
+		render_info->rect.x = NIBBLE_X_SHIFT;
+		++row;
+		i_last = (row + 1) * 64;
+		i = i_last - 64;
 	}
 }
 
@@ -157,7 +212,40 @@ void	draw(t_sdl *sdl, unsigned char *arena)
 	
 	//draw_arena_row(arena, 0, &info, sdl);
 
-	draw_arena(arena, info, sdl->surface);
+	//draw_arena(arena, info, sdl->surface);
+
+	//draw_range(arena, &info, sdl->surface, 65, 128);
+	SDL_Color colors[5];
+	colors[0] = (SDL_Color) {255, 255, 0};
+	colors[1] = (SDL_Color) {0, 0, 255};
+	colors[2] = (SDL_Color) {0, 255, 0};
+	colors[3] = (SDL_Color) {255, 0, 0};
+	colors[4] = (SDL_Color) {255, 255, 255};
+
+	int	range[9];
+	range[0] = 0;
+	range[1] = 150;
+	range[2] = 1000;
+	range[3] = 2000;
+	range[4] = 3096;
+	range[5] = 3500;
+	range[6] = 4096;
+
+	int	i = 1;
+	int	num_players = 2;
+	info.color = colors[0];
+	draw_range(arena, &info, sdl->surface, 0, range[1]);
+	info.color = colors[4];
+	draw_range(arena, &info, sdl->surface, range[1], range[2]);
+	while (i < num_players)
+	{
+		info.color = colors[i];
+		draw_range(arena, &info, sdl->surface, range[i * 2], range[i * 2 + 1]);
+		info.color = colors[4];
+		draw_range(arena, &info, sdl->surface, range[i * 2 + 1], range[i * 2 + 2]);
+		i++;
+	}
+
 
 	SDL_UpdateWindowSurface(sdl->window); //draw surface
 
