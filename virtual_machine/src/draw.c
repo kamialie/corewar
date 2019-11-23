@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 16:25:36 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/17 19:18:10 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/11/23 15:09:50 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,24 +64,22 @@ void	draw_arena_grid(t_sdl *sdl, unsigned char *arena)
 	}
 }
 
-/*void	print_arena_row(unsigned char *arena, int row)
+void	draw_square(t_square sq_info, int *img_data)
 {
-	int i;
-	int	total;
+	draw_vertical_line(sq_info.x0, sq_info.y0, sq_info.color, img_data);
+	draw_vertical_line(sq_info.x0 + 1, sq_info.y0, sq_info.color, img_data);
+	draw_vertical_line(sq_info.x1, sq_info.y0, sq_info.color, img_data);
+	draw_vertical_line(sq_info.x1 - 1, sq_info.y0, sq_info.color, img_data);
+	draw_horizontal_line(sq_info.y1, sq_info.x1, sq_info.color, img_data);
+	draw_horizontal_line(sq_info.y1 + 1, sq_info.x1, sq_info.color, img_data);
+	draw_horizontal_line(sq_info.y0, sq_info.x1, sq_info.color, img_data);
+	draw_horizontal_line(sq_info.y0 - 1, sq_info.x1, sq_info.color, img_data);
+}
 
-	total = (row + 1) * 32;
-	i = total - 32;
-	print_bit((arena[i] & 0xf) >> 4);
-	print_bit(arena[i] & 0xf);
-	while (i++ < total)
-	{
-		ft_putchar(' ');
-		print_bit((arena[i] & 0xf0) >> 4);
-		print_bit(arena[i] & 0xf);
-	}
-}*/
-
-char	print_nibble(unsigned char nibble) // nibble is 4 bits!
+/*
+ * nibble is 4 bits!
+*/
+char	print_nibble(unsigned char nibble)
 {
 	//printf("number - %d\n", (int)nibble);
 	if (nibble < 10)
@@ -110,32 +108,60 @@ void	draw_byte(unsigned char byte, t_render *info, t_sdl *sdl)
 	char cell[3];
 	SDL_Surface	*text_surface;
 	//SDL_Rect rect;
+	SDL_Color black = {0, 0, 0}; //set color
 
 	//printf("byte - %d\n", byte);
 	cell[0] = print_nibble((byte & 0xf0) >> 4);
 	cell[1] = print_nibble(byte & 0xf);
 	cell[2] = '\0';
-	text_surface = TTF_RenderText_Solid(info->font, cell, info->color);
+	text_surface = TTF_RenderText_Shaded(info->font, cell, info->color, black);
 	SDL_BlitSurface(text_surface, NULL, sdl->surface, &info->rect);
 	SDL_FreeSurface(text_surface);
 }
 
-void	draw_arena_row(unsigned char *arena, int row, t_render *info, t_sdl *sdl)
+/*
+ * former function to output one row
+*/
+/*void	draw_arena_row(unsigned char *arena, int row, t_render *info, t_sdl *sdl)
 {
 	int	i;
 	int	last;
 
 	last = (row + 1) * 64;
 	i = last - 64;
-	info->rect.x = 5;
-	info->rect.y = 0;
-	info->rect.w = 21;
-	info->rect.h = 17;
-	draw_byte(arena[i], info, sdl);
-	while (i++ < last)
+	//draw_byte(arena[i], info, sdl);
+	draw_byte(i, info, sdl);
+	while (++i < last)
 	{
+		printf("i - %d\n", i);
 		info->rect.x += NIBBLE_WIDTH;
-		draw_byte(arena[i], info, sdl);
+		draw_byte(i, info, sdl);
+		//draw_byte(arena[i++], info, sdl);
+	}
+}*/
+
+void	draw_arena(unsigned char *arena, t_render render_info, t_sdl *sdl)
+{
+	int	i;
+	int i_last;
+	int	row;
+	int	row_last;
+
+	row = 0;
+	row_last = 64;
+	while (row < row_last)
+	{
+		i_last = (row + 1) * 64;
+		i = i_last - 64;
+		render_info.rect.x = NIBBLE_X_SHIFT;
+		draw_byte(i, &render_info, sdl);
+		while (++i < i_last)
+		{
+			render_info.rect.x += NIBBLE_WIDTH;
+			draw_byte(i, &render_info, sdl);
+		}
+		render_info.rect.y += NIBBLE_HEIGHT;
+		++row;
 	}
 }
 
@@ -150,10 +176,14 @@ void	draw(t_sdl *sdl, unsigned char *arena)
 	SDL_Color white = {255, 255, 255}; //set color
 	SDL_Color red = {255, 0, 0}; //set color
 
-	SDL_Rect rect = {0 + NIBBLE_X_SHIFT, 0 - NIBBLE_Y_SHIFT, 21, 17};
-	info.rect = rect;
+	//SDL_Rect rect = {NIBBLE_X_SHIFT, NIBBLE_Y_SHIFT, 21, 17};
+	//info.rect = rect;
 	info.color = white;
 	info.font = font;
+	info.rect.x = NIBBLE_X_SHIFT;
+	info.rect.y = NIBBLE_Y_SHIFT;
+	info.rect.w = NIBBLE_WIDTH;
+	info.rect.h = NIBBLE_HEIGHT;
 
 	//SDL_Surface* message = TTF_RenderText_Solid(font, "some text", white); // render text
 	//SDL_Rect dsrect = {0, 0, tw, th}; //set square where to draw the message
@@ -162,24 +192,23 @@ void	draw(t_sdl *sdl, unsigned char *arena)
 	//dsrect = (SDL_Rect) {30, 30, tw, th};
 	//SDL_BlitSurface(message, NULL, sdl->surface, &dsrect);
 
-	printf("tw - %d th - %d\n", tw, th);
+	//printf("tw - %d th - %d\n", tw, th);
 
 	// draw memory edges
-	draw_vertical_line(0, WIN_HEIGHT, 0xFFA500, sdl->img_data);
-	draw_vertical_line(1, WIN_HEIGHT, 0xFFA500, sdl->img_data);
-	draw_vertical_line(1344, WIN_HEIGHT, 0xFFA500, sdl->img_data);
-	draw_vertical_line(1345, WIN_HEIGHT, 0xFFA500, sdl->img_data);
-	draw_horizontal_line(0, WIN_WIDTH - 455, 0xFFA500, sdl->img_data);
-	draw_horizontal_line(1, WIN_WIDTH - 455, 0xFFA500, sdl->img_data);
-	draw_horizontal_line(WIN_HEIGHT - 1, WIN_WIDTH - 455, 0xFFA500, sdl->img_data);
-	draw_horizontal_line(WIN_HEIGHT - 2, WIN_WIDTH - 455, 0xFFA500, sdl->img_data);
-	// end
+	t_square	sq_info;
 
-	draw_arena_grid(sdl, arena);
+	sq_info = (t_square) {0, WIN_HEIGHT - 1, WIN_WIDTH - 455, 0, 0xFFA500};
+   	draw_square(sq_info, sdl->img_data);
+	//end
+
+	//draw_arena_grid(sdl, arena);
 
 	//void	print_byte(int byte, int x, int y, TTF_Font *font, SDL_Color color, t_sdl *sdl)
 	//draw_byte(0xf0, &info, sdl);
-	draw_arena_row(arena, 0, &info, sdl);
+	
+	//draw_arena_row(arena, 0, &info, sdl);
+
+	draw_arena(arena, info, sdl);
 
 	SDL_UpdateWindowSurface(sdl->window); //draw surface
 
