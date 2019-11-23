@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 16:25:36 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/23 15:09:50 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/11/23 16:34:24 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,7 @@
 #include "visual.h"
 #include "libft.h"
 
-void	draw_vertical_line(int x, int h, int color, int *img_data)
-{
-	int	y;
-
-	y = 0;
-	while (y < h)
-	{
-		img_data[y * WIN_WIDTH + x] = color;
-		++y;
-	}
-}
-
-void	draw_horizontal_line(int y, int w, int color, int	*img_data)
-{
-	int	x;
-
-	x = 0;
-	while (x < w)
-	{
-		img_data[y * WIN_WIDTH + x] = color;
-		++x;
-	}
-}
-
-void	draw_arena_grid(t_sdl *sdl, unsigned char *arena)
+/*void	draw_arena_grid(t_sdl *sdl, unsigned char *arena)
 {
 
 	int i;
@@ -62,19 +38,7 @@ void	draw_arena_grid(t_sdl *sdl, unsigned char *arena)
 		draw_horizontal_line(i * h, sdl->surface->w - 455, 0xFF, sdl->img_data);
 		++i;
 	}
-}
-
-void	draw_square(t_square sq_info, int *img_data)
-{
-	draw_vertical_line(sq_info.x0, sq_info.y0, sq_info.color, img_data);
-	draw_vertical_line(sq_info.x0 + 1, sq_info.y0, sq_info.color, img_data);
-	draw_vertical_line(sq_info.x1, sq_info.y0, sq_info.color, img_data);
-	draw_vertical_line(sq_info.x1 - 1, sq_info.y0, sq_info.color, img_data);
-	draw_horizontal_line(sq_info.y1, sq_info.x1, sq_info.color, img_data);
-	draw_horizontal_line(sq_info.y1 + 1, sq_info.x1, sq_info.color, img_data);
-	draw_horizontal_line(sq_info.y0, sq_info.x1, sq_info.color, img_data);
-	draw_horizontal_line(sq_info.y0 - 1, sq_info.x1, sq_info.color, img_data);
-}
+}*/
 
 /*
  * nibble is 4 bits!
@@ -103,19 +67,16 @@ char	print_nibble(unsigned char nibble)
 ** divide byte into nibbles, get the corresponding base 16 symbols, form a string
 ** render text using TTF, set coordinates, copy to window surface, free orginal surface created by TTF
 */
-void	draw_byte(unsigned char byte, t_render *info, t_sdl *sdl)
+void	draw_byte(unsigned char byte, t_render *info, SDL_Surface *surface)
 {
 	char cell[3];
 	SDL_Surface	*text_surface;
-	//SDL_Rect rect;
-	SDL_Color black = {0, 0, 0}; //set color
 
-	//printf("byte - %d\n", byte);
 	cell[0] = print_nibble((byte & 0xf0) >> 4);
 	cell[1] = print_nibble(byte & 0xf);
 	cell[2] = '\0';
-	text_surface = TTF_RenderText_Shaded(info->font, cell, info->color, black);
-	SDL_BlitSurface(text_surface, NULL, sdl->surface, &info->rect);
+	text_surface = TTF_RenderText_Blended(info->font, cell, info->color);
+	SDL_BlitSurface(text_surface, NULL, surface, &info->rect);
 	SDL_FreeSurface(text_surface);
 }
 
@@ -140,7 +101,7 @@ void	draw_byte(unsigned char byte, t_render *info, t_sdl *sdl)
 	}
 }*/
 
-void	draw_arena(unsigned char *arena, t_render render_info, t_sdl *sdl)
+void	draw_arena(unsigned char *arena, t_render render_info, SDL_Surface *surface)
 {
 	int	i;
 	int i_last;
@@ -154,11 +115,11 @@ void	draw_arena(unsigned char *arena, t_render render_info, t_sdl *sdl)
 		i_last = (row + 1) * 64;
 		i = i_last - 64;
 		render_info.rect.x = NIBBLE_X_SHIFT;
-		draw_byte(i, &render_info, sdl);
+		draw_byte(i, &render_info, surface);
 		while (++i < i_last)
 		{
 			render_info.rect.x += NIBBLE_WIDTH;
-			draw_byte(i, &render_info, sdl);
+			draw_byte(i, &render_info, surface);
 		}
 		render_info.rect.y += NIBBLE_HEIGHT;
 		++row;
@@ -185,30 +146,18 @@ void	draw(t_sdl *sdl, unsigned char *arena)
 	info.rect.w = NIBBLE_WIDTH;
 	info.rect.h = NIBBLE_HEIGHT;
 
-	//SDL_Surface* message = TTF_RenderText_Solid(font, "some text", white); // render text
-	//SDL_Rect dsrect = {0, 0, tw, th}; //set square where to draw the message
-
-	//message = TTF_RenderText_Solid(font, "8a", white);
-	//dsrect = (SDL_Rect) {30, 30, tw, th};
-	//SDL_BlitSurface(message, NULL, sdl->surface, &dsrect);
-
-	//printf("tw - %d th - %d\n", tw, th);
-
 	// draw memory edges
 	t_square	sq_info;
 
-	sq_info = (t_square) {0, WIN_HEIGHT - 1, WIN_WIDTH - 455, 0, 0xFFA500};
+	sq_info = (t_square) {0, WIN_HEIGHT - 1, WIN_WIDTH - 452, 0, 0xFFA500};
    	draw_square(sq_info, sdl->img_data);
 	//end
 
 	//draw_arena_grid(sdl, arena);
-
-	//void	print_byte(int byte, int x, int y, TTF_Font *font, SDL_Color color, t_sdl *sdl)
-	//draw_byte(0xf0, &info, sdl);
 	
 	//draw_arena_row(arena, 0, &info, sdl);
 
-	draw_arena(arena, info, sdl);
+	draw_arena(arena, info, sdl->surface);
 
 	SDL_UpdateWindowSurface(sdl->window); //draw surface
 

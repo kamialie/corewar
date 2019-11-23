@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 16:09:49 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/23 14:12:14 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/11/23 16:32:54 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 # define WIN_HEIGHT 1100
 # define WIN_WIDTH 1800
 
-# define NIBBLE_X_SHIFT 4
-# define NIBBLE_Y_SHIFT 0
+# define NIBBLE_X_SHIFT 5
+# define NIBBLE_Y_SHIFT 3
 
 # define NIBBLE_WIDTH 21
 # define NIBBLE_HEIGHT 17
@@ -53,6 +53,7 @@ typedef struct	s_square
 }				t_square;
 
 void	draw(t_sdl *sdl, unsigned char *arena);
+void	draw_square(t_square sq_info, int *img_data);
 void	event_handler(t_sdl *sdl);
 
 #endif
