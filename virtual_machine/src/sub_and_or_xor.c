@@ -12,22 +12,22 @@
 
 #include "corewar.h"
 
-void		sub_op(t_info *info)
+void		sub_op(t_info *info, t_processes **processes)
 {
 
 }
 
-void		and_op(t_info *info)
+void		and_op(t_info *info, t_processes **processes)
 {
 
 }
 
-void		or_op(t_info *info)
+void		or_op(t_info *info, t_processes **processes)
 {
 
 }
 
-void		xor_op(t_info *info)
+void		xor_op(t_info *info, t_processes **processes)
 {
 
 }

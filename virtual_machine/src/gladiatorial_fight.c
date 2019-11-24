@@ -6,29 +6,30 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 17:20:05 by bdudley           #+#    #+#             */
-/*   Updated: 2019/11/15 17:35:48 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/11/16 20:34:20 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void		take_actions(t_processes *prs)
+void		take_actions(t_info *info, t_processes *prs)
 {
 	if (prs->cc_op == 0)  //получаем код следущей операции и если она валидна записываем количество циклов
 	{
-		prs->code_op = *(prs->ptr);
-		if (*(prs->ptr) > 0 && *(prs->ptr) < 17)
+		prs->code_op = (info->arena)[prs->index];
+		if ((info->arena)[prs->index] > 0 && (info->arena)[prs->index] < 17)
 			prs->cc_op = g_op_tab[prs->code_op - 1].cycle_for_exec;
 	}
 	if (prs->cc_op > 0) //уменьшаем количество циклов ожидания
 		--prs->cc_op;
 	if (prs->cc_op == 0) //выполняем операцию
 	{
-		if (*(prs->ptr) > 0 && *(prs->ptr) < 17)
-		{
-		}
+		//Если операция валидна, то вызываем исполняющую ее функцию
+		//Иначе смещаем на 1 байт
+		if ((info->arena)[prs->index] >= 0 && (info->arena)[prs->index] < 17)
+			g_op_tab[IND((info->arena)[prs->index])].func(info, &prs);
 		else
-			prs->ptr++;
+			prs->index = (++(prs->index)) % MEM_SIZE;
 	}
 }
 
@@ -61,15 +62,15 @@ void		gladiatorial_fight(t_info *info)
 	t_processes	*prs;
 
 	check = 0;
-	prs = info->processes;
 	while (info->processes)
 	{
 		i = -1;
 		while (++i <= info->cycle_to_die)
 		{
+			prs = info->processes;
 			while (prs)
 			{
-				take_actions(prs);
+				take_actions(info, prs);
 				prs = prs->next;
 			}
 			++info->count_cycles;

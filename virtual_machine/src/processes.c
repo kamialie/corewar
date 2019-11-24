@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 18:17:31 by bdudley           #+#    #+#             */
-/*   Updated: 2019/11/13 20:41:10 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/11/16 18:56:47 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void		delete_elem(t_processes **processes, t_info *info)
 	if ((*processes)->prev)
 	{
 		((*processes)->prev)->next = (*processes)->next;
-		((*processes)->next)->prev = (*processes)->prev;
+		if ((*processes)->next)
+			((*processes)->next)->prev = (*processes)->prev;
 	}
 	else if ((*processes)->next)
 	{
@@ -35,7 +36,7 @@ void		delete_elem(t_processes **processes, t_info *info)
 	copy = NULL;
 }
 
-void		add_elem(t_processes **processes, unsigned char	*ptr, int number_player)
+void		add_elem(t_processes **processes, int index, int number_player)
 {
 	t_processes	*new;
 
@@ -44,7 +45,7 @@ void		add_elem(t_processes **processes, unsigned char	*ptr, int number_player)
 	new->next = NULL;
 	new->prev = NULL;
 	new->carry = 0;
-	new->ptr = ptr;
+	new->index = index % MEM_SIZE;
 	ft_bzero(new->reg, REG_NUMBER * REG_SIZE);
 	(new->reg)[REG_SIZE - 4] += (number_player & 0xff);
 	(new->reg)[REG_SIZE - 3] += (number_player & 0xff00);
@@ -69,6 +70,6 @@ void		create_processes(t_info *info)
 	while (++i <= info->count_process)
 	{
 		shift = (MEM_SIZE / info->count_process) * (i - 1);
-		add_elem(&(info->processes), info->arena + shift, i);
+		add_elem(&(info->processes), shift, i);
 	}
 }
