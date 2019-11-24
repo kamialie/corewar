@@ -6,12 +6,14 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 13:34:54 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/17 20:42:22 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/11/24 14:59:15 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "visual.h"
 #include "corewar.h"
+
+int			init_sdl(t_sdl *sdl);
 
 void	present_champion(header_t *players)
 {
@@ -45,30 +47,6 @@ void 	init_info(t_info *info)
 		ft_bzero((info->players)[i].prog_name, PROG_NAME_LENGTH + 1);
 		ft_bzero((info->players)[i].comment, COMMENT_LENGTH + 1);
 	}
-}
-
-static int	init_sdl(t_sdl *sdl)
-{
-	if (SDL_Init(SDL_INIT_VIDEO) != 0)
-	{
-		printf("SDL_Init Error: %s\n", SDL_GetError());
-		return (1);
-	}
-	sdl->window = SDL_CreateWindow("Corewar", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIN_WIDTH, WIN_HEIGHT, SDL_WINDOW_SHOWN);
-	if (sdl->window == NULL)
-	{
-		printf("SDL_CreateWindow Error: %s\n", SDL_GetError());
-		return (1);
-	}
-	sdl->surface = SDL_GetWindowSurface(sdl->window);
-	if (sdl->surface == NULL)
-	{
-		printf("SDL_GetWindowSurface Error: %s\n", SDL_GetError());
-		return (1);
-	}
-	sdl->img_data = (int *)sdl->surface->pixels;
-	ft_bzero(sdl->img_data, WIN_WIDTH * WIN_HEIGHT * 4);
-	return (0);
 }
 
 int	main(int argc , char *argv[])

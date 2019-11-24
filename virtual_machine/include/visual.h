@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 16:09:49 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/23 16:32:54 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/11/24 15:26:27 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "SDL.h"
 # include "SDL_ttf.h"
 
+# define FONT_PATH "sdl/fonts/OpenSans-Regular.ttf"
 # define WIN_HEIGHT 1100
 # define WIN_WIDTH 1800
 
@@ -25,11 +26,19 @@
 # define NIBBLE_WIDTH 21
 # define NIBBLE_HEIGHT 17
 
+# define WHITE 0
+# define YELLOW 1
+# define BLUE 2
+# define GREEN 3
+# define RED 4
+
 typedef struct	s_sdl
 {
 	SDL_Window	*window;
 	SDL_Surface	*surface;
 	int			*img_data;
+	SDL_Color	colors[8];
+	TTF_Font	*font;
 }				t_sdl;
 
 typedef struct	s_render

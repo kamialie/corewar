@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 16:25:36 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/23 21:01:04 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/11/24 15:27:02 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@
 */
 char	get_nibble(unsigned char nibble)
 {
-	//printf("number - %d\n", (int)nibble);
 	if (nibble < 10)
 		return (48 + nibble);
 	else if (nibble == 10)
@@ -123,7 +122,11 @@ void	draw_byte(unsigned char byte, t_render *info, SDL_Surface *surface)
 	}
 }*/
 
-void	draw_arena(unsigned char *arena, t_render render_info, SDL_Surface *surface)
+/*
+ * former function to output arena without coloring
+ * currently outputs just current number, change i in draw_byte to draw actual data
+*/
+/*void	draw_arena(unsigned char *arena, t_render render_info, SDL_Surface *surface)
 {
 	int	i;
 	int i_last;
@@ -148,7 +151,7 @@ void	draw_arena(unsigned char *arena, t_render render_info, SDL_Surface *surface
 		render_info.rect.y += NIBBLE_HEIGHT;
 		++row;
 	}
-}
+}*/
 
 void	draw_range(unsigned char *arena, t_render *render_info, SDL_Surface *surface, int i, int end)
 {
@@ -161,45 +164,28 @@ void	draw_range(unsigned char *arena, t_render *render_info, SDL_Surface *surfac
 	render_info->rect.y = NIBBLE_Y_SHIFT + NIBBLE_HEIGHT * (i / 64);
 	while (1)
 	{
-		//render_info.color = choose_color(i);
-		//draw_byte(i, render_info, surface);
 		while (i < i_last)
 		{
-			printf("i - %d\n", i);
 			if (i == end)
 				return ;
 			draw_byte(i, render_info, surface);
 			render_info->rect.x += NIBBLE_WIDTH;
-			//render_info.color = choose_color(i);
 			++i;
 		}
 		render_info->rect.y += NIBBLE_HEIGHT;
 		render_info->rect.x = NIBBLE_X_SHIFT;
-		++row;
-		i_last = (row + 1) * 64;
+		i_last = (++row + 1) * 64;
 		i = i_last - 64;
 	}
 }
 
 void	draw(t_sdl *sdl, unsigned char *arena)
 {
-	int	tw;
-	int th;
-	t_render	info;
+	t_render	render_info;
 
-	TTF_Init(); //int sdl_ttf
-	TTF_Font* font = TTF_OpenFont("sdl/fonts/OpenSans-Regular.ttf", 15); //open font
-	SDL_Color white = {255, 255, 255}; //set color
-	SDL_Color red = {255, 0, 0}; //set color
-
-	//SDL_Rect rect = {NIBBLE_X_SHIFT, NIBBLE_Y_SHIFT, 21, 17};
-	//info.rect = rect;
-	info.color = white;
-	info.font = font;
-	info.rect.x = NIBBLE_X_SHIFT;
-	info.rect.y = NIBBLE_Y_SHIFT;
-	info.rect.w = NIBBLE_WIDTH;
-	info.rect.h = NIBBLE_HEIGHT;
+	render_info.font = sdl->font;
+	render_info.rect.w = NIBBLE_WIDTH;
+	render_info.rect.h = NIBBLE_HEIGHT;
 
 	// draw memory edges
 	t_square	sq_info;
@@ -210,40 +196,32 @@ void	draw(t_sdl *sdl, unsigned char *arena)
 
 	//draw_arena_grid(sdl, arena);
 	
-	//draw_arena_row(arena, 0, &info, sdl);
-
-	//draw_arena(arena, info, sdl->surface);
-
-	//draw_range(arena, &info, sdl->surface, 65, 128);
-	SDL_Color colors[5];
-	colors[0] = (SDL_Color) {255, 255, 0};
-	colors[1] = (SDL_Color) {0, 0, 255};
-	colors[2] = (SDL_Color) {0, 255, 0};
-	colors[3] = (SDL_Color) {255, 0, 0};
-	colors[4] = (SDL_Color) {255, 255, 255};
-
 	int	range[9];
 	range[0] = 0;
 	range[1] = 150;
-	range[2] = 1000;
-	range[3] = 2000;
-	range[4] = 3096;
-	range[5] = 3500;
-	range[6] = 4096;
+	//range[2] = 4096;
+	range[2] = 500;
+	range[3] = 1000;
+	//range[4] = 4096;
+	range[4] = 2300;
+	range[5] = 2500;
+	//range[6] = 4096;
+	range[6] = 3000;
+	range[7] = 3500;
+	range[8] = 4096;
 
-	int	i = 1;
-	int	num_players = 2;
-	info.color = colors[0];
-	draw_range(arena, &info, sdl->surface, 0, range[1]);
-	info.color = colors[4];
-	draw_range(arena, &info, sdl->surface, range[1], range[2]);
+	int	i = 0;
+	int	num_players = 4;
+	int end;
+
 	while (i < num_players)
 	{
-		info.color = colors[i];
-		draw_range(arena, &info, sdl->surface, range[i * 2], range[i * 2 + 1]);
-		info.color = colors[4];
-		draw_range(arena, &info, sdl->surface, range[i * 2 + 1], range[i * 2 + 2]);
-		i++;
+		end = i * 2 + 1;
+		render_info.color = sdl->colors[i + 1];
+		draw_range(arena, &render_info, sdl->surface, range[i * 2], range[end]);
+		render_info.color = sdl->colors[WHITE];
+		draw_range(arena, &render_info, sdl->surface, range[end], range[end + 1]);
+		++i;
 	}
 
 
@@ -251,8 +229,9 @@ void	draw(t_sdl *sdl, unsigned char *arena)
 
 	event_handler(sdl); // loop
 
-	TTF_CloseFont(font); //free memory used by font
+	TTF_CloseFont(sdl->font); //free memory used by font
 	SDL_DestroyWindow(sdl->window);
+	TTF_Quit();
 	SDL_Quit();
 }
 

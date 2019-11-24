@@ -6,7 +6,7 @@
 #    By: rgyles <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/16 14:20:48 by rgyles            #+#    #+#              #
-#    Updated: 2019/11/23 16:31:36 by rgyles           ###   ########.fr        #
+#    Updated: 2019/11/24 15:35:55 by rgyles           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,8 @@ SRC = main.c \
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
-VISUAL_SRC = draw.c \
+VISUAL_SRC = init_visual.c \
+			 draw.c \
 			 draw_shapes.c \
 			 event_handler.c
 
@@ -99,7 +100,8 @@ $(SDL_TTF_BUILD): $(FREETYPE_BUILD)
 	@tar -xf sdl/SDL_ttf.tar.gz -C sdl
 	@mkdir $(SDL_TTF_BUILD)
 	@echo "$(BLUE)Configuring SDL_ttf build...$(NC)"
-	@cd $(SDL_TTF_BUILD) ; export SDL_CONFIG="$(PWD)/$(SDL_BUILD)/sdl2-config" ; ../SDL_ttf/configure --prefix="$(PWD)/$(SDL_TTF_BUILD)" --with-freetype-prefix="$(PWD)/$(FREETYPE_BUILD)" > /dev/null
+	@cd $(SDL_TTF_BUILD) ; export SDL_CONFIG="$(PWD)/$(SDL_BUILD)/sdl2-config" ; \
+		../SDL_ttf/configure --prefix="$(PWD)/$(SDL_TTF_BUILD)" --with-freetype-prefix="$(PWD)/$(FREETYPE_BUILD)" > /dev/null
 	@echo "$(BLUE)Building SDL_ttf...$(NC)"
 	@make -C $(SDL_TTF_BUILD) > /dev/null 2>&1
 	@make -C $(SDL_TTF_BUILD) install > /dev/null 2>&1
