@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw.c                                             :+:      :+:    :+:   */
+/*   initialize_visual_arena.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/13 16:25:36 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/24 15:27:02 by rgyles           ###   ########.fr       */
+/*   Created: 2019/11/24 17:20:29 by rgyles            #+#    #+#             */
+/*   Updated: 2019/11/24 18:45:33 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ char	get_nibble(unsigned char nibble)
 ** divide byte into nibbles, get the corresponding base 16 symbols, form a string
 ** render text using TTF, set coordinates, copy to window surface, free orginal surface created by TTF
 */
-void	draw_byte(unsigned char byte, t_render *info, SDL_Surface *surface)
+void	draw_byte(unsigned char byte, t_render *info, SDL_Surface *surface, int flag)
 {
 	char cell[3];
 	SDL_Surface	*text_surface;
@@ -96,7 +96,10 @@ void	draw_byte(unsigned char byte, t_render *info, SDL_Surface *surface)
 	cell[0] = get_nibble((byte & 0xf0) >> 4);
 	cell[1] = get_nibble(byte & 0xf);
 	cell[2] = '\0';
-	text_surface = TTF_RenderText_Blended(info->font, cell, info->color);
+	if (flag)
+		text_surface = TTF_RenderText_Shaded(info->font, cell, info->color, (SDL_Color) {80, 80, 80});
+	else
+		text_surface = TTF_RenderText_Blended(info->font, cell, info->color);
 	SDL_BlitSurface(text_surface, NULL, surface, &info->rect);
 	SDL_FreeSurface(text_surface);
 }
@@ -162,13 +165,16 @@ void	draw_range(unsigned char *arena, t_render *render_info, SDL_Surface *surfac
 	i_last = (row + 1) * 64;
 	render_info->rect.x = NIBBLE_X_SHIFT + NIBBLE_WIDTH * (i % 64);
 	render_info->rect.y = NIBBLE_Y_SHIFT + NIBBLE_HEIGHT * (i / 64);
+	draw_byte(i, render_info, surface, 1);
+	i++;
+	render_info->rect.x += NIBBLE_WIDTH;
 	while (1)
 	{
 		while (i < i_last)
 		{
 			if (i == end)
 				return ;
-			draw_byte(i, render_info, surface);
+			draw_byte(i, render_info, surface, 0);
 			render_info->rect.x += NIBBLE_WIDTH;
 			++i;
 		}
@@ -179,7 +185,7 @@ void	draw_range(unsigned char *arena, t_render *render_info, SDL_Surface *surfac
 	}
 }
 
-void	draw(t_sdl *sdl, unsigned char *arena)
+void	initialize_visual_arena(t_sdl *sdl, t_info *info)
 {
 	t_render	render_info;
 
@@ -218,12 +224,13 @@ void	draw(t_sdl *sdl, unsigned char *arena)
 	{
 		end = i * 2 + 1;
 		render_info.color = sdl->colors[i + 1];
-		draw_range(arena, &render_info, sdl->surface, range[i * 2], range[end]);
+		draw_range(info->arena, &render_info, sdl->surface, range[i * 2], range[end]);
 		render_info.color = sdl->colors[WHITE];
-		draw_range(arena, &render_info, sdl->surface, range[end], range[end + 1]);
+		draw_range(info->arena, &render_info, sdl->surface, range[end], range[end + 1]);
 		++i;
 	}
 
+	draw_annotations(sdl, info);
 
 	SDL_UpdateWindowSurface(sdl->window); //draw surface
 

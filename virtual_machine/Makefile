@@ -6,7 +6,7 @@
 #    By: rgyles <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/16 14:20:48 by rgyles            #+#    #+#              #
-#    Updated: 2019/11/24 15:35:55 by rgyles           ###   ########.fr        #
+#    Updated: 2019/11/24 17:20:51 by rgyles           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,8 +40,9 @@ SRC = main.c \
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
 VISUAL_SRC = init_visual.c \
-			 draw.c \
+			 initialize_visual_arena.c \
 			 draw_shapes.c \
+			 draw_annotations.c \
 			 event_handler.c
 
 VISUAL_OBJ = $(addprefix $(OBJ_DIR)/, $(VISUAL_SRC:.c=.o))

@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 16:09:49 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/24 15:26:27 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/11/24 18:44:09 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 # include "SDL.h"
 # include "SDL_ttf.h"
+//TMP
+# include "corewar.h"
+//
 
 # define FONT_PATH "sdl/fonts/OpenSans-Regular.ttf"
 # define WIN_HEIGHT 1100
@@ -31,6 +34,16 @@
 # define BLUE 2
 # define GREEN 3
 # define RED 4
+
+# define PLAYER_ONE "Player 1: "
+# define PLAYER_TWO "Player 2: "
+# define PLAYER_THREE "Player 3: "
+# define PLAYER_FOUR "Player 4: "
+
+# define PLAYER_X_LOCATION 1360
+# define PLAYER_Y_LOCATION 120
+# define PLAYER_NAME_X_LOCATION 1445
+# define PLAYER_SECTION_HEIGHT 102
 
 typedef struct	s_sdl
 {
@@ -61,8 +74,10 @@ typedef struct	s_square
 	int	color;
 }				t_square;
 
-void	draw(t_sdl *sdl, unsigned char *arena);
+int		init_sdl(t_sdl *sdl);
+void	initialize_visual_arena(t_sdl *sdl, t_info *info);
 void	draw_square(t_square sq_info, int *img_data);
+void	draw_annotations(t_sdl *sdl, t_info *info);
 void	event_handler(t_sdl *sdl);
 
 #endif

@@ -6,14 +6,13 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 13:34:54 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/24 14:59:15 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/11/24 17:27:34 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "visual.h"
 #include "corewar.h"
 
-int			init_sdl(t_sdl *sdl);
 
 void	present_champion(header_t *players)
 {
@@ -58,7 +57,7 @@ int	main(int argc , char *argv[])
 	read_arg(&info, argc, argv);
 	if (init_sdl(&sdl))
 		return (1);
-	draw(&sdl, info.arena);
+	initialize_visual_arena(&sdl, &info);
 	present_champion(info.players);
 	create_processes(&info);
 	gladiatorial_fight(&info);

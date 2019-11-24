@@ -6,12 +6,11 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 14:40:04 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/24 15:34:43 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/11/24 18:16:11 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "visual.h"
-#include "libft.h"
 
 static void	init_colors(SDL_Color *colors)
 {
@@ -53,9 +52,9 @@ int	init_sdl(t_sdl *sdl)
 		printf("SDL_GetWindowSurface Error: %s\n", SDL_GetError());
 		return (1);
 	}
+	SDL_FreeSurface(sdl->surface);
 	init_colors(sdl->colors);
 	sdl->font = init_font(); // check for return status
 	sdl->img_data = (int *)sdl->surface->pixels;
-	ft_bzero(sdl->img_data, WIN_WIDTH * WIN_HEIGHT * 4);
 	return (0);
 }
