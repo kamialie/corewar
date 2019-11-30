@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:35:59 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/24 17:50:02 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/11/30 15:09:07 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	show_players(t_sdl *sdl, t_info *info)
 	render_info.rect.y = PLAYER_Y_LOCATION;
 	render_info.rect.w = 50; //make macros
 	render_info.rect.h = 17; // make macros
-	render_info.color = sdl->colors[WHITE];
+	render_info.font_color = sdl->colors[WHITE];
 	render_info.font = sdl->font;
 
 	i = 0;
@@ -50,14 +50,14 @@ void	show_players(t_sdl *sdl, t_info *info)
 			text = PLAYER_FOUR;
 
 		render_info.rect.x = PLAYER_X_LOCATION;
-		render_info.color = sdl->colors[WHITE];
-		text_surface = TTF_RenderText_Blended(render_info.font, text, render_info.color);
+		render_info.font_color = sdl->colors[WHITE];
+		text_surface = TTF_RenderText_Blended(render_info.font, text, render_info.font_color);
 		SDL_BlitSurface(text_surface, NULL, sdl->surface, &render_info.rect);
 		SDL_FreeSurface(text_surface);
 
 		render_info.rect.x = PLAYER_NAME_X_LOCATION;
-		render_info.color = sdl->colors[i + 1];
-		text_surface = TTF_RenderText_Blended(render_info.font, players[i], render_info.color);
+		render_info.font_color = sdl->colors[i + 1];
+		text_surface = TTF_RenderText_Blended(render_info.font, players[i], render_info.font_color);
 		SDL_BlitSurface(text_surface, NULL, sdl->surface, &render_info.rect);
 		SDL_FreeSurface(text_surface);
 

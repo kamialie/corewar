@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 14:40:04 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/24 18:16:11 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/11/30 15:22:09 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@ static void	init_colors(SDL_Color *colors)
 	colors[GREEN] = (SDL_Color) {0, 0, 255};
 	colors[BLUE] = (SDL_Color) {0, 255, 0};
 	colors[RED] = (SDL_Color) {255, 0, 0};
+	colors[YELLOW_BACK] = (SDL_Color) {110, 110, 0};
+	colors[GREEN_BACK] = (SDL_Color) {0, 0, 110};
+	colors[BLUE_BACK] = (SDL_Color) {0, 110, 0};
+	colors[RED_BACK] = (SDL_Color) {110, 0, 0};
 }
 
 static TTF_Font	*init_font(void)
@@ -26,7 +30,7 @@ static TTF_Font	*init_font(void)
 	TTF_Font	*font;
 
 	TTF_Init(); //int sdl_ttf
-	font = TTF_OpenFont(FONT_PATH, 15); //open font
+	font = TTF_OpenFont(FONT_PATH, 13); //open font
 	return (font);
 }
 

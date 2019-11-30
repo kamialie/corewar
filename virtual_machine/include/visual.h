@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 16:09:49 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/24 18:44:09 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/11/30 15:15:39 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,24 @@
 //
 
 # define FONT_PATH "sdl/fonts/OpenSans-Regular.ttf"
-# define WIN_HEIGHT 1100
+# define WIN_HEIGHT 1160
 # define WIN_WIDTH 1800
 
-# define NIBBLE_X_SHIFT 5
+# define NIBBLE_X_SHIFT 6
 # define NIBBLE_Y_SHIFT 3
 
 # define NIBBLE_WIDTH 21
-# define NIBBLE_HEIGHT 17
+# define NIBBLE_HEIGHT 18
 
 # define WHITE 0
 # define YELLOW 1
 # define BLUE 2
 # define GREEN 3
 # define RED 4
+# define YELLOW_BACK 5
+# define BLUE_BACK 6
+# define GREEN_BACK 7
+# define RED_BACK 8
 
 # define PLAYER_ONE "Player 1: "
 # define PLAYER_TWO "Player 2: "
@@ -50,14 +54,16 @@ typedef struct	s_sdl
 	SDL_Window	*window;
 	SDL_Surface	*surface;
 	int			*img_data;
-	SDL_Color	colors[8];
+	SDL_Color	colors[9];
 	TTF_Font	*font;
 }				t_sdl;
 
 typedef struct	s_render
 {
+	int			cursor;
 	SDL_Rect	rect;
-	SDL_Color	color;
+	SDL_Color	font_color;
+	SDL_Color	back_color;
 	TTF_Font	*font;
 }				t_render;
 
