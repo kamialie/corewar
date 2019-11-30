@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 14:40:04 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/30 15:22:09 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/11/30 16:53:53 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void	init_colors(SDL_Color *colors)
 {
+	colors[BLACK] = (SDL_Color) {0, 0, 0};
 	colors[WHITE] = (SDL_Color) {255, 255, 255};
 	colors[YELLOW] = (SDL_Color) {255, 255, 0};
 	colors[GREEN] = (SDL_Color) {0, 0, 255};

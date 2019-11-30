@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 17:20:29 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/30 15:21:23 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/11/30 17:00:16 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	draw_byte(unsigned char byte, t_render *render_info, SDL_Surface *surface)
 	if (render_info->cursor)
 		text_surface = TTF_RenderText_Shaded(render_info->font, cell, (SDL_Color) {255, 255, 255}, render_info->back_color);
 	else
-		text_surface = TTF_RenderText_Blended(render_info->font, cell, render_info->font_color);
+		text_surface = TTF_RenderText_Shaded(render_info->font, cell, render_info->font_color, (SDL_Color) {0, 0, 0});
 	SDL_BlitSurface(text_surface, NULL, surface, &render_info->rect);
 	SDL_FreeSurface(text_surface);
 }
@@ -225,8 +225,8 @@ void	initialize_visual_arena(t_sdl *sdl, t_info *info)
 	{
 		end = i * 2 + 1;
 		render_info.cursor = 1;
-		render_info.font_color = sdl->colors[i + 1];
-		render_info.back_color = sdl->colors[i + 5];
+		render_info.font_color = sdl->colors[i + FONT_COLOR];
+		render_info.back_color = sdl->colors[i + BACK_COLOR];
 		draw_range(info->arena, &render_info, sdl->surface, range[i * 2], range[end]);
 		render_info.cursor = 0;
 		render_info.font_color = sdl->colors[WHITE];
@@ -238,6 +238,7 @@ void	initialize_visual_arena(t_sdl *sdl, t_info *info)
 
 	SDL_UpdateWindowSurface(sdl->window); //draw surface
 
+	move_cursor(0, 3, 0, sdl);
 	event_handler(sdl); // loop
 
 	TTF_CloseFont(sdl->font); //free memory used by font

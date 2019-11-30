@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 16:09:49 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/30 15:15:39 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/11/30 16:59:04 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,19 @@
 # define NIBBLE_WIDTH 21
 # define NIBBLE_HEIGHT 18
 
-# define WHITE 0
-# define YELLOW 1
-# define BLUE 2
-# define GREEN 3
-# define RED 4
-# define YELLOW_BACK 5
-# define BLUE_BACK 6
-# define GREEN_BACK 7
-# define RED_BACK 8
+# define BLACK 0
+# define WHITE 1
+# define YELLOW 2
+# define BLUE 3
+# define GREEN 4
+# define RED 5
+# define YELLOW_BACK 6
+# define BLUE_BACK 7
+# define GREEN_BACK 8
+# define RED_BACK 9
+
+# define FONT_COLOR 2
+# define BACK_COLOR 6
 
 # define PLAYER_ONE "Player 1: "
 # define PLAYER_TWO "Player 2: "
@@ -84,6 +88,9 @@ int		init_sdl(t_sdl *sdl);
 void	initialize_visual_arena(t_sdl *sdl, t_info *info);
 void	draw_square(t_square sq_info, int *img_data);
 void	draw_annotations(t_sdl *sdl, t_info *info);
+void	draw_byte(unsigned char byte, t_render *render_info, SDL_Surface *surface);
+void	update_byte(int location, int player, int cursor, t_sdl *sdl);
+void	move_cursor(int cur_location, int new_location, int player, t_sdl *sdl);
 void	event_handler(t_sdl *sdl);
 
 #endif
