@@ -38,7 +38,7 @@ typedef struct	s_processes
 	int					code_op : 5; //код операции
 	int 				index : 14; //местоположение каретки на арене
 	int 				c_byte_op : 4; //сколько перешагнуть до следущей операции
-	char 				reg[REG_NUMBER * REG_SIZE];
+	int 				reg[REG_NUMBER];
 	struct s_processes	*next;
 	struct s_processes	*prev; //???
 }				t_processes;
