@@ -59,7 +59,7 @@ int	main(int argc , char *argv[])
 	read_arg(&info, argc, argv);
 	if (init_sdl(&sdl))
 		return (1);
-	initialize_visual_arena(&sdl, &info);
+	//initialize_visual_arena(&sdl, &info);
 	present_champion(info.players);
 	create_processes(&info);
 //	unsigned int *ptr;
