@@ -12,13 +12,25 @@
 
 #include "visual.h"
 
-void	update_byte(int location, int player, int cursor, t_sdl *sdl)
+t_render	set_render_info(int location, TTF_Font *font)
 {
-	t_render render_info;
+	t_render	render_info;
+	
+	render_info.font = font;
+	render_info.rect.w = NIBBLE_WIDTH;
+	render_info.rect.h = NIBBLE_HEIGHT;
+	render_info.rect.x = NIBBLE_X_SHIFT + NIBBLE_WIDTH * (location % 64);
+	render_info.rect.y = NIBBLE_Y_SHIFT + NIBBLE_HEIGHT * (location / 64);
+	return (render_info);
+}
+
+void	update_byte(int location, int player, int is_cursor, t_sdl *sdl)
+{
+	t_render	render_info;
 
 	render_info.rect.x = NIBBLE_X_SHIFT + NIBBLE_WIDTH * (location % 64);
 	render_info.rect.y = NIBBLE_Y_SHIFT + NIBBLE_HEIGHT * (location / 64);
-	if (cursor)
+	if (is_cursor)
 		render_info.back_color = sdl->colors[player + 6];
 	else
 		render_info.font_color = sdl->colors[player + 2];
@@ -28,7 +40,7 @@ void	update_byte(int location, int player, int cursor, t_sdl *sdl)
 
 void	move_cursor(int cur_location, int new_location, int player, t_sdl *sdl)
 {
-	t_render render_info;
+	t_render	render_info;
 
 	render_info.font = sdl->font;
 	render_info.rect.w = NIBBLE_WIDTH;
@@ -44,5 +56,16 @@ void	move_cursor(int cur_location, int new_location, int player, t_sdl *sdl)
 	render_info.rect.x = NIBBLE_X_SHIFT + NIBBLE_WIDTH * (new_location % 64);
 	render_info.rect.y = NIBBLE_Y_SHIFT + NIBBLE_HEIGHT * (new_location / 64);
 	draw_byte(new_location, &render_info, sdl->surface);
+	SDL_UpdateWindowSurface(sdl->window); //draw surface
+}
+
+void	create_cursor(int location, int player, t_sdl *sdl)
+{
+	t_render	render_info;
+
+	render_info = set_render_info(location, sdl->font);
+	render_info.font_color = sdl->colors[WHITE];
+	render_info.back_color = sdl->colors[player + 6];
+	draw_byte(location, &render_info, sdl->surface);
 	SDL_UpdateWindowSurface(sdl->window); //draw surface
 }

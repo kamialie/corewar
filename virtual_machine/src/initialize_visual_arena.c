@@ -234,11 +234,14 @@ void	initialize_visual_arena(t_sdl *sdl, t_info *info)
 		++i;
 	}
 
-	draw_annotations(sdl, info);
+	draw_annotations(sdl, info); // draw side menu, info
 
 	SDL_UpdateWindowSurface(sdl->window); //draw surface
 
 	move_cursor(0, 3, 0, sdl);
+
+	create_cursor(15, 0, sdl);
+
 	event_handler(sdl); // loop
 
 	TTF_CloseFont(sdl->font); //free memory used by font

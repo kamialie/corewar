@@ -89,8 +89,9 @@ void	initialize_visual_arena(t_sdl *sdl, t_info *info);
 void	draw_square(t_square sq_info, int *img_data);
 void	draw_annotations(t_sdl *sdl, t_info *info);
 void	draw_byte(unsigned char byte, t_render *render_info, SDL_Surface *surface);
-void	update_byte(int location, int player, int cursor, t_sdl *sdl);
+void	update_byte(int location, int player, int is_cursor, t_sdl *sdl);
 void	move_cursor(int cur_location, int new_location, int player, t_sdl *sdl);
+void	create_cursor(int location, int player, t_sdl *sdl);
 void	event_handler(t_sdl *sdl);
 
 #endif
