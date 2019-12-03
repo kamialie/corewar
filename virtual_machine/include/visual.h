@@ -43,6 +43,10 @@
 # define FONT_COLOR 2
 # define BACK_COLOR 6
 
+# define EMPTY 0
+# define CURSOR 1
+# define CODE 2
+
 # define PLAYER_ONE "Player 1: "
 # define PLAYER_TWO "Player 2: "
 # define PLAYER_THREE "Player 3: "
@@ -64,7 +68,6 @@ typedef struct	s_sdl
 
 typedef struct	s_render
 {
-	int			cursor;
 	SDL_Rect	rect;
 	SDL_Color	font_color;
 	SDL_Color	back_color;
@@ -88,8 +91,11 @@ int		init_sdl(t_sdl *sdl);
 void	initialize_visual_arena(t_sdl *sdl, t_info *info);
 void	draw_square(t_square sq_info, int *img_data);
 void	draw_annotations(t_sdl *sdl, t_info *info);
+void		set_render_color(int type, int player, t_render *render_info, SDL_Color *colors);
+void		set_render_location(int location, t_render *render_info);
+t_render	create_render_info(TTF_Font *font);
 void	draw_byte(unsigned char byte, t_render *render_info, SDL_Surface *surface);
-void	update_byte(int location, int player, int is_cursor, t_sdl *sdl);
+void	update_byte(int location, int player, t_sdl *sdl);
 void	move_cursor(int cur_location, int new_location, int player, t_sdl *sdl);
 void	create_cursor(int location, int player, t_sdl *sdl);
 void	event_handler(t_sdl *sdl);

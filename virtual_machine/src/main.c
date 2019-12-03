@@ -60,13 +60,17 @@ int	main(int argc , char *argv[])
 	if (init_sdl(&sdl))
 		return (1);
 	initialize_visual_arena(&sdl, &info);
+	printf("sega check\n");
 	present_champion(info.players);
-	create_processes(&info);
+	printf("sega check1\n");
+	//create_processes(&info);
+	printf("sega check2\n");
 //	unsigned int *ptr;
 //	ptr = (unsigned int *)(info.arena);
 //	printf("%d %d %d %d\n", *(info.arena), *(info.arena + 1), *(info.arena + 2), *(info.arena + 3));
 //	printf("result %u\n", *ptr);
-	gladiatorial_fight(&info);
+	//gladiatorial_fight(&info);
+	printf("sega check3\n");
 	printf("Contestant %d, %s, has won !\n", info.last_live, (info.players)[info.last_live - 1].prog_name);
 	//print_arena(info.arena);
 	return (0);

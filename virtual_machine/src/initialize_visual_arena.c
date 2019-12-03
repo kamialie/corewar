@@ -96,10 +96,7 @@ void	draw_byte(unsigned char byte, t_render *render_info, SDL_Surface *surface)
 	cell[0] = get_nibble((byte & 0xf0) >> 4);
 	cell[1] = get_nibble(byte & 0xf);
 	cell[2] = '\0';
-	if (render_info->cursor)
-		text_surface = TTF_RenderText_Shaded(render_info->font, cell, (SDL_Color) {255, 255, 255}, render_info->back_color);
-	else
-		text_surface = TTF_RenderText_Shaded(render_info->font, cell, render_info->font_color, (SDL_Color) {0, 0, 0});
+	text_surface = TTF_RenderText_Shaded(render_info->font, cell, render_info->font_color, render_info->back_color);
 	SDL_BlitSurface(text_surface, NULL, surface, &render_info->rect);
 	SDL_FreeSurface(text_surface);
 }
@@ -156,43 +153,36 @@ void	draw_byte(unsigned char byte, t_render *render_info, SDL_Surface *surface)
 	}
 }*/
 
-void	draw_range(unsigned char *arena, t_render *render_info, SDL_Surface *surface, int i, int end)
+/*
+ * draw range from i to end
+ * end_of_row detects last index(one dimenstion) on the current row(two dimension)
+*/
+void	draw_range(int i, int end, unsigned char *arena, t_render *render_info, SDL_Surface *surface)
 {
-	int i_last;
+	int end_of_row;
 	int	row;
 
 	row = i / 64;
-	i_last = (row + 1) * 64;
-	render_info->rect.x = NIBBLE_X_SHIFT + NIBBLE_WIDTH * (i % 64);
-	render_info->rect.y = NIBBLE_Y_SHIFT + NIBBLE_HEIGHT * (i / 64);
-	draw_byte(i, render_info, surface);
-	render_info->cursor = 0;
-	i++;
-	render_info->rect.x += NIBBLE_WIDTH;
+	end_of_row = (row + 1) * 64;
 	while (1)
 	{
-		while (i < i_last)
+		while (i < end_of_row)
 		{
 			if (i == end)
 				return ;
-			draw_byte(i, render_info, surface);
+			draw_byte(arena[i++], render_info, surface);
 			render_info->rect.x += NIBBLE_WIDTH;
-			++i;
 		}
 		render_info->rect.y += NIBBLE_HEIGHT;
 		render_info->rect.x = NIBBLE_X_SHIFT;
-		i_last = (++row + 1) * 64;
-		i = i_last - 64;
+		end_of_row = (++row + 1) * 64;
+		i = end_of_row - 64;
 	}
 }
 
 void	initialize_visual_arena(t_sdl *sdl, t_info *info)
 {
 	t_render	render_info;
-
-	render_info.font = sdl->font;
-	render_info.rect.w = NIBBLE_WIDTH;
-	render_info.rect.h = NIBBLE_HEIGHT;
 
 	// draw memory edges
 	t_square	sq_info;
@@ -217,30 +207,38 @@ void	initialize_visual_arena(t_sdl *sdl, t_info *info)
 	range[7] = 3500;
 	range[8] = 4096;
 
-	int	i = 0;
+	int	i;
+	int	player = 0;
 	int	num_players = 4;
 	int end;
 
-	while (i < num_players)
+	render_info = create_render_info(sdl->font);
+	while (player < num_players)
 	{
-		end = i * 2 + 1;
-		render_info.cursor = 1;
-		render_info.font_color = sdl->colors[i + FONT_COLOR];
-		render_info.back_color = sdl->colors[i + BACK_COLOR];
-		draw_range(info->arena, &render_info, sdl->surface, range[i * 2], range[end]);
-		render_info.cursor = 0;
-		render_info.font_color = sdl->colors[WHITE];
-		draw_range(info->arena, &render_info, sdl->surface, range[end], range[end + 1]);
-		++i;
+		i = range[player * 2];
+		end = player * 2 + 1;
+
+		set_render_location(i, &render_info);
+		set_render_color(CURSOR, player, &render_info, sdl->colors);
+		draw_byte(i, &render_info, sdl->surface);
+
+		set_render_location(i + 1, &render_info);
+		set_render_color(CODE, player, &render_info, sdl->colors);
+		draw_range(i + 1, range[end], info->arena, &render_info, sdl->surface);
+
+		set_render_location(range[end], &render_info);
+		set_render_color(EMPTY, player, &render_info, sdl->colors);
+		draw_range(range[end], range[end + 1], info->arena, &render_info, sdl->surface);
+		++player;
 	}
 
 	draw_annotations(sdl, info); // draw side menu, info
 
-	SDL_UpdateWindowSurface(sdl->window); //draw surface
-
 	move_cursor(0, 3, 0, sdl);
 
 	create_cursor(15, 0, sdl);
+
+	SDL_UpdateWindowSurface(sdl->window); //draw surface
 
 	event_handler(sdl); // loop
 
