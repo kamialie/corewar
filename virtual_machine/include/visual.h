@@ -19,7 +19,7 @@
 # include "corewar.h"
 //
 
-# define FONT_PATH "sdl/fonts/OpenSans-Regular.ttf"
+# define FONT_PATH "sdl/fonts/FreeMono.ttf"
 # define WIN_HEIGHT 1160
 # define WIN_WIDTH 1800
 
