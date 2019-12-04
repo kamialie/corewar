@@ -187,7 +187,7 @@ void	initialize_visual_arena(t_sdl *sdl, t_info *info)
 	// draw memory edges
 	t_square	sq_info;
 
-	sq_info = (t_square) {0, WIN_HEIGHT - 1, WIN_WIDTH - 452, 0, 0xFFA500};
+	sq_info = (t_square) {0, WIN_HEIGHT - 1, WIN_WIDTH - 445, 0, 0xFFA500};
    	draw_square(sq_info, sdl->img_data);
 	//end
 

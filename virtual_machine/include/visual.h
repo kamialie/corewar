@@ -23,8 +23,8 @@
 # define WIN_HEIGHT 1160
 # define WIN_WIDTH 1800
 
-# define NIBBLE_X_SHIFT 6
-# define NIBBLE_Y_SHIFT 3
+# define NIBBLE_X_SHIFT 7
+# define NIBBLE_Y_SHIFT 5
 
 # define NIBBLE_WIDTH 21
 # define NIBBLE_HEIGHT 18

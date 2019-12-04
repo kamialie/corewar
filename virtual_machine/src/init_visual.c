@@ -31,7 +31,7 @@ static TTF_Font	*init_font(void)
 	TTF_Font	*font;
 
 	TTF_Init(); //int sdl_ttf
-	font = TTF_OpenFont(FONT_PATH, 13); //open font
+	font = TTF_OpenFont(FONT_PATH, 15); //open font
 	TTF_SetFontStyle(font, TTF_STYLE_BOLD);
 	return (font);
 }
