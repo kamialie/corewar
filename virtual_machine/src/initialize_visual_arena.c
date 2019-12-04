@@ -62,44 +62,6 @@
 	}
 }*/
 
-/*
- * nibble is 4 bits!
-*/
-char	get_nibble(unsigned char nibble)
-{
-	if (nibble < 10)
-		return (48 + nibble);
-	else if (nibble == 10)
-		return ('a');
-	else if (nibble == 11)
-		return ('b');
-	else if (nibble == 12)
-		return ('c');
-	else if (nibble == 13)
-		return ('d');
-	else if (nibble == 14)
-		return ('e');
-	else
-		return ('f');
-}
-
-/*
-** render single byte:
-** divide byte into nibbles, get the corresponding base 16 symbols, form a string
-** render text using TTF, set coordinates, copy to window surface, free orginal surface created by TTF
-*/
-void	draw_byte(unsigned char byte, t_render *render_info, SDL_Surface *surface)
-{
-	char cell[3];
-	SDL_Surface	*text_surface;
-
-	cell[0] = get_nibble((byte & 0xf0) >> 4);
-	cell[1] = get_nibble(byte & 0xf);
-	cell[2] = '\0';
-	text_surface = TTF_RenderText_Shaded(render_info->font, cell, render_info->font_color, render_info->back_color);
-	SDL_BlitSurface(text_surface, NULL, surface, &render_info->rect);
-	SDL_FreeSurface(text_surface);
-}
 
 /*
  * former function to output one row

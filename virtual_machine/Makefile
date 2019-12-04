@@ -41,6 +41,7 @@ OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
 VISUAL_SRC = init_visual.c \
 			 initialize_visual_arena.c \
+			 draw_byte.c \
 			 draw_shapes.c \
 			 draw_annotations.c \
 			 update_byte.c \
