@@ -142,6 +142,29 @@ void	draw_range(int i, int end, unsigned char *arena, t_render *render_info, SDL
 	}
 }
 
+/*
+ * trying to write range initialization
+ *
+*/
+/*void	prepare_range_array(int *range, t_info *info)
+{
+	int	i;
+	int	end;
+	int	shift;
+	int	size;
+
+	i = 0;
+	end = 1;
+	size = (info->players)[i].prog_size;
+	while (size != 0)
+	{
+		shift = (MEM_SIZE / count) * i;
+		range[i] = shift;
+		range[end] = range[i] + size;
+	}
+}*/
+
+
 void	initialize_visual_arena(t_sdl *sdl, t_info *info)
 {
 	t_render	render_info;
