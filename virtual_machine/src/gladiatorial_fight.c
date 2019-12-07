@@ -12,7 +12,7 @@
 
 #include "corewar.h"
 
-void		take_actions(t_info *info, t_processes *prs)
+void		take_actions(t_info *info, t_processes *prs, t_sdl *sdl)
 {
 	if (prs->cc_op == 0)  //получаем код следущей операции и если она валидна записываем количество циклов
 	{
@@ -27,13 +27,13 @@ void		take_actions(t_info *info, t_processes *prs)
 		//Если операция валидна, то вызываем исполняющую ее функцию
 		//Иначе смещаем на 1 байт
 		if ((info->arena)[prs->index] >= 0 && (info->arena)[prs->index] < 17)
-			g_op_tab[IND((info->arena)[prs->index])].func(info, &prs);
+			g_op_tab[IND((info->arena)[prs->index])].func(info, &prs, sdl);
 		else
 			prs->index = (++(prs->index)) % MEM_SIZE;
 	}
 }
 
-void		kick_noobs(t_info *info, int *check)
+void		kick_noobs(t_info *info)
 {
 	t_processes		*ptr;
 
@@ -45,36 +45,36 @@ void		kick_noobs(t_info *info, int *check)
 		else
 			ptr = ptr->next;
 	}
-	if (info->count_live >= NBR_LIVE || *check < MAX_CHECKS)
+	if (info->count_live >= NBR_LIVE || info->count_check < MAX_CHECKS)
 	{
-		*check = -1;
+        info->count_check = -1;
 		info->cycle_to_die -= CYCLE_DELTA;
 	}
-	++(*check);
+	++(info->count_check);
+	info->i = -1;
 	info->count_live = 0;
-	++info->count_check;
 }
 
-void		gladiatorial_fight(t_info *info)
+void		gladiatorial_fight(t_info *info, t_sdl *sdl)
 {
-	int 		i;
-	int			check;
 	t_processes	*prs;
 
-	check = 0;
 	while (info->processes)
 	{
-		i = -1;
-		while (++i <= info->cycle_to_die)
+		while (++(info->i) <= info->cycle_to_die)
 		{
 			prs = info->processes;
 			while (prs)
 			{
-				take_actions(info, prs);
+				take_actions(info, prs, sdl);
 				prs = prs->next;
 			}
 			++info->count_cycles;
+			if (info->count_cycles % 500 == 0)
+			    return ;
 		}
-		kick_noobs(info, &check);
+		kick_noobs(info);
 	}
+	printf("privet - %d\n\n", info->count_cycles);
+	exit(1); //Камиль нарисует победителя потом тут!!!
 }

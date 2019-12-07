@@ -12,7 +12,7 @@
 
 #include "corewar.h"
 
-void		live_op(t_info *info, t_processes **prs)
+void		live_op(t_info *info, t_processes **prs, t_sdl *sdl)
 {
 	int 	num_player;
 
@@ -25,17 +25,17 @@ void		live_op(t_info *info, t_processes **prs)
 	//printf("cc_live %d\n./", (*prs)->cc_live);
 }
 
-void		ld_op(t_info *info, t_processes **prs)
+void		ld_op(t_info *info, t_processes **prs, t_sdl *sdl)
 {
 
 }
 
-void		st_op(t_info *info, t_processes **prs)
+void		st_op(t_info *info, t_processes **prs, t_sdl *sdl)
 {
 
 }
 
-void		add_op(t_info *info, t_processes **prs)
+void		add_op(t_info *info, t_processes **prs, t_sdl *sdl)
 {
 
 }

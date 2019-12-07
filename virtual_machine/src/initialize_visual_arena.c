@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "SDL_ttf.h"
-#include "visual.h"
-#include "libft.h"
+#include "corewar.h"
 
 /*SDL_Color	choose_color(int i)
 {

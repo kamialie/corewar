@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "visual.h"
+#include "corewar.h"
 
 void	show_players(t_sdl *sdl, t_info *info)
 {

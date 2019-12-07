@@ -12,17 +12,17 @@
 
 #include "corewar.h"
 
-void		lld_op(t_info *info, t_processes **prs)
+void		lld_op(t_info *info, t_processes **prs, t_sdl *sdl)
 {
 
 }
 
-void		lldi_op(t_info *info, t_processes **prs)
+void		lldi_op(t_info *info, t_processes **prs, t_sdl *sdl)
 {
 
 }
 
-void		lfork_op(t_info *info, t_processes **prs)
+void		lfork_op(t_info *info, t_processes **prs, t_sdl *sdl)
 {
     int     i;
 
@@ -36,7 +36,7 @@ void		lfork_op(t_info *info, t_processes **prs)
 	(*prs)->index = (((*prs)->index) + 3) % MEM_SIZE; //1 байт занимает код операции и 2 байта занимает аргумент
 }
 
-void		aff_op(t_info *info, t_processes **prs)
+void		aff_op(t_info *info, t_processes **prs, t_sdl *sdl)
 {
 
 }

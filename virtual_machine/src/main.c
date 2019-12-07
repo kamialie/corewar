@@ -38,6 +38,7 @@ void 	init_info(t_info *info)
 	info->count_cycles = 0;
 	info->count_live = 0;
 	info->count_check = 0;
+	info->i = -1;
 	i = -1;
 	while (++i < MAX_PLAYERS)
 	{
@@ -61,16 +62,17 @@ int	main(int argc , char *argv[])
 		return (1);
 	present_champion(info.players);
 	create_processes(&info);
+
 	initialize_visual_arena(&sdl, &info);
 //	unsigned int *ptr;
 //	ptr = (unsigned int *)(info.arena);
 //	printf("%d %d %d %d\n", *(info.arena), *(info.arena + 1), *(info.arena + 2), *(info.arena + 3));
 //	printf("result %u\n", *ptr);
-	gladiatorial_fight(&info);
-	printf("Contestant %d, %s, has won !\n", info.last_live, (info.players)[info.last_live - 1].prog_name);
-	
+	//gladiatorial_fight(&info);
+   // printf("%d", info.count_cycles);
 	//print_arena(info.arena);
-	event_handler(&sdl); // loop
+	event_handler(&info, &sdl); // loop
+    printf("Contestant %d, %s, has won !\n", info.last_live, (info.players)[info.last_live - 1].prog_name);
 
 	TTF_CloseFont(sdl.font); //free memory used by font
 	SDL_DestroyWindow(sdl.window);

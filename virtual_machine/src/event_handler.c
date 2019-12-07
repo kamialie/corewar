@@ -11,8 +11,9 @@
 /* ************************************************************************** */
 
 #include "visual.h"
+#include "corewar.h"
 
-void	event_handler(t_sdl *sdl)
+void	event_handler(t_info *info, t_sdl *sdl)
 {
 	int	key;
 	SDL_Event event;
@@ -29,8 +30,11 @@ void	event_handler(t_sdl *sdl)
 				key = event.key.keysym.sym;
 				if (key == SDLK_ESCAPE)
 					return ;
-				//if (key == SDLK_SPACE)
-					//gladiatorial_fight(&info);
+				if (key == SDLK_SPACE)
+                {
+				    printf("count_cycles %d\n", info->count_cycles);
+					gladiatorial_fight(info, sdl);
+                }
 			}
 		}
 	}

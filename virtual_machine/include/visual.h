@@ -15,9 +15,6 @@
 
 # include "SDL.h"
 # include "SDL_ttf.h"
-//TMP
-# include "corewar.h"
-//
 
 # define FONT_PATH "sdl/fonts/FreeMono.ttf"
 # define WIN_HEIGHT 1160
@@ -88,13 +85,11 @@ typedef struct	s_square
 }				t_square;
 
 int				init_sdl(t_sdl *sdl);
-void			initialize_visual_arena(t_sdl *sdl, t_info *info);
 void			draw_byte(unsigned char byte, t_render *render_info, SDL_Surface *surface);
 void			set_render_color(int type, int player, t_render *render_info, SDL_Color *colors);
 void			set_render_location(int location, t_render *render_info);
 t_render		create_render_info(TTF_Font *font);
 void			draw_square(t_square sq_info, int *img_data);
-void			draw_annotations(t_sdl *sdl, t_info *info);
 void			set_render_color(int type, int player, t_render *render_info, SDL_Color *colors);
 void			set_render_location(int location, t_render *render_info);
 t_render		create_render_info(TTF_Font *font);
@@ -102,6 +97,5 @@ void			draw_byte(unsigned char byte, t_render *render_info, SDL_Surface *surface
 void			update_byte(int location, int player, t_sdl *sdl);
 void			move_cursor(int cur_location, int new_location, int player, t_sdl *sdl);
 void			create_cursor(int location, int player, t_sdl *sdl);
-void			event_handler(t_sdl *sdl);
 
 #endif

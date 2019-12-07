@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 15:10:22 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/24 18:53:04 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/12/07 19:24:24 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <errno.h>
 # include "libft.h"
 # include "op.h"
+# include "visual.h"
 
 # define DUMP "-dump"
 # define N "-n"
@@ -55,6 +56,7 @@ typedef struct	s_info
 	int				cycle_to_die; //длительность периода проверки
 	int 			count_live; //количество выполнынных live за последний период
 	int 			count_check; //количество проведенных проверок
+	int             i; //i Kamil
 }				t_info;
 
 typedef struct	s_op
@@ -68,14 +70,17 @@ typedef struct	s_op
 	unsigned int			change_carry : 1; //изменяет ли данная операция флаг carry
 	unsigned int			args_types_code : 1;  //код типов аругементов
 	unsigned char			t_dir_size : 3; //размер типа T_DIR для данной операции
-	void					(*func)(t_info *, t_processes **); // указатель на функцию с данной операцией
+	void					(*func)(t_info *, t_processes **, t_sdl *); // указатель на функцию с данной операцией
 }				t_op;
 
 void		read_arg(t_info *info, int argc, char *argv[]);
 void		error(int err);
-void		gladiatorial_fight(t_info *info);
+void		gladiatorial_fight(t_info *info, t_sdl *sdl);
 char		get_nibble(unsigned char nibble);
 void		print_arena(unsigned char *arena);
+void		initialize_visual_arena(t_sdl *sdl, t_info *info);
+void		draw_annotations(t_sdl *sdl, t_info *info);
+void        event_handler(t_info *info, t_sdl *sdl);
 
 
 /*
@@ -90,22 +95,22 @@ void		delete_elem(t_processes **processes, t_info *info);
 ** Функции, на которые указывает структура g_op_tab
 */
 
-void		live_op(t_info *info, t_processes **prs);
-void		ld_op(t_info *info, t_processes **prs);
-void		st_op(t_info *info, t_processes **prs);
-void		add_op(t_info *info, t_processes **prs);
-void		sub_op(t_info *info, t_processes **prs);
-void		and_op(t_info *info, t_processes **prs);
-void		or_op(t_info *info, t_processes **prs);
-void		xor_op(t_info *info, t_processes **prs);
-void		zjmp_op(t_info *info,  t_processes **prs);
-void		ldi_op(t_info *info, t_processes **prs);
-void		sti_op(t_info *info, t_processes **prs);
-void		fork_op(t_info *info, t_processes **prs);
-void		lld_op(t_info *info, t_processes **prs);
-void		lldi_op(t_info *info, t_processes **prs);
-void		lfork_op(t_info *info, t_processes **prs);
-void		aff_op(t_info *info, t_processes **prs);
+void		live_op(t_info *info, t_processes **prs, t_sdl *sdl);
+void		ld_op(t_info *info, t_processes **prs, t_sdl *sdl);
+void		st_op(t_info *info, t_processes **prs, t_sdl *sdl);
+void		add_op(t_info *info, t_processes **prs, t_sdl *sdl);
+void		sub_op(t_info *info, t_processes **prs, t_sdl *sdl);
+void		and_op(t_info *info, t_processes **prs, t_sdl *sdl);
+void		or_op(t_info *info, t_processes **prs, t_sdl *sdl);
+void		xor_op(t_info *info, t_processes **prs, t_sdl *sdl);
+void		zjmp_op(t_info *info,  t_processes **prs, t_sdl *sdl);
+void		ldi_op(t_info *info, t_processes **prs, t_sdl *sdl);
+void		sti_op(t_info *info, t_processes **prs, t_sdl *sdl);
+void		fork_op(t_info *info, t_processes **prs, t_sdl *sdl);
+void		lld_op(t_info *info, t_processes **prs, t_sdl *sdl);
+void		lldi_op(t_info *info, t_processes **prs, t_sdl *sdl);
+void		lfork_op(t_info *info, t_processes **prs, t_sdl *sdl);
+void		aff_op(t_info *info, t_processes **prs, t_sdl *sdl);
 
 
 static t_op	g_op_tab[16] =
