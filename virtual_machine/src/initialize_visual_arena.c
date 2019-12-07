@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 17:20:29 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/30 17:00:16 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/12/07 16:42:31 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,11 +194,43 @@ void	initialize_visual_arena(t_sdl *sdl, t_info *info)
 
 	int	i;
 	int	player = 0;
-	int	num_players = 4;
+	//int	num_players = 4;
 	int end;
+	int tmp;
 
+	printf("%lu\n", sizeof(int*));
 	render_info = create_render_info(sdl->font);
-	while (player < num_players)
+	t_processes	*processes = info->processes;
+	while (processes->next != NULL)
+		processes = processes->next;
+
+	while (processes != NULL)
+	{
+		i = processes->index;
+		end = i + ((info->players)[player]).prog_size;
+		//i = range[player * 2];
+		//end = player * 2 + 1;
+
+		set_render_location(i, &render_info);
+		set_render_color(CURSOR, player, &render_info, sdl->colors);
+		draw_byte(i, &render_info, sdl->surface);
+
+		set_render_location(i + 1, &render_info);
+		set_render_color(CODE, player, &render_info, sdl->colors);
+		draw_range(i + 1, end, info->arena, &render_info, sdl->surface);
+
+		set_render_location(end, &render_info);
+		set_render_color(EMPTY, player, &render_info, sdl->colors);
+		if (processes->prev == NULL)
+			tmp = MEM_SIZE;
+		else
+			tmp = ((processes->prev)->index);
+		draw_range(end, tmp, info->arena, &render_info, sdl->surface);
+		player++;
+		processes = processes->prev;
+	}
+
+	/*while (player < num_players)
 	{
 		i = range[player * 2];
 		end = player * 2 + 1;
@@ -215,22 +247,16 @@ void	initialize_visual_arena(t_sdl *sdl, t_info *info)
 		set_render_color(EMPTY, player, &render_info, sdl->colors);
 		draw_range(range[end], range[end + 1], info->arena, &render_info, sdl->surface);
 		++player;
-	}
+	}*/
 
 	draw_annotations(sdl, info); // draw side menu, info
 
-	move_cursor(0, 3, 0, sdl);
+	//move_cursor(0, 3, 1, sdl);
 
-	create_cursor(15, 0, sdl);
+	//create_cursor(15, 0, sdl);
 
 	SDL_UpdateWindowSurface(sdl->window); //draw surface
 
-	event_handler(sdl); // loop
-
-	TTF_CloseFont(sdl->font); //free memory used by font
-	SDL_DestroyWindow(sdl->window);
-	TTF_Quit();
-	SDL_Quit();
 }
 
 /*

@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 15:50:24 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/13 16:14:22 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/12/07 16:11:28 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	event_handler(t_sdl *sdl)
 	int	key;
 	SDL_Event event;
 
-	(void)sdl;
 	while (1)
 	{
 		while (SDL_PollEvent(&event))
@@ -30,6 +29,8 @@ void	event_handler(t_sdl *sdl)
 				key = event.key.keysym.sym;
 				if (key == SDLK_ESCAPE)
 					return ;
+				//if (key == SDLK_SPACE)
+					//gladiatorial_fight(&info);
 			}
 		}
 	}
