@@ -16,12 +16,13 @@ void		live_op(t_info *info, t_processes **prs)
 {
 	int 	num_player;
 
-	printf("live\n");
+	//printf("live ");
 	(*prs)->cc_live = info->count_cycles;
 	num_player = (info->arena)[(*prs)->index];
 	if (((info->players)[num_player - 1]).magic == COREWAR_EXEC_MAGIC)
 		info->last_live = num_player;
 	(*prs)->index = (((*prs)->index) + 5) % MEM_SIZE; //1 байт занимает код операции и 4 байта занимает аргумент
+	//printf("cc_live %d\n./", (*prs)->cc_live);
 }
 
 void		ld_op(t_info *info, t_processes **prs)
