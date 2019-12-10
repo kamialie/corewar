@@ -39,6 +39,7 @@ void 	init_info(t_info *info)
 	info->count_live = 0;
 	info->count_check = 0;
 	info->i = -1;
+	info->processes = NULL;
 	i = -1;
 	while (++i < MAX_PLAYERS)
 	{
