@@ -80,6 +80,7 @@ char		get_nibble(unsigned char nibble);
 void		print_arena(unsigned char *arena);
 void		initialize_visual_arena(t_sdl *sdl, t_info *info);
 void		draw_annotations(t_sdl *sdl, t_info *info);
+void		show_cycle(t_info *info, t_sdl *sdl);
 void        event_handler(t_info *info, t_sdl *sdl);
 
 

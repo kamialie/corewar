@@ -54,6 +54,9 @@
 # define PLAYER_NAME_X_LOCATION 1445
 # define PLAYER_SECTION_HEIGHT 102
 
+# define CYCLE_X_LOCATION 1500
+# define CYCLE_Y_LOCATION 50
+
 typedef struct	s_sdl
 {
 	SDL_Window	*window;
@@ -97,5 +100,6 @@ void			draw_byte(unsigned char byte, t_render *render_info, SDL_Surface *surface
 void			update_byte(int location, int player, t_sdl *sdl);
 void			move_cursor(int cur_location, int new_location, int player, t_sdl *sdl);
 void			create_cursor(int location, int player, t_sdl *sdl);
+
 
 #endif

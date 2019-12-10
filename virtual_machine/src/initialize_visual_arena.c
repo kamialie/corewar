@@ -162,60 +162,44 @@ void	draw_range(int i, int end, unsigned char *arena, t_render *render_info, SDL
 	}
 }*/
 
-
-void	initialize_visual_arena(t_sdl *sdl, t_info *info)
+void	draw_memory_frame(t_sdl *sdl)
 {
-	t_render	render_info;
-
-	// draw memory edges
 	t_square	sq_info;
 
 	sq_info = (t_square) {0, WIN_HEIGHT - 1, WIN_WIDTH - 445, 0, 0xFFA500};
    	draw_square(sq_info, sdl->img_data);
-	//end
-
 	//draw_arena_grid(sdl, arena);
-	
-	int	range[9];
-	range[0] = 0;
-	range[1] = 150;
-	//range[2] = 4096;
-	range[2] = 500;
-	range[3] = 1000;
-	//range[4] = 4096;
-	range[4] = 2300;
-	range[5] = 2500;
-	//range[6] = 4096;
-	range[6] = 3000;
-	range[7] = 3500;
-	range[8] = 4096;
+}
 
-	int	i;
-	int	player = 0;
-	//int	num_players = 4;
+
+void	initialize_visual_arena(t_sdl *sdl, t_info *info)
+{
+
+	draw_memory_frame(sdl); //draw frame for memory
+	
+	int	cursor_location;
+	int	player;
 	int end;
 	int tmp;
+	t_render	render_info;
 
-	printf("%lu\n", sizeof(int*));
+	player = 0;
 	render_info = create_render_info(sdl->font);
 	t_processes	*processes = info->processes;
 	while (processes->next != NULL)
 		processes = processes->next;
-
 	while (processes != NULL)
 	{
-		i = processes->index;
-		end = i + ((info->players)[player]).prog_size;
-		//i = range[player * 2];
-		//end = player * 2 + 1;
+		cursor_location = processes->index;
+		end = cursor_location + ((info->players)[player]).prog_size;
 
-		set_render_location(i, &render_info);
+		set_render_location(cursor_location, &render_info);
 		set_render_color(CURSOR, player, &render_info, sdl->colors);
-		draw_byte(i, &render_info, sdl->surface);
+		draw_byte(cursor_location, &render_info, sdl->surface);
 
-		set_render_location(i + 1, &render_info);
+		set_render_location(cursor_location + 1, &render_info);
 		set_render_color(CODE, player, &render_info, sdl->colors);
-		draw_range(i + 1, end, info->arena, &render_info, sdl->surface);
+		draw_range(cursor_location + 1, end, info->arena, &render_info, sdl->surface);
 
 		set_render_location(end, &render_info);
 		set_render_color(EMPTY, player, &render_info, sdl->colors);
@@ -254,7 +238,6 @@ void	initialize_visual_arena(t_sdl *sdl, t_info *info)
 	//create_cursor(15, 0, sdl);
 
 	SDL_UpdateWindowSurface(sdl->window); //draw surface
-
 }
 
 /*

@@ -12,14 +12,38 @@
 
 #include "visual.h"
 #include "corewar.h"
+//TMP
+#include <time.h>
+//END
+
+void	delay(int limit)
+{
+	for (int i; i < limit; i++) {
+		for (int j; j < limit; j++) {
+		}
+	}
+}
 
 void	event_handler(t_info *info, t_sdl *sdl)
 {
 	int	key;
+	int	play;
 	SDL_Event event;
+	//TMP
+	struct timespec req = {0, 500000000};
+	//END
 
+	play = 1;
 	while (1)
 	{
+		if (play)
+		{
+			nanosleep(&req, NULL);
+			printf("count_cycles %d\n", info->count_cycles);
+			show_cycle(info, sdl);
+			SDL_UpdateWindowSurface(sdl->window); //draw surface
+			gladiatorial_fight(info, sdl);
+		}
 		while (SDL_PollEvent(&event))
 		{
 			if (event.type == SDL_QUIT)
@@ -31,10 +55,7 @@ void	event_handler(t_info *info, t_sdl *sdl)
 				if (key == SDLK_ESCAPE)
 					return ;
 				if (key == SDLK_SPACE)
-                {
-				    printf("count_cycles %d\n", info->count_cycles);
-					gladiatorial_fight(info, sdl);
-                }
+					play = play == 0 ? 1 : 0;
 			}
 		}
 	}

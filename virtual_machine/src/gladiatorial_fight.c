@@ -70,8 +70,9 @@ void		gladiatorial_fight(t_info *info, t_sdl *sdl)
 				prs = prs->next;
 			}
 			++info->count_cycles;
-			if (info->count_cycles % 500 == 0)
-			    return ;
+			return ;
+			//if (info->count_cycles % 500 == 0)
+			    //return ;
 		}
 		kick_noobs(info);
 	}
