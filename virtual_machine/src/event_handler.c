@@ -22,7 +22,7 @@ void	event_handler(t_info *info, t_sdl *sdl)
 	int	play;
 	SDL_Event event;
 	//TMP
-	struct timespec req = {0, 500000000};
+	struct timespec req = {0, 50000000};
 	//END
 
 	play = 0;
@@ -33,12 +33,14 @@ void	event_handler(t_info *info, t_sdl *sdl)
 			nanosleep(&req, NULL);
 			printf("count_cycles %d\n", info->count_cycles);
 			show_data(info->count_cycles, 0, sdl);
-			show_data(info->last_live, 500, sdl);
-			show_data(info->cycle_to_die, 520, sdl);
-			show_data(info->count_live, 540, sdl);
-			show_data(info->count_check, 560, sdl);
-			SDL_UpdateWindowSurface(sdl->window); //draw surface
+			show_data(info->last_live, 500, sdl); // put on updata
+			show_data(info->cycle_to_die, 520, sdl); // put on updata
+			show_data(info->count_live, 540, sdl); // put on updata
+			show_data(info->count_check, 560, sdl); // put on updata
+
 			gladiatorial_fight(info, sdl);
+
+			SDL_UpdateWindowSurface(sdl->window); //draw surface
 		}
 		while (SDL_PollEvent(&event))
 		{
@@ -51,7 +53,10 @@ void	event_handler(t_info *info, t_sdl *sdl)
 				if (key == SDLK_ESCAPE)
 					return ;
 				if (key == SDLK_SPACE)
+				{
 					play = play == 0 ? 1 : 0;
+					update_game_status(play, sdl);
+				}
 			}
 		}
 	}

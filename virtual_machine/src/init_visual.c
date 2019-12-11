@@ -17,12 +17,12 @@ static void	init_colors(SDL_Color *colors)
 	colors[BLACK] = (SDL_Color) {0, 0, 0};
 	colors[WHITE] = (SDL_Color) {255, 255, 255};
 	colors[YELLOW] = (SDL_Color) {255, 255, 0};
-	colors[GREEN] = (SDL_Color) {0, 0, 255};
-	colors[BLUE] = (SDL_Color) {0, 255, 0};
+	colors[BLUE] = (SDL_Color) {0, 0, 255};
+	colors[GREEN] = (SDL_Color) {0, 255, 0};
 	colors[RED] = (SDL_Color) {255, 0, 0};
 	colors[YELLOW_BACK] = (SDL_Color) {110, 110, 0};
-	colors[GREEN_BACK] = (SDL_Color) {0, 0, 110};
-	colors[BLUE_BACK] = (SDL_Color) {0, 110, 0};
+	colors[BLUE_BACK] = (SDL_Color) {0, 0, 110};
+	colors[GREEN_BACK] = (SDL_Color) {0, 110, 0};
 	colors[RED_BACK] = (SDL_Color) {110, 0, 0};
 }
 

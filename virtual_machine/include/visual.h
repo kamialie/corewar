@@ -44,6 +44,9 @@
 # define CURSOR 1
 # define CODE 2
 
+# define GAME_STATUS_X_LOCATION 1400
+# define GAME_STATUS_Y_LOCATION 30
+
 # define PLAYER_ONE "Player 1: "
 # define PLAYER_TWO "Player 2: "
 # define PLAYER_THREE "Player 3: "
@@ -98,6 +101,8 @@ void			draw_byte(unsigned char byte, t_render *render_info, SDL_Surface *surface
 void			update_byte(int location, int player, t_sdl *sdl);
 void			move_cursor(int cur_location, int new_location, int player, t_sdl *sdl);
 void			create_cursor(int location, int player, t_sdl *sdl);
+
+void			update_game_status(int status, t_sdl *sdl);
 
 
 #endif

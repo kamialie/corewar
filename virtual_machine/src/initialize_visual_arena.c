@@ -131,8 +131,6 @@ void	initialize_visual_arena(t_sdl *sdl, t_info *info)
 
 	draw_memory_frame(sdl); //draw frame for memory
 	
-	sdl->render_info->rect.w = NIBBLE_WIDTH;
-	sdl->render_info->rect.h = NIBBLE_HEIGHT;
 	t_processes	*processes = info->processes;
 	while (processes->next != NULL)
 		processes = processes->next;
