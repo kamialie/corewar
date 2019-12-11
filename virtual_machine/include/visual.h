@@ -49,9 +49,10 @@
 # define PLAYER_THREE "Player 3: "
 # define PLAYER_FOUR "Player 4: "
 
-# define PLAYER_X_LOCATION 1360
+# define PLAYER_X_LOCATION 1380
 # define PLAYER_Y_LOCATION 120
-# define PLAYER_NAME_X_LOCATION 1445
+# define PLAYER_NAME_X_LOCATION 1400
+# define PLAYER_NAME_Y_LOCATION 140
 # define PLAYER_SECTION_HEIGHT 102
 
 # define CYCLE_X_LOCATION 1500
@@ -90,14 +91,9 @@ typedef struct	s_square
 
 int				init_sdl(t_sdl *sdl);
 void			draw_byte(unsigned char byte, t_render *render_info, SDL_Surface *surface);
-void			set_render_color(int type, int player, t_render *render_info, SDL_Color *colors);
-void			set_render_location(int location, t_render *render_info);
-t_render		create_render_info(TTF_Font *font);
 void			draw_square(t_square sq_info, int *img_data);
 void			set_render_color(int type, int player, t_render *render_info, SDL_Color *colors);
-//void			set_nibble_location(int location, t_render *render_info);
 void			set_nibble_for_render(int location, int type, int player, t_sdl *sdl);
-t_render		create_render_info(TTF_Font *font);
 void			draw_byte(unsigned char byte, t_render *render_info, SDL_Surface *surface);
 void			update_byte(int location, int player, t_sdl *sdl);
 void			move_cursor(int cur_location, int new_location, int player, t_sdl *sdl);

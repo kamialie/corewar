@@ -39,6 +39,9 @@ void	draw_byte(unsigned char byte, t_render *render_info, SDL_Surface *surface)
 	SDL_FreeSurface(text_surface);
 }
 
+/*
+ * set color and location for nibble
+*/
 void		set_nibble_for_render(int location, int type, int player, t_sdl *sdl)
 {
 	if (type == EMPTY)

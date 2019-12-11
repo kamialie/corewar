@@ -12,28 +12,6 @@
 
 #include "corewar.h"
 
-/*SDL_Color	choose_color(int i)
-{
-	int	limits[8];
-
-	ft_bzero(limits, 8 * 4);
-	limits[1] = 100;
-	
-	if (num_of_players >= 1)
-	{
-		if (i >= 0 && i <= limits[1])
-			return ((SDL_Color) {255, 255, 0});
-		if (num_of_players >= 2)
-		{
-			if (i >= limits[2] && i <= limits[3]) 
-				return ((SDL_Color) {0, 0, 255});
-			if (num_of_players >= 3)
-			{
-		}
-	}
-	return ((SDL_Color) {255, 255, 255});
-}*/
-
 /*void	draw_arena_grid(t_sdl *sdl, unsigned char *arena)
 {
 
@@ -82,36 +60,14 @@
 	}
 }*/
 
-/*
- * former function to output arena without coloring
- * currently outputs just current number, change i in draw_byte to draw actual data
-*/
-/*void	draw_arena(unsigned char *arena, t_render render_info, SDL_Surface *surface)
+void	draw_memory_frame(t_sdl *sdl)
 {
-	int	i;
-	int i_last;
-	int	row;
-	int	row_last;
+	t_square	sq_info;
 
-	row = 0;
-	row_last = 64;
-	while (row < row_last)
-	{
-		i_last = (row + 1) * 64;
-		i = i_last - 64;
-		render_info.rect.x = NIBBLE_X_SHIFT;
-		//render_info.color = choose_color(i);
-		draw_byte(i, &render_info, surface);
-		while (++i < i_last)
-		{
-			render_info.rect.x += NIBBLE_WIDTH;
-			//render_info.color = choose_color(i);
-			draw_byte(i, &render_info, surface);
-		}
-		render_info.rect.y += NIBBLE_HEIGHT;
-		++row;
-	}
-}*/
+	sq_info = (t_square) {0, WIN_HEIGHT - 1, WIN_WIDTH - 445, 0, 0xFFA500};
+   	draw_square(sq_info, sdl->img_data);
+	//draw_arena_grid(sdl, arena);
+}
 
 /*
  * draw range from i to end
@@ -142,37 +98,6 @@ void	draw_range(int i, int end, unsigned char *arena, t_sdl *sdl)
 		end_of_row = (++row + 1) * 64;
 		i = end_of_row - 64;
 	}
-}
-
-/*
- * trying to write range initialization
- *
-*/
-/*void	prepare_range_array(int *range, t_info *info)
-{
-	int	i;
-	int	end;
-	int	shift;
-	int	size;
-
-	i = 0;
-	end = 1;
-	size = (info->players)[i].prog_size;
-	while (size != 0)
-	{
-		shift = (MEM_SIZE / count) * i;
-		range[i] = shift;
-		range[end] = range[i] + size;
-	}
-}*/
-
-void	draw_memory_frame(t_sdl *sdl)
-{
-	t_square	sq_info;
-
-	sq_info = (t_square) {0, WIN_HEIGHT - 1, WIN_WIDTH - 445, 0, 0xFFA500};
-   	draw_square(sq_info, sdl->img_data);
-	//draw_arena_grid(sdl, arena);
 }
 
 void	draw_arena(t_processes *processes, t_info *info, t_sdl *sdl)
@@ -213,11 +138,11 @@ void	initialize_visual_arena(t_sdl *sdl, t_info *info)
 		processes = processes->next;
 	draw_arena(processes, info, sdl);
 	
-	draw_annotations(sdl, info); // draw side menu, info
+	draw_annotations(info, sdl); // draw side menu, info
 
-	move_cursor(0, 3, 0, sdl);
+	//move_cursor(0, 3, 0, sdl); //for testing 
 
-	create_cursor(15, 0, sdl);
+	//create_cursor(15, 0, sdl); //for testing 
 
 	SDL_UpdateWindowSurface(sdl->window); //draw surface
 }

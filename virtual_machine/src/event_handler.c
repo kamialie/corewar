@@ -25,14 +25,18 @@ void	event_handler(t_info *info, t_sdl *sdl)
 	struct timespec req = {0, 500000000};
 	//END
 
-	play = 1;
+	play = 0;
 	while (1)
 	{
 		if (play)
 		{
 			nanosleep(&req, NULL);
 			printf("count_cycles %d\n", info->count_cycles);
-			show_cycle(info, sdl);
+			show_data(info->count_cycles, 0, sdl);
+			show_data(info->last_live, 500, sdl);
+			show_data(info->cycle_to_die, 520, sdl);
+			show_data(info->count_live, 540, sdl);
+			show_data(info->count_check, 560, sdl);
 			SDL_UpdateWindowSurface(sdl->window); //draw surface
 			gladiatorial_fight(info, sdl);
 		}
