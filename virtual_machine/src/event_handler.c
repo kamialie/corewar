@@ -12,25 +12,18 @@
 
 #include "visual.h"
 #include "corewar.h"
-//TMP
-#include <time.h>
-//END
 
 void	event_handler(t_info *info, t_sdl *sdl)
 {
 	int	key;
 	int	play;
 	SDL_Event event;
-	//TMP
-	struct timespec req = {0, 50000000};
-	//END
 
 	play = 0;
 	while (1)
 	{
 		if (play)
 		{
-			nanosleep(&req, NULL);
 			printf("count_cycles %d\n", info->count_cycles);
 			show_data(info->count_cycles, 0, sdl);
 			show_data(info->last_live, 500, sdl); // put on updata
@@ -41,6 +34,7 @@ void	event_handler(t_info *info, t_sdl *sdl)
 			gladiatorial_fight(info, sdl);
 
 			SDL_UpdateWindowSurface(sdl->window); //draw surface
+			SDL_Delay(100);
 		}
 		while (SDL_PollEvent(&event))
 		{
