@@ -16,14 +16,6 @@
 #include <time.h>
 //END
 
-void	delay(int limit)
-{
-	for (int i; i < limit; i++) {
-		for (int j; j < limit; j++) {
-		}
-	}
-}
-
 void	event_handler(t_info *info, t_sdl *sdl)
 {
 	int	key;

@@ -59,8 +59,10 @@ int	init_sdl(t_sdl *sdl)
 		return (1);
 	}
 	SDL_FreeSurface(sdl->surface);
-	init_colors(sdl->colors);
+	sdl->render_info = (t_render *)malloc(sizeof(t_render)); //check failure
 	sdl->font = init_font(); // check for return status
+	sdl->render_info->font = sdl->font;
+	init_colors(sdl->colors);
 	sdl->img_data = (int *)sdl->surface->pixels;
 	return (0);
 }

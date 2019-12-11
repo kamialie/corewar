@@ -14,22 +14,14 @@
 
 void	update_byte(int location, int player, t_sdl *sdl)
 {
-	t_render	render_info;
-
-	render_info = create_render_info(sdl->font);
-	set_render_location(location, &render_info);
-	set_render_color(CODE, player, &render_info, sdl->colors);
-	draw_byte(location, &render_info, sdl->surface);
+	set_nibble_for_render(location, CODE, player, sdl);
+	draw_byte(location, sdl->render_info, sdl->surface);
 }
 
 void	create_cursor(int location, int player, t_sdl *sdl)
 {
-	t_render	render_info;
-
-	render_info = create_render_info(sdl->font);
-	set_render_location(location, &render_info);
-	set_render_color(CURSOR, player, &render_info, sdl->colors);
-	draw_byte(location, &render_info, sdl->surface);
+	set_nibble_for_render(location, CURSOR, player, sdl);
+	draw_byte(location, sdl->render_info, sdl->surface);
 }
 
 void	move_cursor(int cur_location, int new_location, int player, t_sdl *sdl)

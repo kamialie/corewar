@@ -57,15 +57,6 @@
 # define CYCLE_X_LOCATION 1500
 # define CYCLE_Y_LOCATION 50
 
-typedef struct	s_sdl
-{
-	SDL_Window	*window;
-	SDL_Surface	*surface;
-	int			*img_data;
-	SDL_Color	colors[9];
-	TTF_Font	*font;
-}				t_sdl;
-
 typedef struct	s_render
 {
 	SDL_Rect	rect;
@@ -73,6 +64,16 @@ typedef struct	s_render
 	SDL_Color	back_color;
 	TTF_Font	*font;
 }				t_render;
+
+typedef struct	s_sdl
+{
+	SDL_Window	*window;
+	SDL_Surface	*surface;
+	int			*img_data;
+	SDL_Color	colors[9];
+	TTF_Font	*font;
+	t_render	*render_info;
+}				t_sdl;
 
 /*
  * x0, y0 - lower left corner
@@ -94,7 +95,8 @@ void			set_render_location(int location, t_render *render_info);
 t_render		create_render_info(TTF_Font *font);
 void			draw_square(t_square sq_info, int *img_data);
 void			set_render_color(int type, int player, t_render *render_info, SDL_Color *colors);
-void			set_render_location(int location, t_render *render_info);
+//void			set_nibble_location(int location, t_render *render_info);
+void			set_nibble_for_render(int location, int type, int player, t_sdl *sdl);
 t_render		create_render_info(TTF_Font *font);
 void			draw_byte(unsigned char byte, t_render *render_info, SDL_Surface *surface);
 void			update_byte(int location, int player, t_sdl *sdl);

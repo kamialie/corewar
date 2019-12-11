@@ -39,37 +39,23 @@ void	draw_byte(unsigned char byte, t_render *render_info, SDL_Surface *surface)
 	SDL_FreeSurface(text_surface);
 }
 
-void		set_render_color(int type, int player, t_render *render_info, SDL_Color *colors)
+void		set_nibble_for_render(int location, int type, int player, t_sdl *sdl)
 {
 	if (type == EMPTY)
 	{
-		render_info->font_color = colors[WHITE];
-		render_info->back_color = colors[BLACK];
+		sdl->render_info->font_color = sdl->colors[WHITE];
+		sdl->render_info->back_color = sdl->colors[BLACK];
 	}
 	else if (type == CURSOR)
 	{
-		render_info->font_color = colors[WHITE];
-		render_info->back_color = colors[player + BACK_COLOR];
+		sdl->render_info->font_color = sdl->colors[WHITE];
+		sdl->render_info->back_color = sdl->colors[player + BACK_COLOR];
 	}
 	else
 	{
-		render_info->font_color = colors[player + FONT_COLOR];
-		render_info->back_color = colors[BLACK];
+		sdl->render_info->font_color = sdl->colors[player + FONT_COLOR];
+		sdl->render_info->back_color = sdl->colors[BLACK];
 	}
-}
-
-void		set_render_location(int location, t_render *render_info)
-{
-	render_info->rect.x = NIBBLE_X_SHIFT + NIBBLE_WIDTH * (location % 64);
-	render_info->rect.y = NIBBLE_Y_SHIFT + NIBBLE_HEIGHT * (location / 64);
-}
-
-t_render	create_render_info(TTF_Font *font)
-{
-	t_render	render_info;
-	
-	render_info.font = font;
-	render_info.rect.w = NIBBLE_WIDTH;
-	render_info.rect.h = NIBBLE_HEIGHT;
-	return (render_info);
+	sdl->render_info->rect.x = NIBBLE_X_SHIFT + NIBBLE_WIDTH * (location % 64);
+	sdl->render_info->rect.y = NIBBLE_Y_SHIFT + NIBBLE_HEIGHT * (location / 64);
 }
