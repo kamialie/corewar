@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:35:59 by rgyles            #+#    #+#             */
-/*   Updated: 2019/12/14 18:02:02 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/12/14 18:38:57 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	update_game_status(int status, t_sdl *sdl)
 	sdl->render_info->rect.x = GAME_STATUS_X_LOCATION;
 	sdl->render_info->rect.y = GAME_STATUS_Y_LOCATION;
 	sdl->render_info->rect.w = 65; //make macros
-	sdl->render_info->rect.y = 17; //make macros
+	sdl->render_info->rect.h = 20; //make macros
 	if (status == 1)
 	{
 		sdl->render_info->font_color = sdl->colors[GREEN];
@@ -87,8 +87,11 @@ void	draw_annotations(t_info *info, t_sdl *sdl)
 	render_text("count_live - ", sdl->render_info, sdl->surface);
 	sdl->render_info->rect.y += INFO_Y_SHIFT;
 	render_text("count_check - ", sdl->render_info, sdl->surface);
+	sdl->render_info->rect.y += INFO_Y_SHIFT;
+	render_text("speed - ", sdl->render_info, sdl->surface);
 
 	show_data(info, sdl);
+	show_sdl_data(sdl);
 
 	update_game_status(0, sdl);
 

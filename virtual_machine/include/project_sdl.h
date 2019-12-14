@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 16:17:50 by rgyles            #+#    #+#             */
-/*   Updated: 2019/12/14 16:17:59 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/12/14 18:09:49 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct	s_render
 
 typedef struct	s_sdl
 {
+	int			speed;
 	SDL_Window	*window;
 	SDL_Surface	*surface;
 	int			*img_data;

@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 16:09:49 by rgyles            #+#    #+#             */
-/*   Updated: 2019/12/14 17:57:42 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/12/14 18:30:49 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,9 @@
 # define DATA_X_LOCATION 1570
 # define DATA_Y_LOCATION 50
 
+# define SDL_DATA_X_LOCATION 1570
+# define SDL_DATA_Y_LOCATION 150
+
 /*
  * x0, y0 - lower left corner
  * x1, y1 - top right corner
@@ -83,6 +86,7 @@ void			draw_byte(unsigned char byte, t_render *render_info, SDL_Surface *surface
 void			set_nibble_for_render(int location, int type, int player, t_sdl *sdl);
 void			set_render_color(int type, int player, t_render *render_info, SDL_Color *colors);
 void			draw_byte(unsigned char byte, t_render *render_info, SDL_Surface *surface);
+void			show_sdl_data(t_sdl *sdl);
 
 void			draw_square(t_square sq_info, int *img_data);
 

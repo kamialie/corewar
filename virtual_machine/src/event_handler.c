@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 15:50:24 by rgyles            #+#    #+#             */
-/*   Updated: 2019/12/14 17:58:25 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/12/14 18:32:02 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	event_handler(t_info *info, t_sdl *sdl)
             gladiatorial_fight(info, sdl);
 
 			SDL_UpdateWindowSurface(sdl->window); //draw surface
-			SDL_Delay(100);
+			SDL_Delay(sdl->speed);
 		}
 		while (SDL_PollEvent(&event))
 		{
@@ -43,10 +43,24 @@ void	event_handler(t_info *info, t_sdl *sdl)
 				key = event.key.keysym.sym;
 				if (key == SDLK_ESCAPE)
 					return ;
-				if (key == SDLK_SPACE)
+				else if (key == SDLK_SPACE)
 				{
 					play = play == 0 ? 1 : 0;
 					update_game_status(play, sdl);
+				}
+				else if (key == SDLK_EQUALS && sdl->speed > 0)
+				{
+					printf("increase\n");
+					sdl->speed -= 50;
+					show_sdl_data(sdl);
+					SDL_UpdateWindowSurface(sdl->window); //draw surface
+				}
+				else if (key == SDLK_MINUS && sdl->speed < 1000)
+				{
+					printf("decrease\n");
+					sdl->speed += 50;
+					show_sdl_data(sdl);
+					SDL_UpdateWindowSurface(sdl->window); //draw surface
 				}
 			}
 		}
