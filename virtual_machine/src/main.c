@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 13:34:54 by rgyles            #+#    #+#             */
-/*   Updated: 2019/12/07 16:11:51 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/12/14 16:50:04 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ int	main(int argc , char *argv[])
 	present_champion(info.players);
 	create_processes(&info);
 
-	initialize_visual_arena(&sdl, &info);
 //	unsigned int *ptr;
 //	ptr = (unsigned int *)(info.arena);
 //	printf("%d %d %d %d\n", *(info.arena), *(info.arena + 1), *(info.arena + 2), *(info.arena + 3));
@@ -72,7 +71,17 @@ int	main(int argc , char *argv[])
 	//gladiatorial_fight(&info);
    // printf("%d", info.count_cycles);
 	//print_arena(info.arena);
-	event_handler(&info, &sdl); // loop
+	if (info.dump >= 0)
+	{
+		while (info.count_cycles <= info.dump) // temporary
+			gladiatorial_fight(&info, &sdl);
+		print_arena(info.arena);
+	}
+	else
+	{
+		initialize_visual_arena(&sdl, &info);
+		event_handler(&info, &sdl); // loop
+	}
     printf("Contestant %d, %s, has won !\n", info.last_live, (info.players)[info.last_live - 1].prog_name);
 
 	TTF_CloseFont(sdl.font); //free memory used by font

@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 18:08:19 by bdudley           #+#    #+#             */
-/*   Updated: 2019/11/17 20:31:51 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/12/14 16:41:40 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void		fork_op(t_info *info, t_processes **prs, t_sdl *sdl)
     short int current_location = (*prs)->index;
 	(*prs)->index = (((*prs)->index) + 3) % MEM_SIZE; //1 байт занимает код операции и 2 байта занимает аргумент
     //printf("%d color", (*prs)->reg[0]);
-	move_cursor(current_location, (*prs)->index, (*prs)->reg[0] - 1, sdl);
+	//move_cursor(current_location, (*prs)->index, (*prs)->reg[0] - 1, sdl);
     SDL_UpdateWindowSurface(sdl->window);
    // create_cursor(info->processes->index, info->processes->reg[0], sdl);
 }

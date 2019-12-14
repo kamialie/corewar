@@ -22,24 +22,6 @@ char	get_nibble(unsigned char nibble)
 }
 
 /*
-** render single byte:
-** divide byte into nibbles, get the corresponding base 16 symbols, form a string
-** render text using TTF, set coordinates, copy to window surface, free orginal surface created by TTF
-*/
-void	draw_byte(unsigned char byte, t_render *render_info, SDL_Surface *surface)
-{
-	char cell[3];
-	SDL_Surface	*text_surface;
-
-	cell[0] = get_nibble((byte & 0xf0) >> 4);
-	cell[1] = get_nibble(byte & 0xf);
-	cell[2] = '\0';
-	text_surface = TTF_RenderText_Shaded(render_info->font, cell, render_info->font_color, render_info->back_color);
-	SDL_BlitSurface(text_surface, NULL, surface, &render_info->rect);
-	SDL_FreeSurface(text_surface);
-}
-
-/*
  * set color and location for nibble
 */
 void		set_nibble_for_render(int location, int type, int player, t_sdl *sdl)
@@ -61,4 +43,22 @@ void		set_nibble_for_render(int location, int type, int player, t_sdl *sdl)
 	}
 	sdl->render_info->rect.x = NIBBLE_X_SHIFT + NIBBLE_WIDTH * (location % 64);
 	sdl->render_info->rect.y = NIBBLE_Y_SHIFT + NIBBLE_HEIGHT * (location / 64);
+}
+
+/*
+** render single byte:
+** divide byte into nibbles, get the corresponding base 16 symbols, form a string
+** render text using TTF, set coordinates, copy to window surface, free orginal surface created by TTF
+*/
+void	draw_byte(unsigned char byte, t_render *render_info, SDL_Surface *surface)
+{
+	char cell[3];
+	SDL_Surface	*text_surface;
+
+	cell[0] = get_nibble((byte & 0xf0) >> 4);
+	cell[1] = get_nibble(byte & 0xf);
+	cell[2] = '\0';
+	text_surface = TTF_RenderText_Shaded(render_info->font, cell, render_info->font_color, render_info->back_color);
+	SDL_BlitSurface(text_surface, NULL, surface, &render_info->rect);
+	SDL_FreeSurface(text_surface);
 }

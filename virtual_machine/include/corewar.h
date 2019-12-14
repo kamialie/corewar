@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 15:10:22 by rgyles            #+#    #+#             */
-/*   Updated: 2019/12/14 16:18:24 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/12/14 16:40:16 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,9 @@ void		initialize_visual_arena(t_sdl *sdl, t_info *info);
 void		draw_annotations(t_info *info, t_sdl *sdl);
 void        event_handler(t_info *info, t_sdl *sdl);
 
-void		update_byte(int location, int player, t_sdl *sdl);
-void		move_cursor(int cur_location, int new_location, int player, t_sdl *sdl);
-void		create_cursor(int location, int player, t_sdl *sdl);
+void		update_byte(unsigned char value, int location, int player, t_sdl *sdl);
+void		create_cursor(unsigned char value, int location, int player, t_sdl *sdl);
+//void		move_cursor(int cur_location, int new_location, int player, t_sdl *sdl);
 
 /*
 ** Создание и удаление кареток
