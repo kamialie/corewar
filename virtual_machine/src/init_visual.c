@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 14:40:04 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/30 16:53:53 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/12/14 18:10:33 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int	init_sdl(t_sdl *sdl)
 	sdl->font = init_font(); // check for return status
 	sdl->render_info->font = sdl->font;
 	init_colors(sdl->colors);
+	sdl->speed = 100;
 	sdl->img_data = (int *)sdl->surface->pixels;
 	return (0);
 }

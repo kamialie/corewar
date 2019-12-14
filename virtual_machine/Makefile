@@ -6,7 +6,7 @@
 #    By: rgyles <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/16 14:20:48 by rgyles            #+#    #+#              #
-#    Updated: 2019/11/30 16:28:36 by rgyles           ###   ########.fr        #
+#    Updated: 2019/12/14 18:14:51 by rgyles           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,7 @@ VISUAL_SRC = init_visual.c \
 			 draw_shapes.c \
 			 draw_annotations.c \
 			 update_byte.c \
+			 show_data.c \
 			 event_handler.c
 
 VISUAL_OBJ = $(addprefix $(OBJ_DIR)/, $(VISUAL_SRC:.c=.o))
@@ -74,9 +75,9 @@ $(NAME): $(LIB) $(SDL_BUILD) $(SDL_TTF_BUILD) $(OBJ) $(VISUAL_OBJ)
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c include/corewar.h | $(OBJ_DIR)
 	gcc $(FLAGS) $(INCLUDE) -o $@ -c $<
 
-$(OBJ_DIR)/main.o: include/visual.h
+$(OBJ_DIR)/main.o: include/visual.h include/project_sdl.h
 
-$(VISUAL_OBJ): include/visual.h
+$(VISUAL_OBJ): include/visual.h include/project_sdl.h
 
 $(OBJ_DIR):
 	@echo "$(GREEN)Object directory is created!$(NC)"

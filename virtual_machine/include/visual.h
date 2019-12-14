@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 16:09:49 by rgyles            #+#    #+#             */
-/*   Updated: 2019/12/14 16:25:01 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/12/14 18:30:49 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,21 @@
 # define PLAYER_FOUR "Player 4: "
 
 # define PLAYER_X_LOCATION 1380
-# define PLAYER_Y_LOCATION 120
+# define PLAYER_Y_LOCATION 200
 # define PLAYER_NAME_X_LOCATION 1400
 # define PLAYER_NAME_Y_LOCATION 140
 # define PLAYER_SECTION_HEIGHT 102
 
-# define CYCLE_X_LOCATION 1500
-# define CYCLE_Y_LOCATION 50
+# define INFO_X_LOCATION 1420
+# define INFO_Y_LOCATION 50
+
+# define INFO_Y_SHIFT 20
+
+# define DATA_X_LOCATION 1570
+# define DATA_Y_LOCATION 50
+
+# define SDL_DATA_X_LOCATION 1570
+# define SDL_DATA_Y_LOCATION 150
 
 /*
  * x0, y0 - lower left corner
@@ -78,7 +86,7 @@ void			draw_byte(unsigned char byte, t_render *render_info, SDL_Surface *surface
 void			set_nibble_for_render(int location, int type, int player, t_sdl *sdl);
 void			set_render_color(int type, int player, t_render *render_info, SDL_Color *colors);
 void			draw_byte(unsigned char byte, t_render *render_info, SDL_Surface *surface);
-void			show_data(int data, int shift, t_sdl *sdl);
+void			show_sdl_data(t_sdl *sdl);
 
 void			draw_square(t_square sq_info, int *img_data);
 
