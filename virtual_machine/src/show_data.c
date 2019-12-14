@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 17:49:29 by rgyles            #+#    #+#             */
-/*   Updated: 2019/12/14 18:40:55 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/12/14 18:53:09 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	show_sdl_data(t_sdl *sdl)
 	render_info->rect.h = 20;
 	render_info->font_color = sdl->colors[WHITE];
 	render_info->back_color = sdl->colors[BLACK];
-	SDL_FillRect(sdl->surface, &sdl->render_info->rect, 0xFF0000);
+	SDL_FillRect(sdl->surface, &sdl->render_info->rect, 0);
 	if (sdl->speed == 0)
 		render_text("no delay", render_info, sdl->surface);
 	else
