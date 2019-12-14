@@ -33,35 +33,36 @@ void		live_op(t_info *info, t_processes **prs, t_sdl *sdl)
 void		ld_op(t_info *info, t_processes **prs, t_sdl *sdl)
 {
     unsigned char code_arg;
+    int           skiped_bytes;
 
-    code_arg = (info->arena)[((*prs)->index + 1) % MEM_SIZE];
-//    if (code_arg == 208)
-//    {
-//
-//    }
-//    else if (code_arg == 144)
-//    {
-//
-//    }
-//    else
-//    {
-//
-//    }
-    create_cursor(info->arena[((*prs)->index + 1) % MEM_SIZE], ((*prs)->index + 1) % MEM_SIZE, (*prs)->reg[0] - 1, sdl);
+    code_arg = ((info->arena)[((*prs)->index + 1) % MEM_SIZE]) & 0xf0;
+    printf("%d   %d\n", code_arg, ((info->arena)[((*prs)->index + 1) % MEM_SIZE]));
+    if (code_arg == 208)
+    {
+        skiped_bytes = 1;
+    }
+    else if (code_arg == 144)
+    {
+        skiped_bytes = 1;
+    }
+    else
+       skiped_bytes = get_bytes_to_skip(1, code_arg);
+    printf("skip %d\n", skiped_bytes);
+    create_cursor(info->arena[((*prs)->index + skiped_bytes) % MEM_SIZE], ((*prs)->index + skiped_bytes) % MEM_SIZE, (*prs)->reg[0] - 1, sdl);
     update_byte(info->arena[(*prs)->index], (*prs)->index, (*prs)->reg[0] - 1, sdl);
-    (*prs)->index = (++((*prs)->index)) % MEM_SIZE;
+    (*prs)->index = ((*prs)->index + skiped_bytes) % MEM_SIZE;
 }
 
 void		st_op(t_info *info, t_processes **prs, t_sdl *sdl)
 {
-    create_cursor(info->arena[((*prs)->index + 1) % MEM_SIZE], ((*prs)->index + 1) % MEM_SIZE, (*prs)->reg[0] - 1, sdl);
-    update_byte(info->arena[(*prs)->index], (*prs)->index, (*prs)->reg[0] - 1, sdl);
-    (*prs)->index = (++((*prs)->index)) % MEM_SIZE;
+//    create_cursor(info->arena[((*prs)->index + 1) % MEM_SIZE], ((*prs)->index + 1) % MEM_SIZE, (*prs)->reg[0] - 1, sdl);
+//    update_byte(info->arena[(*prs)->index], (*prs)->index, (*prs)->reg[0] - 1, sdl);
+//    (*prs)->index = (++((*prs)->index)) % MEM_SIZE;
 }
 
 void		add_op(t_info *info, t_processes **prs, t_sdl *sdl)
 {
-    create_cursor(info->arena[((*prs)->index + 1) % MEM_SIZE], ((*prs)->index + 1) % MEM_SIZE, (*prs)->reg[0] - 1, sdl);
-    update_byte(info->arena[(*prs)->index], (*prs)->index, (*prs)->reg[0] - 1, sdl);
-    (*prs)->index = (++((*prs)->index)) % MEM_SIZE;
+//    create_cursor(info->arena[((*prs)->index + 1) % MEM_SIZE], ((*prs)->index + 1) % MEM_SIZE, (*prs)->reg[0] - 1, sdl);
+//    update_byte(info->arena[(*prs)->index], (*prs)->index, (*prs)->reg[0] - 1, sdl);
+//    (*prs)->index = (++((*prs)->index)) % MEM_SIZE;
 }

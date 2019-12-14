@@ -14,6 +14,31 @@
 #include "corewar.h"
 
 
+//переместить
+int     get_bytes_to_skip(int num, unsigned char code_arg)
+{
+    int     i;
+    int     summ;
+    char    copy;
+
+    i = -1;
+    summ = 2;
+    while (++i < g_op_tab[num].count_args)
+    {
+        printf("do %d\n", code_arg);
+        copy = (code_arg >> (6 - i * 2)) & 00000011;
+        printf("posle %d\n", copy);
+        if (copy == 3)
+            summ += 2;
+        else if (copy== 1)
+            summ += 1;
+        else if (copy == 2)
+            summ += g_op_tab[num].t_dir_size;
+        copy = code_arg;
+    }
+    return (summ);
+}
+
 void	present_champion(header_t *players)
 {
 	int i;
