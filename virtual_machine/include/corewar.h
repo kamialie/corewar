@@ -25,7 +25,7 @@
 # define COR ".cor"
 # define LINE_SIZE 97
 
-# define IND(x) x - 1
+# define IND(x) (x - 1)
 // TEMPORARY
 # include <stdio.h>
 // END

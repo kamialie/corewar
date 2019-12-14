@@ -26,8 +26,8 @@ void		take_actions(t_info *info, t_processes *prs, t_sdl *sdl)
 	{
 		//Если операция валидна, то вызываем исполняющую ее функцию
 		//Иначе смещаем на 1 байт
-		if ((info->arena)[prs->index] >= 0 && (info->arena)[prs->index] < 17)
-			g_op_tab[IND((info->arena)[prs->index])].func(info, &prs, sdl);
+		if ((info->arena)[prs->index] > 0 && (info->arena)[prs->index] < 17)
+            g_op_tab[IND((info->arena)[prs->index])].func(info, &prs, sdl);
 		else
 			prs->index = (++(prs->index)) % MEM_SIZE;
 	}
