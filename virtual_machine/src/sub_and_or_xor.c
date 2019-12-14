@@ -12,22 +12,30 @@
 
 #include "corewar.h"
 
-void		sub_op(t_info *info, t_processes **processes, t_sdl *sdl)
+void		sub_op(t_info *info, t_processes **prs, t_sdl *sdl)
 {
-
+    create_cursor(info->arena[((*prs)->index + 1) % MEM_SIZE], ((*prs)->index + 1) % MEM_SIZE, (*prs)->reg[0] - 1, sdl);
+    update_byte(info->arena[(*prs)->index], (*prs)->index, (*prs)->reg[0] - 1, sdl);
+    (*prs)->index = (++((*prs)->index)) % MEM_SIZE;
 }
 
-void		and_op(t_info *info, t_processes **processes, t_sdl *sdl)
+void		and_op(t_info *info, t_processes **prs, t_sdl *sdl)
 {
-
+    create_cursor(info->arena[((*prs)->index + 1) % MEM_SIZE], ((*prs)->index + 1) % MEM_SIZE, (*prs)->reg[0] - 1, sdl);
+    update_byte(info->arena[(*prs)->index], (*prs)->index, (*prs)->reg[0] - 1, sdl);
+    (*prs)->index = (++((*prs)->index)) % MEM_SIZE;
 }
 
-void		or_op(t_info *info, t_processes **processes, t_sdl *sdl)
+void		or_op(t_info *info, t_processes **prs, t_sdl *sdl)
 {
-
+    create_cursor(info->arena[((*prs)->index + 1) % MEM_SIZE], ((*prs)->index + 1) % MEM_SIZE, (*prs)->reg[0] - 1, sdl);
+    update_byte(info->arena[(*prs)->index], (*prs)->index, (*prs)->reg[0] - 1, sdl);
+    (*prs)->index = (++((*prs)->index)) % MEM_SIZE;
 }
 
-void		xor_op(t_info *info, t_processes **processes, t_sdl *sdl)
+void		xor_op(t_info *info, t_processes **prs, t_sdl *sdl)
 {
-
+    create_cursor(info->arena[((*prs)->index + 1) % MEM_SIZE], ((*prs)->index + 1) % MEM_SIZE, (*prs)->reg[0] - 1, sdl);
+    update_byte(info->arena[(*prs)->index], (*prs)->index, (*prs)->reg[0] - 1, sdl);
+    (*prs)->index = (++((*prs)->index)) % MEM_SIZE;
 }
