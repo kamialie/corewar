@@ -113,7 +113,7 @@ void	draw_arena(t_processes *processes, t_info *info, t_sdl *sdl)
 		start = processes->index;
 		end = start + ((info->players)[player]).prog_size;
 		set_nibble_for_render(start, CURSOR, player, sdl);
-		draw_byte(start, sdl->render_info, sdl->surface);
+		draw_byte(info->arena[start], sdl->render_info, sdl->surface);
 		set_nibble_for_render(start + 1, CODE, player, sdl);
 		draw_range(start + 1, end, info->arena, sdl);
 		set_nibble_for_render(end, EMPTY, player, sdl);

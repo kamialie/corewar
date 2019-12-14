@@ -30,9 +30,7 @@ void	event_handler(t_info *info, t_sdl *sdl)
 			show_data(info->cycle_to_die, 520, sdl); // put on updata
 			show_data(info->count_live, 540, sdl); // put on updata
 			show_data(info->count_check, 560, sdl); // put on updata
-
-			gladiatorial_fight(info, sdl);
-
+            gladiatorial_fight(info, sdl);
 			SDL_UpdateWindowSurface(sdl->window); //draw surface
 			SDL_Delay(100);
 		}

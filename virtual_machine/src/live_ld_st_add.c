@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 18:05:20 by bdudley           #+#    #+#             */
-/*   Updated: 2019/11/17 18:06:45 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/12/14 17:00:40 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,25 @@
 void		live_op(t_info *info, t_processes **prs, t_sdl *sdl)
 {
 	int 	num_player;
+	int     arg;
+	int     new_location;
 
-	//printf("live ");
+    printf("live\n");
 	(*prs)->cc_live = info->count_cycles;
 	num_player = (info->arena)[(*prs)->index];
-	if (((info->players)[num_player - 1]).magic == COREWAR_EXEC_MAGIC)
+	arg = (info->arena)[(*prs)->index + 1];
+	if (((info->players)[num_player - 1]).magic == COREWAR_EXEC_MAGIC && arg == (*prs)->reg[0])
 		info->last_live = num_player;
-	(*prs)->index = (((*prs)->index) + 5) % MEM_SIZE; //1 байт занимает код операции и 4 байта занимает аргумент
+	new_location = (((*prs)->index) + 5) % MEM_SIZE;
+	create_cursor(info->arena[new_location], new_location, num_player - 1, sdl);
+	update_byte(info->arena[(*prs)->index], (*prs)->index, num_player - 1, sdl);
+	//move_cursor((*prs)->index, new_location, num_player - 1, sdl);
+    (*prs)->index = new_location; //1 байт занимает код операции и 4 байта занимает аргумент
 	//printf("cc_live %d\n./", (*prs)->cc_live);
+
+
+
+
 }
 
 void		ld_op(t_info *info, t_processes **prs, t_sdl *sdl)
