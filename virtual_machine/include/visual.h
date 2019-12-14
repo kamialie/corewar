@@ -6,15 +6,14 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 16:09:49 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/30 16:59:04 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/12/14 16:25:01 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VISUAL_H
 # define VISUAL_H
 
-# include "SDL.h"
-# include "SDL_ttf.h"
+# include "project_sdl.h"
 
 # define FONT_PATH "sdl/fonts/FreeMono.ttf"
 # define WIN_HEIGHT 1160
@@ -61,24 +60,6 @@
 # define CYCLE_X_LOCATION 1500
 # define CYCLE_Y_LOCATION 50
 
-typedef struct	s_render
-{
-	SDL_Rect	rect;
-	SDL_Color	font_color;
-	SDL_Color	back_color;
-	TTF_Font	*font;
-}				t_render;
-
-typedef struct	s_sdl
-{
-	SDL_Window	*window;
-	SDL_Surface	*surface;
-	int			*img_data;
-	SDL_Color	colors[9];
-	TTF_Font	*font;
-	t_render	*render_info;
-}				t_sdl;
-
 /*
  * x0, y0 - lower left corner
  * x1, y1 - top right corner
@@ -94,15 +75,13 @@ typedef struct	s_square
 
 int				init_sdl(t_sdl *sdl);
 void			draw_byte(unsigned char byte, t_render *render_info, SDL_Surface *surface);
-void			draw_square(t_square sq_info, int *img_data);
-void			set_render_color(int type, int player, t_render *render_info, SDL_Color *colors);
 void			set_nibble_for_render(int location, int type, int player, t_sdl *sdl);
+void			set_render_color(int type, int player, t_render *render_info, SDL_Color *colors);
 void			draw_byte(unsigned char byte, t_render *render_info, SDL_Surface *surface);
-void			update_byte(int location, int player, t_sdl *sdl);
-void			move_cursor(int cur_location, int new_location, int player, t_sdl *sdl);
-void			create_cursor(int location, int player, t_sdl *sdl);
+void			show_data(int data, int shift, t_sdl *sdl);
+
+void			draw_square(t_square sq_info, int *img_data);
 
 void			update_game_status(int status, t_sdl *sdl);
-
 
 #endif

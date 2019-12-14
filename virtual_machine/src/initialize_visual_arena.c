@@ -6,10 +6,11 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 17:20:29 by rgyles            #+#    #+#             */
-/*   Updated: 2019/12/07 16:42:31 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/12/14 16:28:41 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "visual.h"
 #include "corewar.h"
 
 /*void	draw_arena_grid(t_sdl *sdl, unsigned char *arena)

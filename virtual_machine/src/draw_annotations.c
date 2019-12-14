@@ -6,10 +6,11 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:35:59 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/30 15:09:07 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/12/14 16:29:07 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "visual.h"
 #include "corewar.h"
 
 int		get_size(int number)
