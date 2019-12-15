@@ -13,6 +13,18 @@
 #include "visual.h"
 #include "corewar.h"
 
+//переместить
+int     reverse_int(int num)
+{
+    int	rev_num;
+
+    rev_num = 0;
+    rev_num += ((num & 0xff) << (8 * 3));
+    rev_num += ((num & 0xff00) << (8 * 1));
+    rev_num += ((num & 0xff0000) >> (8 * 1));
+    rev_num += ((num & 0xff000000) >> (8 * 3));
+    return (rev_num);
+}
 
 //переместить
 int     get_bytes_to_skip(int num, unsigned char code_arg)
