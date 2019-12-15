@@ -6,7 +6,7 @@
 #    By: rgyles <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/16 14:20:48 by rgyles            #+#    #+#              #
-#    Updated: 2019/12/14 18:14:51 by rgyles           ###   ########.fr        #
+#    Updated: 2019/12/15 20:44:34 by rgyles           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,18 @@ INCLUDE = -I include/ -I ../libft -I sdl/sdl_build/include/SDL2 -I sdl/sdl_ttf_b
 SDL = -L sdl/sdl_build/lib -l SDL2
 
 SDL_TTF = -L sdl/sdl_ttf_build/lib -l SDL2_ttf
+
+SDL_DIR = sdl/SDL2-2.0.10
+
+SDL_TTF_DIR = sdl/SDL_ttf
+
+SDL_LIB = sdl/lib
+
+SDL_INCLUDE = sdl/include
+
+SDL_TARGET = sdl/lib/libSDL2.dylib
+
+SDL_TTF_TARGET = sdl/lib/libSDL2_ttf.dylib
 
 SRC = main.c \
 	  read.c \
@@ -54,7 +66,7 @@ LIB = ../libft/libft.a
 
 PWD = $(shell pwd)
 
-SDL_BUILD = sdl/sdl_build
+#SDL_BUILD = sdl/sdl_build
 
 FREETYPE_BUILD = sdl/freetype_build
 
@@ -67,9 +79,9 @@ NC = \033[0m
 
 all: $(NAME)
 
-$(NAME): $(LIB) $(SDL_BUILD) $(SDL_TTF_BUILD) $(OBJ) $(VISUAL_OBJ)
+$(NAME): $(LIB) $(SDL_LIB) $(OBJ) $(VISUAL_OBJ)
 	@echo "$(BLUE)Linking Corewar...$(NC)"
-	@gcc $(FLAGS) $(LIB) $(SDL) $(SDL_TTF) -o $(NAME) $(OBJ) $(VISUAL_OBJ)
+	#@gcc $(FLAGS) $(LIB) $(SDL) $(SDL_TTF) -o $(NAME) $(OBJ) $(VISUAL_OBJ)
 	@echo "$(GREEN)Corewar is ready!$(NC)"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c include/corewar.h | $(OBJ_DIR)
@@ -87,28 +99,31 @@ $(LIB):
 	@echo "$(BLUE)Checking libft...$(NC)"
 	@make -C $(LIBFT_DIR)
 
-$(SDL_BUILD):
+$(SDL_LIB): $(SDL_TARGET) $(SDL_TTF_TARGET)
+
+$(SDL_TARGET):
 	@echo "$(BLUE)Extracting SDL...$(NC)"
-	@tar -xf sdl/SDL2-2.0.10.zip -C sdl
-	@mkdir $(SDL_BUILD)
-	@CC=$(PWD)/sdl/SDL2-2.0.10/build-scripts/gcc-fat.sh
+	@tar -xf $(SDL_DIR).zip -C sdl
+	@CC=$(PWD)/$(SDL_DIR)/build-scripts/gcc-fat.sh
 	@echo "$(BLUE)Configuring SDL build...$(NC)"
-	@cd $(SDL_BUILD) ; ../SDL2-2.0.10/configure --prefix=$(PWD)/$(SDL_BUILD) > /dev/null
+	@cd $(SDL_DIR) ; ./configure --prefix=$(PWD)/$(SDL_BUILD) \
+									--includedir=$(PWD)/$(SDL_INCLUDE) \
+									--libdir=$(PWD)/$(SDL_LIB) \
+									> /dev/null
 	@echo "$(BLUE)Building SDL...$(NC)"
-	@make -C $(SDL_BUILD) > /dev/null 2>&1
-	@make -C $(SDL_BUILD) install > /dev/null 2>&1
+	@make -C $(SDL_DIR) > /dev/null 2>&1
+	@make -C $(SDL_DIR) install > /dev/null 2>&1
 	@echo "$(GREEN)SDL is ready!$(NC)"
 
-$(SDL_TTF_BUILD): $(FREETYPE_BUILD) 
+$(SDL_TTF_TARGET): $(FREETYPE_BUILD) 
 	@echo "$(BLUE)Extracting SDL_ttf...$(NC)"
-	@tar -xf sdl/SDL_ttf.tar.gz -C sdl
-	@mkdir $(SDL_TTF_BUILD)
+	@tar -xf $(SDL_TTF_DIR).tar.gz -C sdl
 	@echo "$(BLUE)Configuring SDL_ttf build...$(NC)"
-	@cd $(SDL_TTF_BUILD) ; export SDL_CONFIG="$(PWD)/$(SDL_BUILD)/sdl2-config" ; \
-		../SDL_ttf/configure --prefix="$(PWD)/$(SDL_TTF_BUILD)" --with-freetype-prefix="$(PWD)/$(FREETYPE_BUILD)" > /dev/null
+	@echo "$(PWD)/$(SDL_DIR)"
+	@cd $(SDL_TTF_DIR) ; ./configure --prefix=$(PWD)/$(SDL_TTF_BUILD) --with-sdl-prefix=/Users/rgyles/Documents/42/corewar/virtual_machine/sdl/SDL2-2.0.10 --with-freetype-prefix=$(PWD)/$(FREETYPE_BUILD)
 	@echo "$(BLUE)Building SDL_ttf...$(NC)"
-	@make -C $(SDL_TTF_BUILD) > /dev/null 2>&1
-	@make -C $(SDL_TTF_BUILD) install > /dev/null 2>&1
+	@make -C $(SDL_TTF_DIR) > /dev/null 2>&1
+	@make -C $(SDL_TTF_DIR) install > /dev/null 2>&1
 	@echo "$(GREEN)SDL_ttf is ready!$(NC)"
 
 $(FREETYPE_BUILD):
