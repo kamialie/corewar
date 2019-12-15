@@ -20,23 +20,23 @@ void		zjmp_op(t_info *info, t_processes **prs, t_sdl *sdl)
 //		(*prs)->index = (*prs)->index + *((int *)(info->arena + (*prs)->index + 1)) % IDX_MOD;
 //	}
 //	(*prs)->index = (((*prs)->index) + 3) % MEM_SIZE; //1 байт занимает код операции и 2 байта занимает аргумент
-    create_cursor(info->arena[((*prs)->index + 1) % MEM_SIZE], ((*prs)->index + 1) % MEM_SIZE, (*prs)->reg[0] - 1, sdl);
-    update_byte(info->arena[(*prs)->index], (*prs)->index, (*prs)->reg[0] - 1, sdl);
-    (*prs)->index = (++((*prs)->index)) % MEM_SIZE;
+//    create_cursor(info->arena[((*prs)->index + 1) % MEM_SIZE], ((*prs)->index + 1) % MEM_SIZE, (*prs)->reg[0] - 1, sdl);
+//    update_byte(info->arena[(*prs)->index], (*prs)->index, (*prs)->reg[0] - 1, sdl);
+//    (*prs)->index = (++((*prs)->index)) % MEM_SIZE;
 }
 
 void		ldi_op(t_info *info, t_processes **prs, t_sdl *sdl)
 {
-    create_cursor(info->arena[((*prs)->index + 1) % MEM_SIZE], ((*prs)->index + 1) % MEM_SIZE, (*prs)->reg[0] - 1, sdl);
-    update_byte(info->arena[(*prs)->index], (*prs)->index, (*prs)->reg[0] - 1, sdl);
-    (*prs)->index = (++((*prs)->index)) % MEM_SIZE;
+//    create_cursor(info->arena[((*prs)->index + 1) % MEM_SIZE], ((*prs)->index + 1) % MEM_SIZE, (*prs)->reg[0] - 1, sdl);
+//    update_byte(info->arena[(*prs)->index], (*prs)->index, (*prs)->reg[0] - 1, sdl);
+//    (*prs)->index = (++((*prs)->index)) % MEM_SIZE;
 }
 
 void		sti_op(t_info *info, t_processes **prs, t_sdl *sdl)
 {
-    create_cursor(info->arena[((*prs)->index + 1) % MEM_SIZE], ((*prs)->index + 1) % MEM_SIZE, (*prs)->reg[0] - 1, sdl);
-    update_byte(info->arena[(*prs)->index], (*prs)->index, (*prs)->reg[0] - 1, sdl);
-    (*prs)->index = (++((*prs)->index)) % MEM_SIZE;
+//    create_cursor(info->arena[((*prs)->index + 1) % MEM_SIZE], ((*prs)->index + 1) % MEM_SIZE, (*prs)->reg[0] - 1, sdl);
+//    update_byte(info->arena[(*prs)->index], (*prs)->index, (*prs)->reg[0] - 1, sdl);
+//    (*prs)->index = (++((*prs)->index)) % MEM_SIZE;
 }
 
 void		fork_op(t_info *info, t_processes **prs, t_sdl *sdl)
