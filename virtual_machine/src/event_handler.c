@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 15:50:24 by rgyles            #+#    #+#             */
-/*   Updated: 2019/12/14 18:32:02 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/12/15 16:02:28 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,13 @@ void	event_handler(t_info *info, t_sdl *sdl)
 					printf("decrease\n");
 					sdl->speed += 50;
 					show_sdl_data(sdl);
+					SDL_UpdateWindowSurface(sdl->window); //draw surface
+				}
+				else if (key == SDLK_n)
+				{
+					printf("count_cycles %d\n", info->count_cycles);
+					show_data(info, sdl);
+					gladiatorial_fight(info, sdl);
 					SDL_UpdateWindowSurface(sdl->window); //draw surface
 				}
 			}
