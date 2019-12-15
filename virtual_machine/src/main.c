@@ -25,9 +25,7 @@ int     get_bytes_to_skip(int num, unsigned char code_arg)
     summ = 2;
     while (++i < g_op_tab[num].count_args)
     {
-        printf("do %d\n", code_arg);
         copy = (code_arg >> (6 - i * 2)) & 00000011;
-        printf("posle %d\n", copy);
         if (copy == 3)
             summ += 2;
         else if (copy== 1)
