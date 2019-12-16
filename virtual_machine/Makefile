@@ -20,17 +20,17 @@ LIBFT_DIR = ../libft
 
 #FLAGS = -Wall -Wextra -Werror
 
-SDL = -L sdl/sdl_build/lib -l SDL2
-
-SDL_TTF = -L sdl/sdl_ttf_build/lib -l SDL2_ttf
-
 SDL_DIR = sdl/SDL2-2.0.10
 
 SDL_TTF_DIR = sdl/SDL_ttf
 
+FREETYPE_DIR = sdl/freetype-2.4.9
+
 SDL_TARGET = sdl/lib/libSDL2.dylib
 
 SDL_TTF_TARGET = sdl/lib/libSDL2_ttf.dylib
+
+FREETYPE_TARGET = sdl/lib/libfreetype.dylib
 
 SDL_LIB = sdl/lib
 
@@ -66,7 +66,7 @@ VISUAL_OBJ = $(addprefix $(OBJ_DIR)/, $(VISUAL_SRC:.c=.o))
 
 LIBFT = ../libft/libft.a
 
-PWD = $(shell pwd)
+PROJECT_PATH = $(shell pwd)
 
 FREETYPE_BUILD = sdl/freetype_build
 
@@ -99,48 +99,51 @@ $(LIBFT):
 
 $(SDL_LIB): $(SDL_TARGET) $(SDL_TTF_TARGET)
 	@echo "$(GREEN)SDL libraries are installed at $(SDL_LIB)!$(NC)"
-	@echo "$(GREEN)SDL header are set at $(SDL_INCLUDE)!$(NC)"
-	rm -rf $(SDL_DIR) $(SDL_TTF_DIR)
+	@echo "$(GREEN)SDL headers are set at $(SDL_INCLUDE)!$(NC)"
+	@echo "$(RED)Deleting build directories...$(NC)"
+	@rm -rf $(SDL_DIR) $(SDL_TTF_DIR) $(FREETYPE_DIR)
 
 
 $(SDL_TARGET):
 	@echo "$(BLUE)Extracting SDL...$(NC)"
 	@tar -xf $(SDL_DIR).zip -C sdl
-	@CC=$(PWD)/$(SDL_DIR)/build-scripts/gcc-fat.sh
+	@CC=$(PROJECT_PATH)/$(SDL_DIR)/build-scripts/gcc-fat.sh
 	@echo "$(BLUE)Configuring SDL build...$(NC)"
-	@cd $(SDL_DIR) ; ./configure --prefix=$(PWD)/$(SDL_DIR) \
-									--includedir=$(PWD)/$(SDL_INCLUDE) \
-									--libdir=$(PWD)/$(SDL_LIB) \
+	@cd $(SDL_DIR) ; ./configure --prefix=$(PROJECT_PATH)/$(SDL_DIR) \
+									--includedir=$(PROJECT_PATH)/$(SDL_INCLUDE) \
+									--libdir=$(PROJECT_PATH)/$(SDL_LIB) \
 									> /dev/null
 	@echo "$(BLUE)Building SDL...$(NC)"
 	@make -C $(SDL_DIR) > /dev/null 2>&1
 	@make -C $(SDL_DIR) install > /dev/null 2>&1
 	@echo "$(GREEN)SDL is ready!$(NC)"
 
-$(SDL_TTF_TARGET): $(FREETYPE_BUILD) 
+$(SDL_TTF_TARGET): $(FREETYPE_TARGET) 
 	@echo "$(BLUE)Extracting SDL_ttf...$(NC)"
-	@tar -xf $(SDL_TTF_DIR).tar.gz -C sdl
+	@tar -xf $(SDL_TTF_DIR).zip -C sdl
 	@echo "$(BLUE)Configuring SDL_ttf build...$(NC)"
-	@cd $(SDL_TTF_DIR) ; ./configure --prefix=$(PWD)/$(SDL_TTF_DIR) \
-										--with-sdl-prefix=$(PWD)/$(SDL_DIR) \
-										--with-freetype-prefix=$(PWD)/$(FREETYPE_BUILD) \
-										--includedir=$(PWD)/$(SDL_INCLUDE) \
-										--libdir=$(PWD)/$(SDL_LIB) \
+	@cd $(SDL_TTF_DIR) ; ./configure --prefix=$(PROJECT_PATH)/$(SDL_TTF_DIR) \
+										--with-sdl-prefix=$(PROJECT_PATH)/$(SDL_DIR) \
+										--with-freetype-prefix=$(PROJECT_PATH)/$(FREETYPE_DIR) \
+										--includedir=$(PROJECT_PATH)/$(SDL_INCLUDE) \
+										--libdir=$(PROJECT_PATH)/$(SDL_LIB) \
 										> /dev/null
 	@echo "$(BLUE)Building SDL_ttf...$(NC)"
 	@make -C $(SDL_TTF_DIR) > /dev/null 2>&1
 	@make -C $(SDL_TTF_DIR) install > /dev/null 2>&1
 	@echo "$(GREEN)SDL_ttf is ready!$(NC)"
 
-$(FREETYPE_BUILD):
+$(FREETYPE_TARGET):
 	@echo "$(BLUE)Extracting freetype...$(NC)"
 	@tar -xf sdl/freetype-2.4.9.tar.bz2 -C sdl
-	@mkdir $(FREETYPE_BUILD)
 	@echo "$(BLUE)Configuring freetype build...$(NC)"
-	@cd $(FREETYPE_BUILD) ; ../freetype-2.4.9/configure --prefix=$(PWD)/$(FREETYPE_BUILD) > /dev/null
+	@cd $(FREETYPE_DIR) ; ./configure --prefix=$(PROJECT_PATH)/$(FREETYPE_DIR) \
+										--includedir=$(PROJECT_PATH)/$(SDL_INCLUDE) \
+										--libdir=$(PROJECT_PATH)/$(SDL_LIB) \
+										> /dev/null
 	@echo "$(BLUE)Building freetype...$(NC)"
-	@make -C $(FREETYPE_BUILD) > /dev/null 2>&1
-	@make -C $(FREETYPE_BUILD) install > /dev/null 2>&1
+	@make -C $(FREETYPE_DIR) > /dev/null 2>&1
+	@make -C $(FREETYPE_DIR) install > /dev/null 2>&1
 	@echo "$(GREEN)freetype is ready!$(NC)"
 
 clean:
@@ -153,8 +156,8 @@ fclean: clean
 	@rm -rf $(NAME)
 	@echo "$(RED)Deleting libft...$(NC)"
 	@make -C $(LIBFT_DIR) fclean
-	#@echo "$(RED)Deleting SDL, SDL_TTF, freetype builds...$(NC)"
-	#@rm -rf sdl/sdl_build sdl/freetype_build sdl/sdl_ttf_build
+	@echo "$(RED)Deleting SDL, SDL_TTF, freetype libraries and header files...$(NC)"
+	@rm -rf sdl/lib sdl/include
 
 re: fclean all
 
