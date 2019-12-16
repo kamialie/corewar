@@ -105,12 +105,13 @@ build_summary:
 	@echo "\n   $(GREEN)***Wonderful virtual machine build summary***$(NC)   \n"
 
 $(OBJ_DIR):
-	@echo "$(GREEN)Object directory is created!$(NC)"
 	@mkdir -p $(OBJ_DIR)
+	@echo "    $(CHECK_MARK)$(GREEN) Object directory is created!$(NC)\n"
 
 $(LIBFT):
-	@echo "$(BLUE)Checking libft...$(NC)"
+	@echo "    $(CLEAR)$(BLUE)Checking libft...$(NC)"
 	@make -C $(LIBFT_DIR)
+	@echo "    $(UP)$(CLEAR)$(CHECK_MARK)$(YELLOW) Libft is ready!$(NC)"
 
 $(SDL_LIB): $(SDL_TARGET) $(SDL_TTF_TARGET) $(SDL_MIXER_TARGET)
 	@echo "    $(CHECK_MARK)$(GREEN) SDL libraries are installed at $(SDL_LIB)!$(NC)"
