@@ -116,6 +116,7 @@ $(SDL_TARGET):
 	@CC=$(PROJECT_PATH)/$(SDL_DIR)/build-scripts/gcc-fat.sh
 	@echo "$(BLUE)Configuring SDL build...$(NC)"
 	@cd $(SDL_DIR) ; ./configure --prefix=$(PROJECT_PATH)/$(SDL_DIR) \
+									--disable-static \
 									--disable-joystick \
 									--disable-haptic \
 									--disable-sensor \
@@ -124,8 +125,8 @@ $(SDL_TARGET):
 									--libdir=$(PROJECT_PATH)/$(SDL_LIB) \
 									> /dev/null
 	@echo "$(BLUE)Building SDL...$(NC)"
-	@make -C $(SDL_DIR) > /dev/null 2>&1
-	@make -C $(SDL_DIR) install > /dev/null 2>&1
+	@make -j4 -C $(SDL_DIR) > /dev/null 2>&1
+	@make -j4 -C $(SDL_DIR) install > /dev/null 2>&1
 	@echo "$(GREEN)SDL is ready!$(NC)"
 
 $(SDL_TTF_TARGET): $(FREETYPE_TARGET) 
@@ -133,14 +134,15 @@ $(SDL_TTF_TARGET): $(FREETYPE_TARGET)
 	@tar -xf $(SDL_TTF_DIR).zip -C sdl
 	@echo "$(BLUE)Configuring SDL_ttf build...$(NC)"
 	@cd $(SDL_TTF_DIR) ; ./configure --prefix=$(PROJECT_PATH)/$(SDL_TTF_DIR) \
+										--disable-static \
 										--with-sdl-prefix=$(PROJECT_PATH)/$(SDL_DIR) \
 										--with-freetype-prefix=$(PROJECT_PATH)/$(FREETYPE_DIR) \
 										--includedir=$(PROJECT_PATH)/$(SDL_INCLUDE) \
 										--libdir=$(PROJECT_PATH)/$(SDL_LIB) \
 										> /dev/null
 	@echo "$(BLUE)Building SDL_ttf...$(NC)"
-	@make -C $(SDL_TTF_DIR) > /dev/null 2>&1
-	@make -C $(SDL_TTF_DIR) install > /dev/null 2>&1
+	@make -j4 -C $(SDL_TTF_DIR) > /dev/null 2>&1
+	@make -j4 -C $(SDL_TTF_DIR) install > /dev/null 2>&1
 	@echo "$(GREEN)SDL_ttf is ready!$(NC)"
 
 $(FREETYPE_TARGET):
@@ -148,12 +150,13 @@ $(FREETYPE_TARGET):
 	@tar -xf $(FREETYPE_DIR).tar.bz2 -C sdl
 	@echo "$(BLUE)Configuring freetype build...$(NC)"
 	@cd $(FREETYPE_DIR) ; ./configure --prefix=$(PROJECT_PATH)/$(FREETYPE_DIR) \
+										--disable-static \
 										--includedir=$(PROJECT_PATH)/$(SDL_INCLUDE) \
 										--libdir=$(PROJECT_PATH)/$(SDL_LIB) \
 										> /dev/null
 	@echo "$(BLUE)Building freetype...$(NC)"
-	@make -C $(FREETYPE_DIR) > /dev/null 2>&1
-	@make -C $(FREETYPE_DIR) install > /dev/null 2>&1
+	@make -j4 -C $(FREETYPE_DIR) > /dev/null 2>&1
+	@make -j4 -C $(FREETYPE_DIR) install > /dev/null 2>&1
 	@echo "$(GREEN)freetype is ready!$(NC)"
 
 $(SDL_MIXER_TARGET): export CPPFLAGS = -I$(PROJECT_PATH)/$(SDL_INCLUDE)
@@ -163,16 +166,16 @@ $(SDL_MIXER_TARGET): $(LIBMAD_TARGET)
 	@tar -xf $(SDL_MIXER_DIR).zip -C sdl
 	@echo "$(BLUE)Configuring SDL2_mixer build...$(NC)"
 	@export CPPFLAGS="-I$(PROJECT_PATH)/$(SDL_INCLUDE)"
-	@echo $$CPPFLAGS
 	@cd $(SDL_MIXER_DIR) ; ./configure --prefix=$(PROJECT_PATH)/$(SDL_MIXER_DIR) \
+										--disable-static \
 										--with-sdl-prefix=$(PROJECT_PATH)/$(SDL_DIR) \
 										--enable-music-mp3-mad-gpl=yes \
 										--includedir=$(PROJECT_PATH)/$(SDL_INCLUDE) \
 										--libdir=$(PROJECT_PATH)/$(SDL_LIB) \
-										#> /dev/null
+										> /dev/null 2>&1
 	@echo "$(BLUE)Building SDL2_mixer...$(NC)"
-	@make -C $(SDL_MIXER_DIR) #> /dev/null 2>&1
-	@make -C $(SDL_MIXER_DIR) install #> /dev/null 2>&1
+	@make -j4 -C $(SDL_MIXER_DIR) > /dev/null 2>&1
+	@make -j4 -C $(SDL_MIXER_DIR) install > /dev/null 2>&1
 	@echo "$(GREEN)SDL2_mixer is ready!$(NC)"
 
 $(LIBMAD_TARGET):
@@ -180,13 +183,14 @@ $(LIBMAD_TARGET):
 	@tar -xf $(LIBMAD_DIR).zip -C sdl
 	@echo "$(BLUE)Configuring libmad build...$(NC)"
 	@cd $(LIBMAD_DIR) ; ./configure --prefix=$(PROJECT_PATH)/$(LIBMAD_DIR) \
+									--disable-static \
 									--includedir=$(PROJECT_PATH)/$(SDL_INCLUDE) \
 									--libdir=$(PROJECT_PATH)/$(SDL_LIB) \
 									> /dev/null 2>&1
 	@sed -i '' "129s/.*/CFLAGS=-Wall/" $(LIBMAD_DIR)/Makefile
 	@echo "$(BLUE)Building libmad...$(NC)"
-	@make -C $(LIBMAD_DIR) > /dev/null 2>&1
-	@make -C $(LIBMAD_DIR) install > /dev/null 2>&1
+	@make -j4 -C $(LIBMAD_DIR) > /dev/null 2>&1
+	@make -j4 -C $(LIBMAD_DIR) install > /dev/null 2>&1
 	@echo "$(GREEN)libmad is ready!$(NC)"
 
 clean:
