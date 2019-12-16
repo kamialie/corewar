@@ -76,17 +76,23 @@ VISUAL_SRC = init_visual.c \
 
 VISUAL_OBJ = $(addprefix $(OBJ_DIR)/, $(VISUAL_SRC:.c=.o))
 
+CHECK_MARK= \033[0;32m\xE2\x9C\x94\033[0m
+
+CLEAR = \033[2K
+UP= \033[1A
+
 RED = \033[0;31m
-GREEN = \033[0;32m
-BLUE = \033[0;34m
+GREEN = \033[4;32m
+YELLOW = \033[1;33m
+BLUE = \033[1;34m
 NC = \033[0m
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(SDL_LIB) $(OBJ) $(VISUAL_OBJ)
-	@echo "$(BLUE)Linking Corewar...$(NC)"
+$(NAME): build_summary $(LIBFT) $(SDL_LIB) $(OBJ) $(VISUAL_OBJ)
+	@echo "\n    $(CHECK_MARK)$(BLUE) Linking Corewar...$(NC)"
 	@gcc $(FLAGS) $(LIBFT) $(LIB) -o $(NAME) $(OBJ) $(VISUAL_OBJ)
-	@echo "$(GREEN)Corewar is ready!$(NC)"
+	@echo "    $(CHECK_MARK)$(GREEN) Corewar is ready!$(NC)\n"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c include/corewar.h | $(OBJ_DIR)
 	gcc $(FLAGS) $(INCLUDE) -o $@ -c $<
@@ -94,6 +100,9 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c include/corewar.h | $(OBJ_DIR)
 $(OBJ_DIR)/main.o: include/visual.h include/project_sdl.h
 
 $(VISUAL_OBJ): include/visual.h include/project_sdl.h
+
+build_summary:
+	@echo "\n   $(GREEN)***Wonderful virtual machine build summary***$(NC)   \n"
 
 $(OBJ_DIR):
 	@echo "$(GREEN)Object directory is created!$(NC)"
@@ -104,17 +113,23 @@ $(LIBFT):
 	@make -C $(LIBFT_DIR)
 
 $(SDL_LIB): $(SDL_TARGET) $(SDL_TTF_TARGET) $(SDL_MIXER_TARGET)
-	@echo "$(GREEN)SDL libraries are installed at $(SDL_LIB)!$(NC)"
-	@echo "$(GREEN)SDL headers are set at $(SDL_INCLUDE)!$(NC)"
-	@echo "$(RED)Deleting build directories...$(NC)"
+	@echo "    $(CHECK_MARK)$(GREEN) SDL libraries are installed at $(SDL_LIB)!$(NC)"
+	@#/bin/sleep 2
+	@echo "    $(CHECK_MARK)$(GREEN) SDL headers are set at $(SDL_INCLUDE)!$(NC)"
+	@#/bin/sleep 2
+	@echo "    $(CHECK_MARK)$(RED) Deleting build directories...$(NC)"
 	@rm -rf $(SDL_DIR) $(SDL_TTF_DIR) $(FREETYPE_DIR) $(SDL_MIXER_DIR) $(LIBMAD_DIR)
 
 
 $(SDL_TARGET):
-	@echo "$(BLUE)Extracting SDL...$(NC)"
+	@echo "    $(CLEAR)$(BLUE)Extracting SDL...$(NC)"
+	@echo "    Progress: #->               #\r\c"
+	@#/bin/sleep 2
 	@tar -xf $(SDL_DIR).zip -C sdl
 	@CC=$(PROJECT_PATH)/$(SDL_DIR)/build-scripts/gcc-fat.sh
-	@echo "$(BLUE)Configuring SDL build...$(NC)"
+	@echo "    $(UP)$(CLEAR)$(BLUE)Configuring SDL build...$(NC)"
+	@echo "    Progress: #-->              #\r\c"
+	@#/bin/sleep 2
 	@cd $(SDL_DIR) ; ./configure --prefix=$(PROJECT_PATH)/$(SDL_DIR) \
 									--disable-static \
 									--disable-joystick \
@@ -124,15 +139,23 @@ $(SDL_TARGET):
 									--includedir=$(PROJECT_PATH)/$(SDL_INCLUDE) \
 									--libdir=$(PROJECT_PATH)/$(SDL_LIB) \
 									> /dev/null
-	@echo "$(BLUE)Building SDL...$(NC)"
+	@echo "    $(UP)$(CLEAR)$(BLUE)Building SDL...$(NC)"
+	@echo "    Progress: #--->             #\r\c"
+	@#/bin/sleep 2
 	@make -j4 -C $(SDL_DIR) > /dev/null 2>&1
 	@make -j4 -C $(SDL_DIR) install > /dev/null 2>&1
-	@echo "$(GREEN)SDL is ready!$(NC)"
+	@echo "    $(UP)$(CLEAR)$(CHECK_MARK)$(YELLOW) SDL is ready!$(NC)"
+	@echo "    Progress: #---->            #\r\c"
+	@#/bin/sleep 2
 
 $(SDL_TTF_TARGET): $(FREETYPE_TARGET) 
-	@echo "$(BLUE)Extracting SDL_ttf...$(NC)"
+	@echo "    $(CLEAR)$(BLUE)Extracting SDL_ttf...$(NC)"
+	@echo "    Progress: #--------->       #\r\c"
+	@#/bin/sleep 2
 	@tar -xf $(SDL_TTF_DIR).zip -C sdl
-	@echo "$(BLUE)Configuring SDL_ttf build...$(NC)"
+	@echo "    $(UP)$(CLEAR)$(BLUE)Configuring SDL_ttf build...$(NC)"
+	@echo "    Progress: #---------->      #\r\c"
+	@#/bin/sleep 2
 	@cd $(SDL_TTF_DIR) ; ./configure --prefix=$(PROJECT_PATH)/$(SDL_TTF_DIR) \
 										--disable-static \
 										--with-sdl-prefix=$(PROJECT_PATH)/$(SDL_DIR) \
@@ -140,32 +163,47 @@ $(SDL_TTF_TARGET): $(FREETYPE_TARGET)
 										--includedir=$(PROJECT_PATH)/$(SDL_INCLUDE) \
 										--libdir=$(PROJECT_PATH)/$(SDL_LIB) \
 										> /dev/null
-	@echo "$(BLUE)Building SDL_ttf...$(NC)"
+	@echo "    $(UP)$(CLEAR)$(BLUE)Building SDL_ttf...$(NC)"
+	@echo "    Progress: #----------->     #\r\c"
+	@#/bin/sleep 2
 	@make -j4 -C $(SDL_TTF_DIR) > /dev/null 2>&1
 	@make -j4 -C $(SDL_TTF_DIR) install > /dev/null 2>&1
-	@echo "$(GREEN)SDL_ttf is ready!$(NC)"
+	@echo "    $(UP)$(CLEAR)$(CHECK_MARK)$(YELLOW) SDL_ttf is ready!$(NC)"
+	@echo "    Progress: #------------>    #\r\c"
+	@#/bin/sleep 2
 
 $(FREETYPE_TARGET):
-	@echo "$(BLUE)Extracting freetype...$(NC)"
+	@echo "    $(CLEAR)$(BLUE)Extracting freetype...$(NC)"
+	@echo "    Progress: #----->           #\r\c"
+	@#/bin/sleep 2
 	@tar -xf $(FREETYPE_DIR).tar.bz2 -C sdl
-	@echo "$(BLUE)Configuring freetype build...$(NC)"
+	@echo "    $(UP)$(CLEAR)$(BLUE)Configuring freetype build...$(NC)"
+	@echo "    Progress: #------>          #\r\c"
+	@#/bin/sleep 2
 	@cd $(FREETYPE_DIR) ; ./configure --prefix=$(PROJECT_PATH)/$(FREETYPE_DIR) \
 										--disable-static \
 										--includedir=$(PROJECT_PATH)/$(SDL_INCLUDE) \
 										--libdir=$(PROJECT_PATH)/$(SDL_LIB) \
 										> /dev/null
-	@echo "$(BLUE)Building freetype...$(NC)"
+	@echo "    $(UP)$(CLEAR)$(BLUE)Building freetype...$(NC)"
+	@echo "    Progress: #------->         #\r\c"
+	@#/bin/sleep 2
 	@make -j4 -C $(FREETYPE_DIR) > /dev/null 2>&1
 	@make -j4 -C $(FREETYPE_DIR) install > /dev/null 2>&1
-	@echo "$(GREEN)freetype is ready!$(NC)"
+	@echo "    $(UP)$(CLEAR)$(CHECK_MARK)$(YELLOW) freetype is ready!$(NC)"
+	@echo "    Progress: #-------->        #\r\c"
+	@#/bin/sleep 2
 
 $(SDL_MIXER_TARGET): export CPPFLAGS = -I$(PROJECT_PATH)/$(SDL_INCLUDE)
 
 $(SDL_MIXER_TARGET): $(LIBMAD_TARGET)
-	@echo "$(BLUE)Extracting SDL2_mixer...$(NC)"
+	@echo "    $(CLEAR)$(BLUE)Extracting SDL2_mixer...$(NC)"
+	@echo "    Progress: #---------------->#\r\c"
+	@#/bin/sleep 2
 	@tar -xf $(SDL_MIXER_DIR).zip -C sdl
-	@echo "$(BLUE)Configuring SDL2_mixer build...$(NC)"
-	@export CPPFLAGS="-I$(PROJECT_PATH)/$(SDL_INCLUDE)"
+	@echo "    $(UP)$(CLEAR)$(BLUE)Configuring SDL2_mixer build...$(NC)"
+	@echo "    Progress: #---------------->#\r\c"
+	@#/bin/sleep 2
 	@cd $(SDL_MIXER_DIR) ; ./configure --prefix=$(PROJECT_PATH)/$(SDL_MIXER_DIR) \
 										--disable-static \
 										--with-sdl-prefix=$(PROJECT_PATH)/$(SDL_DIR) \
@@ -173,25 +211,37 @@ $(SDL_MIXER_TARGET): $(LIBMAD_TARGET)
 										--includedir=$(PROJECT_PATH)/$(SDL_INCLUDE) \
 										--libdir=$(PROJECT_PATH)/$(SDL_LIB) \
 										> /dev/null 2>&1
-	@echo "$(BLUE)Building SDL2_mixer...$(NC)"
+	@echo "    $(UP)$(CLEAR)$(BLUE)Building SDL2_mixer...$(NC)"
+	@echo "    Progress: #---------------->#\r\c"
+	@#/bin/sleep 2
 	@make -j4 -C $(SDL_MIXER_DIR) > /dev/null 2>&1
 	@make -j4 -C $(SDL_MIXER_DIR) install > /dev/null 2>&1
-	@echo "$(GREEN)SDL2_mixer is ready!$(NC)"
+	@echo "    $(UP)$(CLEAR)$(CHECK_MARK)$(YELLOW) SDL2_mixer is ready!$(NC)"
+	@echo "    Progress: #---------------->#\r\c"
+	@#/bin/sleep 2
 
 $(LIBMAD_TARGET):
-	@echo "$(BLUE)Extracting libmad...$(NC)"
+	@echo "    $(CLEAR)$(BLUE)Extracting libmad...$(NC)"
+	@echo "    Progress: #------------->   #\r\c"
+	@#/bin/sleep 2
 	@tar -xf $(LIBMAD_DIR).zip -C sdl
-	@echo "$(BLUE)Configuring libmad build...$(NC)"
+	@echo "    $(UP)$(CLEAR)$(BLUE)Configuring libmad build...$(NC)"
+	@echo "    Progress: #-------------->  #\r\c"
+	@#/bin/sleep 2
 	@cd $(LIBMAD_DIR) ; ./configure --prefix=$(PROJECT_PATH)/$(LIBMAD_DIR) \
 									--disable-static \
 									--includedir=$(PROJECT_PATH)/$(SDL_INCLUDE) \
 									--libdir=$(PROJECT_PATH)/$(SDL_LIB) \
 									> /dev/null 2>&1
 	@sed -i '' "129s/.*/CFLAGS=-Wall/" $(LIBMAD_DIR)/Makefile
-	@echo "$(BLUE)Building libmad...$(NC)"
+	@echo "    $(UP)$(CLEAR)$(BLUE)Building libmad...$(NC)"
+	@#/bin/sleep 2
 	@make -j4 -C $(LIBMAD_DIR) > /dev/null 2>&1
 	@make -j4 -C $(LIBMAD_DIR) install > /dev/null 2>&1
-	@echo "$(GREEN)libmad is ready!$(NC)"
+	@echo "    Progress: #---------------> #\r\c"
+	@echo "    $(UP)$(CLEAR)$(CHECK_MARK)$(YELLOW) libmad is ready!$(NC)"
+	@echo "    Progress: #---------------->#\r\c"
+	@#/bin/sleep 2
 
 clean:
 	@echo "$(RED)Deleting object files...$(NC)"
@@ -209,7 +259,8 @@ fclean: clean
 re: fclean all
 
 test:
-	KAMIL=HELLO
-	echo $$KAMIL
+	echo "in"
+	/bin/sleep 3
+	echo "out"
 
 .PHONY: all clean fclean re
