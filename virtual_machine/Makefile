@@ -12,13 +12,7 @@
 
 NAME = corewar
 
-SRC_DIR = src
-
-OBJ_DIR = obj
-
-LIBFT_DIR = ../libft
-
-#FLAGS = -Wall -Wextra -Werror
+PROJECT_PATH = $(shell pwd)
 
 SDL_DIR = sdl/SDL2-2.0.10
 
@@ -32,13 +26,23 @@ SDL_TTF_TARGET = sdl/lib/libSDL2_ttf.dylib
 
 FREETYPE_TARGET = sdl/lib/libfreetype.dylib
 
-SDL_LIB = sdl/lib
+LIBFT_DIR = ../libft/
 
-SDL_INCLUDE = sdl/include
+LIBFT = ../libft/libft.a
 
-INCLUDE = -I include/ -I ../libft -I sdl/include/SDL2
+SDL_LIB = lib
 
-LIB = -L sdl/lib -l SDL2 -l SDL2_ttf
+SDL_INCLUDE = include
+
+INCLUDE = -I include -I ../libft -I $(SDL_INCLUDE)/SDL2
+
+LIB = -L $(SDL_LIB) -l SDL2 -l SDL2_ttf
+
+#FLAGS = -Wall -Wextra -Werror
+
+SRC_DIR = src
+
+OBJ_DIR = obj
 
 SRC = main.c \
 	  read.c \
@@ -63,12 +67,6 @@ VISUAL_SRC = init_visual.c \
 			 event_handler.c
 
 VISUAL_OBJ = $(addprefix $(OBJ_DIR)/, $(VISUAL_SRC:.c=.o))
-
-LIBFT = ../libft/libft.a
-
-PROJECT_PATH = $(shell pwd)
-
-FREETYPE_BUILD = sdl/freetype_build
 
 RED = \033[0;31m
 GREEN = \033[0;32m
@@ -157,7 +155,7 @@ fclean: clean
 	@echo "$(RED)Deleting libft...$(NC)"
 	@make -C $(LIBFT_DIR) fclean
 	@echo "$(RED)Deleting SDL, SDL_TTF, freetype libraries and header files...$(NC)"
-	@rm -rf sdl/lib sdl/include
+	@rm -rf $(SDL_LIB) $(SDL_INCLUDE)/SDL2 $(SDL_INCLUDE)/ft2build.h $(SDL_INCLUDE)/freetype2
 
 re: fclean all
 
