@@ -18,13 +18,21 @@ SDL_DIR = sdl/SDL2-2.0.10
 
 SDL_TTF_DIR = sdl/SDL_ttf
 
+SDL_MIXER_DIR = sdl/SDL2_mixer-2.0.4
+
 FREETYPE_DIR = sdl/freetype-2.4.9
 
-SDL_TARGET = sdl/lib/libSDL2.dylib
+LIBMAD_DIR = sdl/libmad-0.15.1b
 
-SDL_TTF_TARGET = sdl/lib/libSDL2_ttf.dylib
+SDL_TARGET = lib/libSDL2.dylib
 
-FREETYPE_TARGET = sdl/lib/libfreetype.dylib
+SDL_TTF_TARGET = lib/libSDL2_ttf.dylib
+
+SDL_MIXER_TARGET = lib/libSDL2_mixer.dylib
+
+FREETYPE_TARGET = lib/libfreetype.dylib
+
+LIBMAD_TARGET = lib/libmad.dylib
 
 LIBFT_DIR = ../libft/
 
@@ -34,7 +42,7 @@ SDL_LIB = lib
 
 SDL_INCLUDE = include
 
-INCLUDE = -I include -I ../libft -I $(SDL_INCLUDE)/SDL2
+INCLUDE = -I ../libft -I include -I $(SDL_INCLUDE)/SDL2
 
 LIB = -L $(SDL_LIB) -l SDL2 -l SDL2_ttf
 
@@ -95,11 +103,11 @@ $(LIBFT):
 	@echo "$(BLUE)Checking libft...$(NC)"
 	@make -C $(LIBFT_DIR)
 
-$(SDL_LIB): $(SDL_TARGET) $(SDL_TTF_TARGET)
+$(SDL_LIB): $(SDL_TARGET) $(SDL_TTF_TARGET) $(SDL_MIXER_TARGET)
 	@echo "$(GREEN)SDL libraries are installed at $(SDL_LIB)!$(NC)"
 	@echo "$(GREEN)SDL headers are set at $(SDL_INCLUDE)!$(NC)"
 	@echo "$(RED)Deleting build directories...$(NC)"
-	@rm -rf $(SDL_DIR) $(SDL_TTF_DIR) $(FREETYPE_DIR)
+	@rm -rf $(SDL_DIR) $(SDL_TTF_DIR) $(FREETYPE_DIR) $(SDL_MIXER_DIR) $(LIBMAD_DIR)
 
 
 $(SDL_TARGET):
@@ -137,7 +145,7 @@ $(SDL_TTF_TARGET): $(FREETYPE_TARGET)
 
 $(FREETYPE_TARGET):
 	@echo "$(BLUE)Extracting freetype...$(NC)"
-	@tar -xf sdl/freetype-2.4.9.tar.bz2 -C sdl
+	@tar -xf $(FREETYPE_DIR).tar.bz2 -C sdl
 	@echo "$(BLUE)Configuring freetype build...$(NC)"
 	@cd $(FREETYPE_DIR) ; ./configure --prefix=$(PROJECT_PATH)/$(FREETYPE_DIR) \
 										--includedir=$(PROJECT_PATH)/$(SDL_INCLUDE) \
@@ -147,6 +155,39 @@ $(FREETYPE_TARGET):
 	@make -C $(FREETYPE_DIR) > /dev/null 2>&1
 	@make -C $(FREETYPE_DIR) install > /dev/null 2>&1
 	@echo "$(GREEN)freetype is ready!$(NC)"
+
+$(SDL_MIXER_TARGET): export CPPFLAGS = -I$(PROJECT_PATH)/$(SDL_INCLUDE)
+
+$(SDL_MIXER_TARGET): $(LIBMAD_TARGET)
+	@echo "$(BLUE)Extracting SDL2_mixer...$(NC)"
+	@tar -xf $(SDL_MIXER_DIR).zip -C sdl
+	@echo "$(BLUE)Configuring SDL2_mixer build...$(NC)"
+	@export CPPFLAGS="-I$(PROJECT_PATH)/$(SDL_INCLUDE)"
+	@echo $$CPPFLAGS
+	@cd $(SDL_MIXER_DIR) ; ./configure --prefix=$(PROJECT_PATH)/$(SDL_MIXER_DIR) \
+										--with-sdl-prefix=$(PROJECT_PATH)/$(SDL_DIR) \
+										--enable-music-mp3-mad-gpl=yes \
+										--includedir=$(PROJECT_PATH)/$(SDL_INCLUDE) \
+										--libdir=$(PROJECT_PATH)/$(SDL_LIB) \
+										#> /dev/null
+	@echo "$(BLUE)Building SDL2_mixer...$(NC)"
+	@make -C $(SDL_MIXER_DIR) #> /dev/null 2>&1
+	@make -C $(SDL_MIXER_DIR) install #> /dev/null 2>&1
+	@echo "$(GREEN)SDL2_mixer is ready!$(NC)"
+
+$(LIBMAD_TARGET):
+	@echo "$(BLUE)Extracting libmad...$(NC)"
+	@tar -xf $(LIBMAD_DIR).zip -C sdl
+	@echo "$(BLUE)Configuring libmad build...$(NC)"
+	@cd $(LIBMAD_DIR) ; ./configure --prefix=$(PROJECT_PATH)/$(LIBMAD_DIR) \
+									--includedir=$(PROJECT_PATH)/$(SDL_INCLUDE) \
+									--libdir=$(PROJECT_PATH)/$(SDL_LIB) \
+									> /dev/null 2>&1
+	@sed -i '' "129s/.*/CFLAGS=-Wall/" $(LIBMAD_DIR)/Makefile
+	@echo "$(BLUE)Building libmad...$(NC)"
+	@make -C $(LIBMAD_DIR) > /dev/null 2>&1
+	@make -C $(LIBMAD_DIR) install > /dev/null 2>&1
+	@echo "$(GREEN)libmad is ready!$(NC)"
 
 clean:
 	@echo "$(RED)Deleting object files...$(NC)"
@@ -162,5 +203,9 @@ fclean: clean
 	@rm -rf $(SDL_LIB) $(SDL_INCLUDE)/SDL2 $(SDL_INCLUDE)/ft2build.h $(SDL_INCLUDE)/freetype2
 
 re: fclean all
+
+test:
+	KAMIL=HELLO
+	echo $$KAMIL
 
 .PHONY: all clean fclean re
