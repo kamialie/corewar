@@ -108,6 +108,10 @@ $(SDL_TARGET):
 	@CC=$(PROJECT_PATH)/$(SDL_DIR)/build-scripts/gcc-fat.sh
 	@echo "$(BLUE)Configuring SDL build...$(NC)"
 	@cd $(SDL_DIR) ; ./configure --prefix=$(PROJECT_PATH)/$(SDL_DIR) \
+									--disable-joystick \
+									--disable-haptic \
+									--disable-sensor \
+									--disable-power \
 									--includedir=$(PROJECT_PATH)/$(SDL_INCLUDE) \
 									--libdir=$(PROJECT_PATH)/$(SDL_LIB) \
 									> /dev/null
