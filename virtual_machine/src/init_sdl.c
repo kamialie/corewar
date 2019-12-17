@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   init_visual.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/24 14:40:04 by rgyles            #+#    #+#             */
-/*   Updated: 2019/12/14 18:10:33 by rgyles           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "visual.h"
 #include "sound.h"
 
@@ -18,23 +6,21 @@ static void	init_colors(SDL_Color *colors)
 	colors[BLACK] = (SDL_Color) {0, 0, 0};
 	colors[WHITE] = (SDL_Color) {255, 255, 255};
 	colors[YELLOW] = (SDL_Color) {255, 255, 0};
-	colors[BLUE] = (SDL_Color) {0, 0, 255};
+	colors[BLUE] = (SDL_Color) {0, 150, 255};
 	colors[GREEN] = (SDL_Color) {0, 255, 0};
 	colors[RED] = (SDL_Color) {255, 0, 0};
-	colors[YELLOW_BACK] = (SDL_Color) {110, 110, 0};
-	colors[BLUE_BACK] = (SDL_Color) {0, 0, 110};
-	colors[GREEN_BACK] = (SDL_Color) {0, 110, 0};
-	colors[RED_BACK] = (SDL_Color) {110, 0, 0};
+	colors[YELLOW_BACK] = (SDL_Color) {255, 150, 0};
+	colors[BLUE_BACK] = (SDL_Color) {0, 150, 255};
+	colors[GREEN_BACK] = (SDL_Color) {0, 150, 0};
+	colors[RED_BACK] = (SDL_Color) {150, 0, 0};
 }
 
-static TTF_Font	*init_font(void) //need to add check
+static void	init_font(t_render *render_info) //need to add check
 {
-	TTF_Font	*font;
-
 	TTF_Init(); //int sdl_ttf
-	font = TTF_OpenFont(FONT_PATH, 15); //open font
-	TTF_SetFontStyle(font, TTF_STYLE_BOLD);
-	return (font);
+	render_info->font = TTF_OpenFont(FONT_PATH, 15); //open font
+	TTF_SetFontStyle(render_info->font, TTF_STYLE_BOLD);
+	//return (font);
 }
 
 void	init_music(t_sdl *sdl)
@@ -49,6 +35,7 @@ void	init_music(t_sdl *sdl)
 	}
     Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 640);
     sdl->main_theme = Mix_LoadMUS(MAIN_THEME); // check for null
+	Mix_VolumeMusic(50);
 	sdl->live_effect = Mix_LoadWAV(LIVE_EFFECT);
 	if (sdl->live_effect == NULL)
 	{
@@ -83,11 +70,11 @@ int	init_sdl(t_sdl *sdl)
 	}
 	SDL_FreeSurface(sdl->surface);
 	sdl->render_info = (t_render *)malloc(sizeof(t_render)); //check failure
-	sdl->font = init_font(); // check for return status
-	sdl->render_info->font = sdl->font; //interesting decision xD may be initialize to render info only?
+	init_font(sdl->render_info); // check for return status
+	sdl->img_data = (int *)sdl->surface->pixels; // do I need this?
+	//sdl->render_info->font = sdl->font; //interesting decision xD may be initialize to render info only?
 	init_music(sdl); // needs work and getting error
 	init_colors(sdl->colors);
 	sdl->speed = 100; // default game speed
-	sdl->img_data = (int *)sdl->surface->pixels; // do I need this?
 	return (0);
 }

@@ -89,6 +89,7 @@ void		create_cursor(unsigned char value, int location, int player, t_sdl *sdl);
 void		render_text(char *text, t_render *render_info, SDL_Surface *surface);
 void		show_data(t_info *info, t_sdl *sdl);
 //void		move_cursor(int cur_location, int new_location, int player, t_sdl *sdl);
+void		free_resources(t_sdl *sdl);
 
 /*
 ** Создание и удаление кареток

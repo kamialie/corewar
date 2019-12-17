@@ -32,7 +32,6 @@ typedef struct	s_sdl
 	SDL_Surface	*surface;
 	int			*img_data;
 	SDL_Color	colors[9];
-	TTF_Font	*font;
 	Mix_Music	*main_theme;
 	Mix_Chunk	*live_effect;
 	t_render	*render_info;

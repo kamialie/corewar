@@ -13,8 +13,6 @@
 #ifndef VISUAL_H
 # define VISUAL_H
 
-# include "SDL.h"
-# include "SDL_ttf.h"
 # include "sdl_struct.h"
 
 # define FONT_PATH "sdl/fonts/FreeMono.ttf"

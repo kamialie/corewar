@@ -108,16 +108,9 @@ int	main(int argc , char *argv[])
 			// wait for any fades to complete
 			//SDL_Delay(100);
 		//}
+		free_resources(&sdl); // free all sdl related stuff
 	}
     printf("Contestant %d, %s, has won !\n", info.last_live, (info.players)[info.last_live - 1].prog_name);
 
-	TTF_CloseFont(sdl.font); //free memory used by font
-	TTF_Quit();
-	Mix_FreeChunk(sdl.live_effect); //free sound effect
-    Mix_FreeMusic(sdl.main_theme); //free music
-	Mix_CloseAudio(); //close mixer
-	Mix_Quit(); // clear all library handles created by Mix_Init
-	SDL_DestroyWindow(sdl.window);
-	SDL_Quit();
 	return (0);
 }
