@@ -3,7 +3,8 @@
 
 # include "SDL_mixer.h"
 
-# define MAIN_THEME "music.mp3"
-# define LIVE_EFFECT "live.wav"
+# define MUSIC_ASSETS_DIR "sdl/sound/"
+# define MAIN_THEME MUSIC_ASSETS_DIR "music.mp3"
+# define LIVE_EFFECT MUSIC_ASSETS_DIR "live.wav"
 
 #endif
