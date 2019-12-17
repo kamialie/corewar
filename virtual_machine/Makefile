@@ -44,7 +44,7 @@ SDL_INCLUDE = include
 
 INCLUDE = -I ../libft -I include -I $(SDL_INCLUDE)/SDL2
 
-LIB = -L $(SDL_LIB) -l SDL2 -l SDL2_ttf
+LIB = -L $(SDL_LIB) -l SDL2 -l SDL2_ttf -l SDL2_mixer
 
 #FLAGS = -Wall -Wextra -Werror
 
@@ -97,9 +97,11 @@ $(NAME): build_summary $(LIBFT) $(SDL_LIB) $(OBJ) $(VISUAL_OBJ)
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c include/corewar.h | $(OBJ_DIR)
 	gcc $(FLAGS) $(INCLUDE) -o $@ -c $<
 
-$(OBJ_DIR)/main.o: include/visual.h include/project_sdl.h
+$(OBJ_DIR)/main.o: include/visual.h include/sdl_struct.h
 
-$(VISUAL_OBJ): include/visual.h include/project_sdl.h
+$(VISUAL_OBJ): include/visual.h include/sdl_struct.h
+
+$(OBJ_DIR)/init_visual.o: include/sound.h
 
 build_summary:
 	@echo "\n   $(GREEN)***Wonderful virtual machine build summary***$(NC)   \n"

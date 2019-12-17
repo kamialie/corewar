@@ -13,7 +13,9 @@
 #ifndef VISUAL_H
 # define VISUAL_H
 
-# include "project_sdl.h"
+# include "SDL.h"
+# include "SDL_ttf.h"
+# include "sdl_struct.h"
 
 # define FONT_PATH "sdl/fonts/FreeMono.ttf"
 # define WIN_HEIGHT 1160

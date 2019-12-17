@@ -1,11 +1,13 @@
 #include "SDL.h"
 #include "SDL_mixer.h"
 
-static const char *MY_COOL_MP3 = "music.mp3";
+//static const char *MY_COOL_MP3 = "music.mp3";
+//static const char *MY_COOL_MP3 = "one.mp3";
 
 int main(int argc, char **argv) {
     int result = 0;
     int flags = MIX_INIT_MP3;
+	char	*MY_COOL_MP3 = argv[1];
 
     if (SDL_Init(SDL_INIT_AUDIO) < 0) {
         printf("Failed to init SDL\n");

@@ -20,6 +20,7 @@ void	event_handler(t_info *info, t_sdl *sdl)
 	SDL_Event event;
 
 	play = 0;
+    Mix_PlayMusic(sdl->main_theme, 1);
 	while (1)
 	{
 		if (play)
@@ -69,6 +70,18 @@ void	event_handler(t_info *info, t_sdl *sdl)
 					gladiatorial_fight(info, sdl);
 					SDL_UpdateWindowSurface(sdl->window); //draw surface
 				}
+				else if (key == SDLK_p)
+				{
+					printf("music on/off\n");
+					if (Mix_PausedMusic())
+						Mix_ResumeMusic();
+					else
+						Mix_PauseMusic();
+				}
+				else if (key == SDLK_s)
+					Mix_FadeOutMusic(3000);
+				else if (key == SDLK_l)
+					Mix_PlayChannel(-1, sdl->live_effect, 0);
 			}
 		}
 	}

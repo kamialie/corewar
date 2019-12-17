@@ -68,3 +68,6 @@ cmake-build-debug
 
 # Vim
 *.swp
+
+#mac
+*DS_Store*

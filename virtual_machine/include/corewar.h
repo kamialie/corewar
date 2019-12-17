@@ -18,7 +18,7 @@
 # include <errno.h>
 # include "libft.h"
 # include "op.h"
-# include "project_sdl.h"
+# include "sdl_struct.h"
 
 # define DUMP "-dump"
 # define N "-n"

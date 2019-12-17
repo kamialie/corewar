@@ -104,12 +104,20 @@ int	main(int argc , char *argv[])
 	{
 		initialize_visual_arena(&sdl, &info);
 		event_handler(&info, &sdl); // loop
+		//while(!Mix_FadeOutMusic(3000) && Mix_PlayingMusic()) {
+			// wait for any fades to complete
+			//SDL_Delay(100);
+		//}
 	}
     printf("Contestant %d, %s, has won !\n", info.last_live, (info.players)[info.last_live - 1].prog_name);
 
 	TTF_CloseFont(sdl.font); //free memory used by font
-	SDL_DestroyWindow(sdl.window);
 	TTF_Quit();
+	Mix_FreeChunk(sdl.live_effect); //free sound effect
+    Mix_FreeMusic(sdl.main_theme); //free music
+	Mix_CloseAudio(); //close mixer
+	Mix_Quit(); // clear all library handles created by Mix_Init
+	SDL_DestroyWindow(sdl.window);
 	SDL_Quit();
 	return (0);
 }
