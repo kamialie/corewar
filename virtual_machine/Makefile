@@ -6,7 +6,7 @@
 #    By: rgyles <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/16 14:20:48 by rgyles            #+#    #+#              #
-#    Updated: 2019/12/21 13:36:58 by rgyles           ###   ########.fr        #
+#    Updated: 2019/12/21 16:35:31 by rgyles           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -91,9 +91,9 @@ CYAN = \033[1;36m
 GREEN_UNDERLINE = \033[4;32m
 NC = \033[0m
 
-all: $(NAME)
+all: build_summary $(NAME)
 
-$(NAME): build_summary $(LIBFT) $(SDL_LIB) $(OBJ) $(SDL_OBJ)
+$(NAME): $(LIBFT) $(SDL_LIB) $(OBJ) $(SDL_OBJ)
 	@echo "\n" $(SHIFT) "$(CHECK_MARK)$(BLUE) Linking Corewar...$(NC)"
 	@gcc $(FLAGS) $(LIBFT) $(LIB) -o $(NAME) $(OBJ) $(SDL_OBJ)
 	@echo $(SHIFT) " $(CHECK_MARK)$(GREEN) Corewar is ready!$(NC)\n"
@@ -242,11 +242,5 @@ fclean: clean
 	@rm -rf $(SDL_LIB) $(SDL_INCLUDE)/SDL2 $(SDL_INCLUDE)/ft2build.h $(SDL_INCLUDE)/freetype2
 
 re: fclean all
-
-SHIFT = "    "
-test:
-	echo "\n" $(SHIFT) "in"
-	/bin/sleep 3
-	echo "out"
 
 .PHONY: all clean fclean re
