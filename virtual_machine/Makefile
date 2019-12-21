@@ -6,7 +6,7 @@
 #    By: rgyles <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/16 14:20:48 by rgyles            #+#    #+#              #
-#    Updated: 2019/12/15 21:17:03 by rgyles           ###   ########.fr        #
+#    Updated: 2019/12/21 13:36:58 by rgyles           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -128,11 +128,11 @@ $(SDL_LIB): $(SDL_TARGET) $(SDL_TTF_TARGET) $(SDL_MIXER_TARGET)
 
 $(SDL_TARGET):
 	@echo $(SHIFT) "$(CLEAR)$(BLUE)Extracting SDL...$(NC)"
-	@echo $(SHIFT) "Progress: #$(CYAN)-$(RED)>                   $(NC)#\r\c"
+	@echo $(SHIFT) "$(GREEN)Progress: #$(CYAN)-$(RED)>                   $(GREEN)#$(NC)\r\c"
 	@tar -xf $(SDL_DIR).zip -C sdl
 	@CC=$(PROJECT_PATH)/$(SDL_DIR)/build-scripts/gcc-fat.sh
 	@echo $(SHIFT) "$(UP)$(CLEAR)$(BLUE)Configuring SDL build...$(NC)"
-	@echo $(SHIFT) "Progress: #$(CYAN)--$(RED)>                  $(NC)#\r\c"
+	@echo $(SHIFT) "$(GREEN)Progress: #$(CYAN)--$(RED)>                  $(GREEN)#$(NC)\r\c"
 	@cd $(SDL_DIR) ; ./configure --prefix=$(PROJECT_PATH)/$(SDL_DIR) \
 									--disable-static \
 									--disable-joystick \
@@ -143,18 +143,18 @@ $(SDL_TARGET):
 									--libdir=$(PROJECT_PATH)/$(SDL_LIB) \
 									> /dev/null
 	@echo $(SHIFT) "$(UP)$(CLEAR)$(BLUE)Building SDL...$(NC)"
-	@echo $(SHIFT) "Progress: #$(CYAN)---$(RED)>                 $(NC)#\r\c"
+	@echo $(SHIFT) "$(GREEN)Progress: #$(CYAN)---$(RED)>                 $(GREEN)#$(NC)\r\c"
 	@make -j4 -C $(SDL_DIR) > /dev/null 2>&1
 	@make -j4 -C $(SDL_DIR) install > /dev/null 2>&1
 	@echo $(SHIFT) "$(UP)$(CLEAR)$(CHECK_MARK)$(YELLOW) SDL is ready!$(NC)"
-	@echo $(SHIFT) "Progress: #$(CYAN)----$(RED)>                $(NC)#\r\c"
+	@echo $(SHIFT) "$(GREEN)Progress: #$(CYAN)----$(RED)>                $(GREEN)#$(NC)\r\c"
 
 $(SDL_TTF_TARGET): $(FREETYPE_TARGET) 
 	@echo $(SHIFT) "$(CLEAR)$(BLUE)Extracting SDL_ttf...$(NC)"
-	@echo $(SHIFT) "Progress: #$(CYAN)---------$(RED)>           $(NC)#\r\c"
+	@echo $(SHIFT) "$(GREEN)Progress: #$(CYAN)---------$(RED)>           $(GREEN)#$(NC)\r\c"
 	@tar -xf $(SDL_TTF_DIR).zip -C sdl
 	@echo $(SHIFT) "$(UP)$(CLEAR)$(BLUE)Configuring SDL_ttf build...$(NC)"
-	@echo $(SHIFT) "Progress: #$(CYAN)----------$(RED)>          $(NC)#\r\c"
+	@echo $(SHIFT) "$(GREEN)Progress: #$(CYAN)----------$(RED)>          $(GREEN)#$(NC)\r\c"
 	@cd $(SDL_TTF_DIR) ; ./configure --prefix=$(PROJECT_PATH)/$(SDL_TTF_DIR) \
 										--disable-static \
 										--with-sdl-prefix=$(PROJECT_PATH)/$(SDL_DIR) \
@@ -163,38 +163,38 @@ $(SDL_TTF_TARGET): $(FREETYPE_TARGET)
 										--libdir=$(PROJECT_PATH)/$(SDL_LIB) \
 										> /dev/null
 	@echo $(SHIFT) "$(UP)$(CLEAR)$(BLUE)Building SDL_ttf...$(NC)"
-	@echo $(SHIFT) "Progress: #$(CYAN)-----------$(RED)>         $(NC)#\r\c"
+	@echo $(SHIFT) "$(GREEN)Progress: #$(CYAN)-----------$(RED)>         $(GREEN)#$(NC)\r\c"
 	@make -j4 -C $(SDL_TTF_DIR) > /dev/null 2>&1
 	@make -j4 -C $(SDL_TTF_DIR) install > /dev/null 2>&1
 	@echo $(SHIFT) "$(UP)$(CLEAR)$(CHECK_MARK)$(YELLOW) SDL_ttf is ready!$(NC)"
-	@echo $(SHIFT) "Progress: #$(CYAN)------------$(RED)>        $(NC)#\r\c"
+	@echo $(SHIFT) "$(GREEN)Progress: #$(CYAN)------------$(RED)>        $(GREEN)#$(NC)\r\c"
 
 $(FREETYPE_TARGET):
 	@echo $(SHIFT) "$(CLEAR)$(BLUE)Extracting freetype...$(NC)"
-	@echo $(SHIFT) "Progress: #$(CYAN)-----$(RED)>               $(NC)#\r\c"
+	@echo $(SHIFT) "$(GREEN)Progress: #$(CYAN)-----$(RED)>               $(GREEN)#$(NC)\r\c"
 	@tar -xf $(FREETYPE_DIR).tar.bz2 -C sdl
 	@echo $(SHIFT) "$(UP)$(CLEAR)$(BLUE)Configuring freetype build...$(NC)"
-	@echo $(SHIFT) "Progress: #$(CYAN)------$(RED)>              $(NC)#\r\c"
+	@echo $(SHIFT) "$(GREEN)Progress: #$(CYAN)------$(RED)>              $(GREEN)#$(NC)\r\c"
 	@cd $(FREETYPE_DIR) ; ./configure --prefix=$(PROJECT_PATH)/$(FREETYPE_DIR) \
 										--disable-static \
 										--includedir=$(PROJECT_PATH)/$(SDL_INCLUDE) \
 										--libdir=$(PROJECT_PATH)/$(SDL_LIB) \
 										> /dev/null
 	@echo $(SHIFT) "$(UP)$(CLEAR)$(BLUE)Building freetype...$(NC)"
-	@echo $(SHIFT) "Progress: #$(CYAN)-------$(RED)>             $(NC)#\r\c"
+	@echo $(SHIFT) "$(GREEN)Progress: #$(CYAN)-------$(RED)>             $(GREEN)#$(NC)\r\c"
 	@make -j4 -C $(FREETYPE_DIR) > /dev/null 2>&1
 	@make -j4 -C $(FREETYPE_DIR) install > /dev/null 2>&1
 	@echo $(SHIFT) "$(UP)$(CLEAR)$(CHECK_MARK)$(YELLOW) freetype is ready!$(NC)"
-	@echo $(SHIFT) "Progress: #$(CYAN)--------$(RED)>            $(NC)#\r\c"
+	@echo $(SHIFT) "$(GREEN)Progress: #$(CYAN)--------$(RED)>            $(GREEN)#$(NC)\r\c"
 
 $(SDL_MIXER_TARGET): export CPPFLAGS = -I$(PROJECT_PATH)/$(SDL_INCLUDE)
 
 $(SDL_MIXER_TARGET): $(LIBMAD_TARGET)
 	@echo $(SHIFT) "$(CLEAR)$(BLUE)Extracting SDL2_mixer...$(NC)"
-	@echo $(SHIFT) "Progress: #$(CYAN)-----------------$(RED)>   $(NC)#\r\c"
+	@echo $(SHIFT) "$(GREEN)Progress: #$(CYAN)-----------------$(RED)>   $(GREEN)#$(NC)\r\c"
 	@tar -xf $(SDL_MIXER_DIR).zip -C sdl
 	@echo $(SHIFT) "$(UP)$(CLEAR)$(BLUE)Configuring SDL2_mixer build...$(NC)"
-	@echo $(SHIFT) "Progress: #$(CYAN)------------------$(RED)>  $(NC)#\r\c"
+	@echo $(SHIFT) "$(GREEN)Progress: #$(CYAN)------------------$(RED)>  $(GREEN)#$(NC)\r\c"
 	@cd $(SDL_MIXER_DIR) ; ./configure --prefix=$(PROJECT_PATH)/$(SDL_MIXER_DIR) \
 										--disable-static \
 										--with-sdl-prefix=$(PROJECT_PATH)/$(SDL_DIR) \
@@ -203,18 +203,18 @@ $(SDL_MIXER_TARGET): $(LIBMAD_TARGET)
 										--libdir=$(PROJECT_PATH)/$(SDL_LIB) \
 										> /dev/null 2>&1
 	@echo $(SHIFT) "$(UP)$(CLEAR)$(BLUE)Building SDL2_mixer...$(NC)"
-	@echo $(SHIFT) "Progress: #$(CYAN)-------------------$(RED)> $(NC)#\r\c"
+	@echo $(SHIFT) "$(GREEN)Progress: #$(CYAN)-------------------$(RED)> $(GREEN)#$(NC)\r\c"
 	@make -j4 -C $(SDL_MIXER_DIR) > /dev/null 2>&1
 	@make -j4 -C $(SDL_MIXER_DIR) install > /dev/null 2>&1
 	@echo $(SHIFT) "$(UP)$(CLEAR)$(CHECK_MARK)$(YELLOW) SDL2_mixer is ready!$(NC)"
-	@echo $(SHIFT) "Progress: #$(CYAN)--------------------$(RED)>$(NC)#\r\c"
+	@echo $(SHIFT) "$(GREEN)Progress: #$(CYAN)--------------------$(RED)>$(GREEN)#$(NC)\r\c"
 
 $(LIBMAD_TARGET):
 	@echo $(SHIFT) "$(CLEAR)$(BLUE)Extracting libmad...$(NC)"
-	@echo $(SHIFT) "Progress: #$(CYAN)-------------$(RED)>       $(NC)#\r\c"
+	@echo $(SHIFT) "$(GREEN)Progress: #$(CYAN)-------------$(RED)>       $(GREEN)#$(NC)\r\c"
 	@tar -xf $(LIBMAD_DIR).zip -C sdl
 	@echo $(SHIFT) "$(UP)$(CLEAR)$(BLUE)Configuring libmad build...$(NC)"
-	@echo $(SHIFT) "Progress: #$(CYAN)--------------$(RED)>      $(NC)#\r\c"
+	@echo $(SHIFT) "$(GREEN)Progress: #$(CYAN)--------------$(RED)>      $(GREEN)#$(NC)\r\c"
 	@cd $(LIBMAD_DIR) ; ./configure --prefix=$(PROJECT_PATH)/$(LIBMAD_DIR) \
 									--disable-static \
 									--includedir=$(PROJECT_PATH)/$(SDL_INCLUDE) \
@@ -224,9 +224,9 @@ $(LIBMAD_TARGET):
 	@echo $(SHIFT) "$(UP)$(CLEAR)$(BLUE)Building libmad...$(NC)"
 	@make -j4 -C $(LIBMAD_DIR) > /dev/null 2>&1
 	@make -j4 -C $(LIBMAD_DIR) install > /dev/null 2>&1
-	@echo $(SHIFT) "Progress: #$(CYAN)---------------$(RED)>     $(NC)#\r\c"
+	@echo $(SHIFT) "$(GREEN)Progress: #$(CYAN)---------------$(RED)>     $(GREEN)#$(NC)\r\c"
 	@echo $(SHIFT) "$(UP)$(CLEAR)$(CHECK_MARK)$(YELLOW) libmad is ready!$(NC)"
-	@echo $(SHIFT) "Progress: #$(CYAN)----------------$(RED)>    $(NC)#\r\c"
+	@echo $(SHIFT) "$(GREEN)Progress: #$(CYAN)----------------$(RED)>    $(GREEN)#$(NC)\r\c"
 
 clean:
 	@echo "$(RED)Deleting object files...$(NC)"
