@@ -1,5 +1,7 @@
 #include "visual.h"
 #include "sound.h"
+#include "op.h"
+#include "libft.h"
 
 static void	init_colors(SDL_Color *colors)
 {
@@ -71,8 +73,9 @@ int	init_sdl(t_sdl *sdl)
 	SDL_FreeSurface(sdl->surface);
 	sdl->render_info = (t_render *)malloc(sizeof(t_render)); //check failure
 	init_font(sdl->render_info); // check for return status
-	sdl->img_data = (int *)sdl->surface->pixels; // do I need this?
-	//sdl->render_info->font = sdl->font; //interesting decision xD may be initialize to render info only?
+	sdl->img_data = (int *)sdl->surface->pixels; // is needed for frame drawing
+	sdl->replica = malloc(MEM_SIZE); //need to add check
+	ft_bzero(sdl->replica, MEM_SIZE);
 	init_music(sdl); // needs work and getting error
 	init_colors(sdl->colors);
 	sdl->speed = 100; // default game speed

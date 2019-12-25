@@ -36,8 +36,8 @@
 # define GREEN_BACK 8
 # define RED_BACK 9
 
-# define FONT_COLOR 2
-# define BACK_COLOR 6
+# define FONT_COLOR 1
+# define BACK_COLOR 5
 
 # define EMPTY 0
 # define CURSOR 1

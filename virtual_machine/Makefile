@@ -91,12 +91,12 @@ CYAN = \033[1;36m
 GREEN_UNDERLINE = \033[4;32m
 NC = \033[0m
 
-all: build_summary $(NAME)
+all: $(NAME)
+	@echo $(SHIFT) " $(CHECK_MARK)$(GREEN) Corewar is ready!$(NC)"
 
 $(NAME): $(LIBFT) $(SDL_LIB) $(OBJ) $(SDL_OBJ)
 	@echo "\n" $(SHIFT) "$(CHECK_MARK)$(BLUE) Linking Corewar...$(NC)"
 	@gcc $(FLAGS) $(LIBFT) $(LIB) -o $(NAME) $(OBJ) $(SDL_OBJ)
-	@echo $(SHIFT) " $(CHECK_MARK)$(GREEN) Corewar is ready!$(NC)\n"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c include/corewar.h | $(OBJ_DIR)
 	gcc $(FLAGS) $(INCLUDE) -o $@ -c $<
