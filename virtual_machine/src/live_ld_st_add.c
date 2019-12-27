@@ -23,9 +23,9 @@ void		live_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	if (arg == (*prs)->reg[0])
 		info->last_live = (*prs)->reg[0];
 	new_location = (((*prs)->index) + 5) % MEM_SIZE;
-	create_cursor(info->arena[new_location], new_location, (*prs)->reg[0] - 1, sdl);
-	update_byte(info->arena[(*prs)->index], (*prs)->index, (*prs)->reg[0] - 1, sdl);
-	//move_cursor((*prs)->index, new_location, num_player - 1, sdl);
+	//create_cursor(info->arena[new_location], new_location, (*prs)->reg[0] - 1, sdl);
+	//update_byte(info->arena[(*prs)->index], (*prs)->index, (*prs)->reg[0] - 1, sdl);
+	move_cursor((*prs)->index, 5, (*prs)->reg[0] - 1, sdl);
     (*prs)->index = new_location; //1 байт занимает код операции и 4 байта занимает аргумент
 	//printf("cc_live %d\n./", (*prs)->cc_live);
 }
@@ -50,8 +50,9 @@ void		ld_op(t_info *info, t_processes **prs, t_sdl *sdl)
         printf("arg %d reg %d\n", arg_dir, code_arg);
     }
     skiped_bytes = get_bytes_to_skip(1, code_arg);
-    create_cursor(info->arena[((*prs)->index + skiped_bytes) % MEM_SIZE], ((*prs)->index + skiped_bytes) % MEM_SIZE, (*prs)->reg[0] - 1, sdl);
-    update_byte(info->arena[(*prs)->index], (*prs)->index, (*prs)->reg[0] - 1, sdl);
+    //create_cursor(info->arena[((*prs)->index + skiped_bytes) % MEM_SIZE], ((*prs)->index + skiped_bytes) % MEM_SIZE, (*prs)->reg[0] - 1, sdl);
+    //update_byte(info->arena[(*prs)->index], (*prs)->index, (*prs)->reg[0] - 1, sdl);
+	move_cursor((*prs)->index, skiped_bytes, (*prs)->reg[0] - 1, sdl);
     (*prs)->index = ((*prs)->index + skiped_bytes) % MEM_SIZE;
 }
 

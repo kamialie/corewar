@@ -51,7 +51,7 @@ void	init_music(t_sdl *sdl)
 /*
  * TODO remove printfs to putstr or smth
 */
-int	init_sdl(t_sdl *sdl)
+int	init_sdl(unsigned char *arena, t_sdl *sdl)
 {
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0)
 	{
@@ -79,5 +79,6 @@ int	init_sdl(t_sdl *sdl)
 	init_music(sdl); // needs work and getting error
 	init_colors(sdl->colors);
 	sdl->speed = 100; // default game speed
+	sdl->arena = arena;
 	return (0);
 }

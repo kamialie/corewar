@@ -38,8 +38,8 @@ void		lfork_op(t_info *info, t_processes **prs, t_sdl *sdl)
 //    while (++i < REG_NUMBER)
 //        (info->processes)->reg[i] = (*prs)->reg[i];
 //	(*prs)->index = (((*prs)->index) + 3) % MEM_SIZE; //1 байт занимает код операции и 2 байта занимает аргумент
-    create_cursor(info->arena[((*prs)->index + 1) % MEM_SIZE], ((*prs)->index + 1) % MEM_SIZE, (*prs)->reg[0] - 1, sdl);
-    update_byte(info->arena[(*prs)->index], (*prs)->index, (*prs)->reg[0] - 1, sdl);
+    //create_cursor(info->arena[((*prs)->index + 1) % MEM_SIZE], ((*prs)->index + 1) % MEM_SIZE, (*prs)->reg[0] - 1, sdl);
+    //update_byte(info->arena[(*prs)->index], (*prs)->index, (*prs)->reg[0] - 1, sdl);
     (*prs)->index = (++((*prs)->index)) % MEM_SIZE;
 }
 

@@ -55,8 +55,10 @@ void		fork_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	i = -1;
 	while (++i < REG_NUMBER)
         (info->processes)->reg[i] = (*prs)->reg[i];
+	//create_cursor(arg, (current_location + 1) % MEM_SIZE, (*prs)->reg[0] - 1, sdl);
+    //create_cursor(info->arena[(*prs)->index], (*prs)->index, (*prs)->reg[0] - 1, sdl);
+    //update_byte(info->arena[current_location], current_location, (*prs)->reg[0] - 1, sdl);
+	move_cursor((*prs)->index, 1, (*prs)->reg[0] - 1, sdl);
 	(*prs)->index = (((*prs)->index) + 3) % MEM_SIZE; //1 байт занимает код операции и 2 байта занимает аргумент
-	create_cursor(arg, (current_location + 1) % MEM_SIZE, (*prs)->reg[0] - 1, sdl);
-    create_cursor(info->arena[(*prs)->index], (*prs)->index, (*prs)->reg[0] - 1, sdl);
-    update_byte(info->arena[current_location], current_location, (*prs)->reg[0] - 1, sdl);
+    create_cursor((*prs)->index, (*prs)->reg[0] - 1, sdl);
 }

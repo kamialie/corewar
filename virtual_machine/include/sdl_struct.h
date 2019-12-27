@@ -27,15 +27,16 @@ typedef struct	s_render
 
 typedef struct	s_sdl
 {
-	int			speed;
-	SDL_Window	*window;
-	SDL_Surface	*surface;
-	int			*img_data;
+	int				speed;
+	int				*img_data;
+	unsigned char	*arena;
 	unsigned char	*replica;
-	SDL_Color	colors[9];
-	Mix_Music	*main_theme;
-	Mix_Chunk	*live_effect;
-	t_render	*render_info;
+	SDL_Window		*window;
+	SDL_Surface		*surface;
+	SDL_Color		colors[9];
+	Mix_Music		*main_theme;
+	Mix_Chunk		*live_effect;
+	t_render		*render_info;
 }				t_sdl;
 
 #endif

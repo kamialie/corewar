@@ -81,7 +81,7 @@ typedef struct	s_square
 	int	color;
 }				t_square;
 
-int				init_sdl(t_sdl *sdl);
+int				init_sdl(unsigned char *arena, t_sdl *sdl);
 void			draw_byte(unsigned char byte, t_render *render_info, SDL_Surface *surface);
 void			set_nibble_for_render(int location, int type, int player, t_sdl *sdl);
 void			set_render_color(int type, int player, t_render *render_info, SDL_Color *colors);

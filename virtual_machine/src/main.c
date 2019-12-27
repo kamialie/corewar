@@ -82,7 +82,7 @@ int	main(int argc , char *argv[])
 		error(8); //Ошибка, нет игроков
 	init_info(&info);
 	read_arg(&info, argc, argv);
-	if (init_sdl(&sdl))
+	if (init_sdl(info.arena, &sdl))
 		return (1);
 	present_champion(info.players);
 	create_processes(&info);

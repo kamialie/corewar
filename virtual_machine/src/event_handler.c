@@ -20,7 +20,7 @@ void	event_handler(t_info *info, t_sdl *sdl)
 	SDL_Event event;
 
 	play = 0;
-    Mix_PlayMusic(sdl->main_theme, 1);
+    //Mix_PlayMusic(sdl->main_theme, 1); // commented for no music while debugging
 	while (1)
 	{
 		if (play)
