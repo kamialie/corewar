@@ -79,7 +79,7 @@ void		gladiatorial_fight(t_info *info, t_sdl *sdl);
 char		get_nibble(unsigned char nibble);
 void		print_arena(unsigned char *arena);
 int         get_bytes_to_skip(int num, unsigned char code_arg);
-
+int         reverse_int(int num);
 void		initialize_visual_arena(t_sdl *sdl, t_info *info);
 void		draw_annotations(t_info *info, t_sdl *sdl);
 void        event_handler(t_info *info, t_sdl *sdl);

@@ -45,8 +45,13 @@ void		ld_op(t_info *info, t_processes **prs, t_sdl *sdl)
     }
     else if (code_arg == 144) //dir
     {
-        arg_dir = *((int *)((info->arena) + ((*prs)->index + 2) % MEM_SIZE));
+        arg_dir = reverse_int(*((int *)((info->arena) + ((*prs)->index + 2) % MEM_SIZE)));
         code_arg = *((info->arena) + ((*prs)->index + 6) % MEM_SIZE);
+        if (code_arg >= 0 && code_arg < REG_NUMBER)
+        {
+            (*prs)->reg[code_arg] = arg_dir; //может можно без приведения
+            (*prs)->carry = (arg_dir == 0) ? 1 : 0;
+        }
         printf("arg %d reg %d\n", arg_dir, code_arg);
     }
     skiped_bytes = get_bytes_to_skip(1, code_arg);
