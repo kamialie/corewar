@@ -6,24 +6,18 @@ void	fill_in_vertial(int value, int index, int length, unsigned char *replica)
 {
 	int i;
 
-	i = 0;
-	while (i < length)
-	{
+	i = -1;
+	while (++i < length)
 		replica[index + i * 64] = value;
-		++i;
-	}
 }
 
 void	fill_in_horizontal(int value, int index, int length, unsigned char *replica)
 {
 	int i;
 
-	i = 0;
-	while (i < length)
-	{
+	i = -1;
+	while (++i < length)
 		replica[index++] = value;
-		++i;
-	}
 }
 
 void	form_squares(int seed, t_sdl *sdl)
@@ -45,6 +39,25 @@ void	form_squares(int seed, t_sdl *sdl)
 		start += shift;
 		length -= 2;
 	}
+}
+
+void	announce_winnder(header_t	player, t_sdl *sdl)
+{
+	//TTF_Font	*font;
+
+	//font = TTF_OpenFont(FONT_PATH, 25); //open font
+	//TTF_SetFontStyle(font, TTF_STYLE_BOLD);
+	//clear_rect(
+	sdl->render_info->font_color = sdl->colors[WHITE];
+	sdl->render_info->back_color = sdl->colors[BLACK];
+	sdl->render_info->rect.x = 500;
+	sdl->render_info->rect.y = 500;
+
+	//render_text("Winner is:", sdl->render_info, sdl->surface);
+	sdl->render_info->rect.y += 100;
+	//render_text(player.prog_name, sdl->render_info, sdl->surface);
+	sdl->render_info->rect.y += 100;
+	//render_text(player.comment, sdl->render_info, sdl->surface);
 }
 
 void	update_arena(int seed, t_sdl *sdl)

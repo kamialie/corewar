@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 15:50:24 by rgyles            #+#    #+#             */
-/*   Updated: 2019/12/28 16:23:26 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/12/28 19:07:54 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,10 @@ void	event_handler(t_info *info, t_sdl *sdl)
 				else if (key == SDLK_l)
 					Mix_PlayChannel(-1, sdl->live_effect, 0);
 				else if (key == SDLK_a)
+				{
 					show = show == 0 ? 1 : 0;
+					sdl->speed = 70;
+				}
 			}
 		}
 	}
