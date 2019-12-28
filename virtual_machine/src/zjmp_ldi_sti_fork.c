@@ -46,10 +46,11 @@ void		fork_op(t_info *info, t_processes **prs, t_sdl *sdl)
     short   int     current_location;
 	int             i;
 
-	printf("fork %d\n", 0);
+
     current_location = (*prs)->index;
 	arg = info->arena[current_location + 1];
-	arg %= IDX_MOD;
+	//arg %= IDX_MOD;
+    printf("fork %d\n", arg);
 	add_elem(&(info->processes), arg, ((*prs)->reg)[0]);
 	info->processes->carry = (*prs)->carry;
 	(info->processes)->cc_live = (*prs)->cc_live;
@@ -61,5 +62,5 @@ void		fork_op(t_info *info, t_processes **prs, t_sdl *sdl)
     //update_byte(info->arena[current_location], current_location, (*prs)->reg[0] - 1, sdl);
 	move_cursor((*prs)->index, 1, (*prs)->reg[0] - 1, sdl);
 	(*prs)->index = (((*prs)->index) + 3) % MEM_SIZE; //1 байт занимает код операции и 2 байта занимает аргумент
-    create_cursor((*prs)->index, (*prs)->reg[0] - 1, sdl);
+    create_cursor(arg, (*prs)->reg[0] - 1, sdl);
 }
