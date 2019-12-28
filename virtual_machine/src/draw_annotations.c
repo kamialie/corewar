@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:35:59 by rgyles            #+#    #+#             */
-/*   Updated: 2019/12/14 18:38:57 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/12/28 20:33:00 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,8 @@ void	show_players(t_info *info, t_sdl *sdl)
 	int	i;
 	char *text;
 
-	//sdl->render_info->rect.w = 50; //make macros
-	//sdl->render_info->rect.h = 17; // make macros
 	sdl->render_info->rect.y = PLAYER_Y_LOCATION;
 	sdl->render_info->back_color = sdl->colors[BLACK];
-
 	i = 0;
 	while (i < info->count_process)
 	{
@@ -49,6 +46,9 @@ void	show_players(t_info *info, t_sdl *sdl)
 	}
 }
 
+/*
+ * no need to update surface if game is running
+*/
 void	update_game_status(int status, t_sdl *sdl)
 {
 	sdl->render_info->rect.x = GAME_STATUS_X_LOCATION;
@@ -91,7 +91,7 @@ void	draw_annotations(t_info *info, t_sdl *sdl)
 	render_text("speed - ", sdl->render_info, sdl->surface);
 
 	show_data(info, sdl);
-	show_sdl_data(sdl);
+	udpate_speed(sdl);
 
 	update_game_status(0, sdl);
 

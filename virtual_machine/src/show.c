@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   show.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/28 20:00:07 by rgyles            #+#    #+#             */
+/*   Updated: 2019/12/28 20:46:53 by rgyles           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "sdl_struct.h"
 #include "op.h"
 #include "visual.h"
@@ -41,26 +53,7 @@ void	form_squares(int seed, t_sdl *sdl)
 	}
 }
 
-void	announce_winnder(header_t	player, t_sdl *sdl)
-{
-	//TTF_Font	*font;
-
-	//font = TTF_OpenFont(FONT_PATH, 25); //open font
-	//TTF_SetFontStyle(font, TTF_STYLE_BOLD);
-	//clear_rect(
-	sdl->render_info->font_color = sdl->colors[WHITE];
-	sdl->render_info->back_color = sdl->colors[BLACK];
-	sdl->render_info->rect.x = 500;
-	sdl->render_info->rect.y = 500;
-
-	//render_text("Winner is:", sdl->render_info, sdl->surface);
-	sdl->render_info->rect.y += 100;
-	//render_text(player.prog_name, sdl->render_info, sdl->surface);
-	sdl->render_info->rect.y += 100;
-	//render_text(player.comment, sdl->render_info, sdl->surface);
-}
-
-void	update_arena(int seed, t_sdl *sdl)
+void	epileptic_square(int seed, t_sdl *sdl)
 {
 	int			index;
 	int			end_of_row;

@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 15:50:24 by rgyles            #+#    #+#             */
-/*   Updated: 2019/12/28 19:07:54 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/12/28 20:46:43 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	event_handler(t_info *info, t_sdl *sdl)
 		}
 		if (show)
 		{
-			update_arena(seed++, sdl);
+			epileptic_square(seed++, sdl);
 			SDL_UpdateWindowSurface(sdl->window); //draw surface
 			SDL_Delay(sdl->speed);
 		}
@@ -63,14 +63,14 @@ void	event_handler(t_info *info, t_sdl *sdl)
 				{
 					printf("increase\n");
 					sdl->speed -= 50;
-					show_sdl_data(sdl);
+					udpate_speed(sdl);
 					SDL_UpdateWindowSurface(sdl->window); //draw surface
 				}
 				else if (key == SDLK_MINUS && sdl->speed < 1000)
 				{
 					printf("decrease\n");
 					sdl->speed += 50;
-					show_sdl_data(sdl);
+					udpate_speed(sdl);
 					SDL_UpdateWindowSurface(sdl->window); //draw surface
 				}
 				else if (key == SDLK_n)
@@ -94,7 +94,8 @@ void	event_handler(t_info *info, t_sdl *sdl)
 					Mix_PlayChannel(-1, sdl->live_effect, 0);
 				else if (key == SDLK_a)
 				{
-					show = show == 0 ? 1 : 0;
+					//show = show == 0 ? 1 : 0;
+					announce_winner((info->players)[info->last_live - 1], sdl);
 					sdl->speed = 70;
 				}
 			}

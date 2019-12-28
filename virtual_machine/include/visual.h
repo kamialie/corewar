@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 16:09:49 by rgyles            #+#    #+#             */
-/*   Updated: 2019/12/28 16:19:35 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/12/28 20:52:58 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,15 @@ void			draw_byte(unsigned char byte, t_render *render_info, SDL_Surface *surface
 void			set_nibble_for_render(int location, int type, int player, t_sdl *sdl);
 void			set_render_color(int type, int player, t_render *render_info, SDL_Color *colors);
 void			draw_byte(unsigned char byte, t_render *render_info, SDL_Surface *surface);
-void			show_sdl_data(t_sdl *sdl);
+void			int_to_char(int number, char *str);
+void			udpate_speed(t_sdl *sdl);
 
 void			draw_square(t_square sq_info, int *img_data);
 
 void			update_game_status(int status, t_sdl *sdl);
 
-void			update_arena(int seed, t_sdl *sdl);
+void			epileptic_square(int seed, t_sdl *sdl);
+
+void			render_text(char *text, t_render *render_info, SDL_Surface *surface);
 
 #endif
