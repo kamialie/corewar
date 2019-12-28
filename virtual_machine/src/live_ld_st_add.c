@@ -37,6 +37,7 @@ void		ld_op(t_info *info, t_processes **prs, t_sdl *sdl)
     int           arg_dir;
     short int     arg_ind;
 
+    printf("ld ");
     code_arg = ((info->arena)[((*prs)->index + 1) % MEM_SIZE]) & 0xf0;
     //printf("%d   %d\n", code_arg, ((info->arena)[((*prs)->index + 1) % MEM_SIZE]));
     if (code_arg == 208) //ind
@@ -45,7 +46,7 @@ void		ld_op(t_info *info, t_processes **prs, t_sdl *sdl)
     }
     else if (code_arg == 144) //dir
     {
-        arg_dir = reverse_int(*((int *)((info->arena) + ((*prs)->index + 2) % MEM_SIZE)));
+        arg_dir = reverse_int(*((int *)((info->arena) + ((*prs)->index + 2) % MEM_SIZE))); //код операции + код аргументов 
         code_arg = *((info->arena) + ((*prs)->index + 6) % MEM_SIZE);
         if (code_arg >= 0 && code_arg < REG_NUMBER)
         {

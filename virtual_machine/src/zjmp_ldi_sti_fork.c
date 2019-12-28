@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 18:08:19 by bdudley           #+#    #+#             */
-/*   Updated: 2019/12/14 16:41:40 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/12/28 18:06:13 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ void		fork_op(t_info *info, t_processes **prs, t_sdl *sdl)
 
 	printf("fork %d\n", 0);
     current_location = (*prs)->index;
-	arg = info->arena[(current_location + 1) % MEM_SIZE];
+	arg = info->arena[current_location + 1];
+	arg %= IDX_MOD;
 	add_elem(&(info->processes), arg, ((*prs)->reg)[0]);
 	info->processes->carry = (*prs)->carry;
 	(info->processes)->cc_live = (*prs)->cc_live;
