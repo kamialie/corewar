@@ -1,10 +1,53 @@
-#include "sdl.h"
+#include "sdl_struct.h"
 #include "op.h"
+#include "visual.h"
 
-void	form_squares(t_sdl *sdl)
+void	fill_in_vertial(int value, int index, int length, unsigned char *replica)
 {
+	int i;
 
-void	update_arena(t_sdl *sdl)
+	i = 0;
+	while (i < length)
+	{
+		replica[index + i * 64] = value;
+		++i;
+	}
+}
+
+void	fill_in_horizontal(int value, int index, int length, unsigned char *replica)
+{
+	int i;
+
+	i = 0;
+	while (i < length)
+	{
+		replica[index++] = value;
+		++i;
+	}
+}
+
+void	form_squares(int seed, t_sdl *sdl)
+{
+	int start;
+	int shift;
+	int	length;
+
+	start = 0;
+	length = 64; //side of square
+	shift = 65; // square side + 1
+	while (start < MEM_SIZE / 2) // median
+	{
+		fill_in_vertial(seed % 5, start, length, sdl->replica);
+		fill_in_vertial(seed % 5, start + length - 1, length, sdl->replica);
+		fill_in_horizontal(seed % 5, start, length, sdl->replica);
+		fill_in_horizontal(seed % 5, start + (length - 1) * 64, length, sdl->replica);
+		++seed;
+		start += shift;
+		length -= 2;
+	}
+}
+
+void	update_arena(int seed, t_sdl *sdl)
 {
 	int			index;
 	int			end_of_row;
@@ -12,11 +55,12 @@ void	update_arena(t_sdl *sdl)
 	t_render	*render_info;
 	SDL_Surface	*surface;
 
+	form_squares(seed, sdl);
 	index = 0;
 	set_nibble_for_render(index, EMPTY, 0, sdl);
 	render_info = sdl->render_info;
 	surface = sdl->surface;
-	row = i / 64;
+	row = index / 64;
 	end_of_row = (row + 1) * 64;
 	while (index < MEM_SIZE)
 	{

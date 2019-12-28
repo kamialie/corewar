@@ -6,7 +6,7 @@
 #    By: rgyles <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/16 14:20:48 by rgyles            #+#    #+#              #
-#    Updated: 2019/12/21 19:47:39 by rgyles           ###   ########.fr        #
+#    Updated: 2019/12/28 15:45:12 by rgyles           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,6 +73,7 @@ SDL_SRC = init_sdl.c \
 			 draw_annotations.c \
 			 update_byte.c \
 			 show_data.c \
+			 announcment.c \
 			 event_handler.c
 
 SDL_OBJ = $(addprefix $(OBJ_DIR)/, $(SDL_SRC:.c=.o))

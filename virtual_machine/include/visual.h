@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 16:09:49 by rgyles            #+#    #+#             */
-/*   Updated: 2019/12/14 18:30:49 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/12/28 16:19:35 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,7 @@ void			show_sdl_data(t_sdl *sdl);
 void			draw_square(t_square sq_info, int *img_data);
 
 void			update_game_status(int status, t_sdl *sdl);
+
+void			update_arena(int seed, t_sdl *sdl);
 
 #endif

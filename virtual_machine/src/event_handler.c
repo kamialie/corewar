@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 15:50:24 by rgyles            #+#    #+#             */
-/*   Updated: 2019/12/15 16:02:28 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/12/28 16:23:26 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,13 @@ void	event_handler(t_info *info, t_sdl *sdl)
 {
 	int	key;
 	int	play;
+	int	show;
+	int	seed;
 	SDL_Event event;
 
 	play = 0;
+	show = 0;
+	seed = 0;
     //Mix_PlayMusic(sdl->main_theme, 1); // commented for no music while debugging
 	while (1)
 	{
@@ -31,6 +35,12 @@ void	event_handler(t_info *info, t_sdl *sdl)
 
             gladiatorial_fight(info, sdl);
 
+			SDL_UpdateWindowSurface(sdl->window); //draw surface
+			SDL_Delay(sdl->speed);
+		}
+		if (show)
+		{
+			update_arena(seed++, sdl);
 			SDL_UpdateWindowSurface(sdl->window); //draw surface
 			SDL_Delay(sdl->speed);
 		}
@@ -82,6 +92,8 @@ void	event_handler(t_info *info, t_sdl *sdl)
 					Mix_FadeOutMusic(3000);
 				else if (key == SDLK_l)
 					Mix_PlayChannel(-1, sdl->live_effect, 0);
+				else if (key == SDLK_a)
+					show = show == 0 ? 1 : 0;
 			}
 		}
 	}

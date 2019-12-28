@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 17:20:29 by rgyles            #+#    #+#             */
-/*   Updated: 2019/12/14 16:28:41 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/12/28 16:19:51 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,6 +194,14 @@ void	initialize_visual_arena(t_sdl *sdl, t_info *info)
 	//move_cursor(0, 3, 0, sdl); //for testing 
 
 	//create_cursor(15, 0, sdl); //for testing 
+	/*update_arena(sdl);
+	for (int i = 0; i < 64; i++) {
+		for (int j = 0; j < 64; j++) {
+			//printf("%d", j + 64 * i);
+			printf("%d ", sdl->replica[j + 64 * i]);
+		}
+		printf("\n");
+	}*/
 
 	SDL_UpdateWindowSurface(sdl->window); //draw surface
 }
