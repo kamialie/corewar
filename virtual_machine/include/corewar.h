@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 15:10:22 by rgyles            #+#    #+#             */
-/*   Updated: 2019/12/28 20:53:20 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/11 15:11:11 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void		move_cursor(int location, int shift, int player, t_sdl *sdl);
 
 void		render_text(char *text, t_render *render_info, SDL_Surface *surface);
 void		show_data(t_info *info, t_sdl *sdl);
-void		announce_winner(header_t player, t_sdl *sdl);
+void		announce_winner(int seed, header_t player, t_sdl *sdl);
 void		free_resources(t_sdl *sdl);
 
 /*

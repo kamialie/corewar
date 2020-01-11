@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 15:50:24 by rgyles            #+#    #+#             */
-/*   Updated: 2019/12/28 20:46:43 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/11 17:11:10 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ void	event_handler(t_info *info, t_sdl *sdl)
 		}
 		if (show)
 		{
-			epileptic_square(seed++, sdl);
+			//epileptic_square(seed++, sdl);
+			announce_winner(seed++, (info->players)[info->last_live - 1], sdl);
 			SDL_UpdateWindowSurface(sdl->window); //draw surface
 			SDL_Delay(sdl->speed);
 		}
@@ -95,8 +96,10 @@ void	event_handler(t_info *info, t_sdl *sdl)
 				else if (key == SDLK_a)
 				{
 					//show = show == 0 ? 1 : 0;
-					announce_winner((info->players)[info->last_live - 1], sdl);
-					sdl->speed = 70;
+					prepare_announcement(sdl);
+					announce_winner(seed++, (info->players)[info->last_live - 1], sdl);
+					SDL_UpdateWindowSurface(sdl->window); //draw surface
+					//sdl->speed = 150;
 				}
 			}
 		}
