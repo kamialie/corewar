@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:35:59 by rgyles            #+#    #+#             */
-/*   Updated: 2019/12/28 20:33:00 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/11 19:01:23 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,19 +79,19 @@ void	draw_annotations(t_info *info, t_sdl *sdl)
 	sdl->render_info->rect.y = INFO_Y_LOCATION;
 
 	render_text("cycle - ", sdl->render_info, sdl->surface);
-	sdl->render_info->rect.y += INFO_Y_SHIFT;
+	sdl->render_info->rect.y += TEXT_Y_SHIFT;
 	render_text("last_live - ", sdl->render_info, sdl->surface);
-	sdl->render_info->rect.y += INFO_Y_SHIFT;
+	sdl->render_info->rect.y += TEXT_Y_SHIFT;
 	render_text("cycle to die - ", sdl->render_info, sdl->surface);
-	sdl->render_info->rect.y += INFO_Y_SHIFT;
+	sdl->render_info->rect.y += TEXT_Y_SHIFT;
 	render_text("count_live - ", sdl->render_info, sdl->surface);
-	sdl->render_info->rect.y += INFO_Y_SHIFT;
+	sdl->render_info->rect.y += TEXT_Y_SHIFT;
 	render_text("count_check - ", sdl->render_info, sdl->surface);
-	sdl->render_info->rect.y += INFO_Y_SHIFT;
+	sdl->render_info->rect.y += TEXT_Y_SHIFT;
 	render_text("speed - ", sdl->render_info, sdl->surface);
 
 	show_data(info, sdl);
-	udpate_speed(sdl);
+	udpate_speed(DEFAULT_GAME_SPEED, sdl);
 
 	update_game_status(0, sdl);
 

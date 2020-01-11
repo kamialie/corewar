@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 17:20:29 by rgyles            #+#    #+#             */
-/*   Updated: 2019/12/28 16:19:51 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/11 18:56:23 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,11 @@ void	draw_memory_frame(t_sdl *sdl)
 	t_square	sq_info;
 
 	sq_info = (t_square) {0, WIN_HEIGHT - 1, WIN_WIDTH - 445, 0, 0xFFA500};
-   	draw_square(sq_info, sdl->img_data);
-	//draw_arena_grid(sdl, arena);
+   	draw_square(&sq_info, sdl->img_data);
+	sq_info = (t_square) {WIN_WIDTH - 444, WIN_HEIGHT - 500, WIN_WIDTH - 1, 0, 0x33CCFF};
+   	draw_square(&sq_info, sdl->img_data);
+	sq_info = (t_square) {WIN_WIDTH - 444, WIN_HEIGHT - 1, WIN_WIDTH - 1, WIN_HEIGHT - 500, 0x6600CC};
+   	draw_square(&sq_info, sdl->img_data);
 }
 
 /*
@@ -190,6 +193,7 @@ void	initialize_visual_arena(t_sdl *sdl, t_info *info)
 	draw_arena(processes, info, sdl);
 	
 	draw_annotations(info, sdl); // draw side menu, info
+	draw_game_controls(sdl);
 
 	//move_cursor(0, 3, 0, sdl); //for testing 
 

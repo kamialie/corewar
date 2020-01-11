@@ -6,44 +6,85 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 15:50:24 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/11 17:11:10 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/11 18:23:58 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "visual.h"
 #include "corewar.h"
 
+static void	update_for_one_round(int speed, t_info *info, t_sdl *sdl)
+{
+	printf("count_cycles %d\n", info->count_cycles);
+	show_data(info, sdl);
+	gladiatorial_fight(info, sdl);
+	SDL_UpdateWindowSurface(sdl->window); //draw surface
+	SDL_Delay(speed);
+}
+
+static void music_controls(int key, t_controls *controls, t_sdl *sdl)
+{
+	if (key == SDLK_p)
+	{
+		printf("music on/off\n");
+		if (Mix_PausedMusic())
+			Mix_ResumeMusic();
+		else
+			Mix_PauseMusic();
+	}
+	else if (key == SDLK_s)
+		Mix_FadeOutMusic(3000);
+	else if (key == SDLK_l)
+		Mix_PlayChannel(-1, sdl->live_effect, 0);
+}
+
+static void	game_controls(int key, t_controls *controls, t_info *info, t_sdl *sdl)
+{
+	if (key == SDLK_SPACE)
+	{
+		controls->play = controls->play == 0 ? 1 : 0;
+		update_game_status(controls->play, sdl);
+	}
+	else if (key == SDLK_n)
+	{
+		show_data(info, sdl);
+		gladiatorial_fight(info, sdl);
+		SDL_UpdateWindowSurface(sdl->window); //draw surface
+	}
+	else if (key == SDLK_d && controls->speed > 0)
+	{
+		controls->speed -= 50;
+		udpate_speed(controls->speed, sdl);
+		SDL_UpdateWindowSurface(sdl->window); //draw surface
+	}
+	else if (key == SDLK_i && controls->speed < 1000)
+	{
+		controls->speed += 50;
+		udpate_speed(controls->speed, sdl);
+		SDL_UpdateWindowSurface(sdl->window); //draw surface
+	}
+	else
+		music_controls(key, controls, sdl);
+}
+
 void	event_handler(t_info *info, t_sdl *sdl)
 {
 	int	key;
-	int	play;
-	int	show;
-	int	seed;
+	t_controls	controls;
 	SDL_Event event;
 
-	play = 0;
-	show = 0;
-	seed = 0;
+	controls = (t_controls) {0, DEFAULT_GAME_SPEED, 0, 0};
     //Mix_PlayMusic(sdl->main_theme, 1); // commented for no music while debugging
 	while (1)
 	{
-		if (play)
-		{
-			printf("count_cycles %d\n", info->count_cycles);
-
-			show_data(info, sdl);
-
-            gladiatorial_fight(info, sdl);
-
-			SDL_UpdateWindowSurface(sdl->window); //draw surface
-			SDL_Delay(sdl->speed);
-		}
-		if (show)
+		if (controls.play)
+			update_for_one_round(controls.speed, info, sdl);
+		if (controls.show)
 		{
 			//epileptic_square(seed++, sdl);
-			announce_winner(seed++, (info->players)[info->last_live - 1], sdl);
+			announce_winner(controls.seed++, (info->players)[info->last_live - 1], sdl);
 			SDL_UpdateWindowSurface(sdl->window); //draw surface
-			SDL_Delay(sdl->speed);
+			SDL_Delay(controls.speed);
 		}
 		while (SDL_PollEvent(&event))
 		{
@@ -55,52 +96,15 @@ void	event_handler(t_info *info, t_sdl *sdl)
 				key = event.key.keysym.sym;
 				if (key == SDLK_ESCAPE)
 					return ;
-				else if (key == SDLK_SPACE)
-				{
-					play = play == 0 ? 1 : 0;
-					update_game_status(play, sdl);
-				}
-				else if (key == SDLK_EQUALS && sdl->speed > 0)
-				{
-					printf("increase\n");
-					sdl->speed -= 50;
-					udpate_speed(sdl);
-					SDL_UpdateWindowSurface(sdl->window); //draw surface
-				}
-				else if (key == SDLK_MINUS && sdl->speed < 1000)
-				{
-					printf("decrease\n");
-					sdl->speed += 50;
-					udpate_speed(sdl);
-					SDL_UpdateWindowSurface(sdl->window); //draw surface
-				}
-				else if (key == SDLK_n)
-				{
-					printf("count_cycles %d\n", info->count_cycles);
-					show_data(info, sdl);
-					gladiatorial_fight(info, sdl);
-					SDL_UpdateWindowSurface(sdl->window); //draw surface
-				}
-				else if (key == SDLK_p)
-				{
-					printf("music on/off\n");
-					if (Mix_PausedMusic())
-						Mix_ResumeMusic();
-					else
-						Mix_PauseMusic();
-				}
-				else if (key == SDLK_s)
-					Mix_FadeOutMusic(3000);
-				else if (key == SDLK_l)
-					Mix_PlayChannel(-1, sdl->live_effect, 0);
 				else if (key == SDLK_a)
 				{
 					//show = show == 0 ? 1 : 0;
 					prepare_announcement(sdl);
-					announce_winner(seed++, (info->players)[info->last_live - 1], sdl);
+					announce_winner(controls.seed++, (info->players)[info->last_live - 1], sdl);
 					SDL_UpdateWindowSurface(sdl->window); //draw surface
 					//sdl->speed = 150;
 				}
+				game_controls(key, &controls, info, sdl);
 			}
 		}
 	}

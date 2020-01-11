@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 14:45:48 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/11 14:45:51 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/11 17:56:54 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ int	init_sdl(unsigned char *arena, t_sdl *sdl)
 	ft_bzero(sdl->replica, MEM_SIZE);
 	init_music(sdl); // needs work and getting error
 	init_colors(sdl->colors);
-	sdl->speed = 100; // default game speed
 	sdl->arena = arena;
 	return (0);
 }

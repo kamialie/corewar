@@ -6,7 +6,7 @@
 #    By: rgyles <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/16 14:20:48 by rgyles            #+#    #+#              #
-#    Updated: 2019/12/28 20:45:03 by rgyles           ###   ########.fr        #
+#    Updated: 2020/01/11 18:24:55 by rgyles           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,6 +71,7 @@ SDL_SRC = init_sdl.c \
 			 draw_byte.c \
 			 draw_shapes.c \
 			 draw_annotations.c \
+			 draw_game_controls.c \
 			 int_to_char.c \
 			 render_text.c \
 			 update_byte.c \
