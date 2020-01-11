@@ -73,6 +73,7 @@ typedef struct	s_op
 	void					(*func)(t_info *, t_processes **, t_sdl *); // указатель на функцию с данной операцией
 }				t_op;
 
+unsigned short int reverse_short_int(unsigned short int num);
 void		read_arg(t_info *info, int argc, char *argv[]);
 void		error(int err);
 void		gladiatorial_fight(t_info *info, t_sdl *sdl);

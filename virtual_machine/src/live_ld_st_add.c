@@ -56,8 +56,6 @@ void		ld_op(t_info *info, t_processes **prs, t_sdl *sdl)
         printf("arg %d reg %d\n", arg_dir, code_arg);
     }
     skiped_bytes = get_bytes_to_skip(1, code_arg);
-    //create_cursor(info->arena[((*prs)->index + skiped_bytes) % MEM_SIZE], ((*prs)->index + skiped_bytes) % MEM_SIZE, (*prs)->reg[0] - 1, sdl);
-    //update_byte(info->arena[(*prs)->index], (*prs)->index, (*prs)->reg[0] - 1, sdl);
 	move_cursor((*prs)->index, skiped_bytes, (*prs)->reg[0] - 1, sdl);
     (*prs)->index = ((*prs)->index + skiped_bytes) % MEM_SIZE;
 }

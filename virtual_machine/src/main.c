@@ -13,6 +13,17 @@
 #include "visual.h"
 #include "corewar.h"
 
+
+unsigned short int reverse_short_int(unsigned short int num)
+{
+    unsigned short int  rev_num;
+
+    rev_num = 0;
+    rev_num += ((num & 0xff) << (8 * 1));
+    rev_num += ((num & 0xff00) >>                            (8 * 1));
+    return (rev_num);
+}
+
 //переместить
 int     reverse_int(int num)
 {

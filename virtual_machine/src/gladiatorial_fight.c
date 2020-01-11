@@ -17,19 +17,23 @@ void		take_actions(t_info *info, t_processes *prs, t_sdl *sdl)
 	if (prs->cc_op == 0)  //получаем код следущей операции и если она валидна записываем количество циклов
 	{
 		prs->code_op = (info->arena)[prs->index];
+        printf("prs->code %d %d\n:", (info->arena)[prs->index], prs->code_op);
 		if ((info->arena)[prs->index] > 0 && (info->arena)[prs->index] < 17)
 			prs->cc_op = g_op_tab[prs->code_op - 1].cycle_for_exec;
 	}
+
 	if (prs->cc_op > 0) //уменьшаем количество циклов ожидания
 		--prs->cc_op;
 	if (prs->cc_op == 0) //выполняем операцию
 	{
 		//Если операция валидна, то вызываем исполняющую ее функцию
 		//Иначе смещаем на 1 байт
+        printf("prs->code %d\n:", (info->arena)[prs->index]);
 		if ((info->arena)[prs->index] > 0 && (info->arena)[prs->index] < 17)
             g_op_tab[IND((info->arena)[prs->index])].func(info, &prs, sdl);
 		else
 		{
+
             //create_cursor(info->arena[(prs->index + 1) % MEM_SIZE], (prs->index + 1) % MEM_SIZE, prs->reg[0] - 1, sdl);
             //update_byte(info->arena[prs->index], prs->index, prs->reg[0] - 1, sdl);
 			move_cursor(prs->index, 1, prs->reg[0] - 1, sdl);
@@ -38,7 +42,7 @@ void		take_actions(t_info *info, t_processes *prs, t_sdl *sdl)
 	}
 }
 
-void		kick_noobs(t_info *info)
+void		kick_noobs(t_info *info, t_sdl *sdl)
 {
 	t_processes		*ptr;
 
@@ -46,7 +50,10 @@ void		kick_noobs(t_info *info)
 	while (ptr)
 	{
 		if (info->count_cycles - ptr->cc_live > info->cycle_to_die)
-			delete_elem(&ptr, info);
+		{
+		    update_byte(ptr->index, sdl);
+            delete_elem(&ptr, info);
+        }
 		else
 			ptr = ptr->next;
 	}
@@ -79,7 +86,7 @@ void		gladiatorial_fight(t_info *info, t_sdl *sdl)
 			//if (info->count_cycles % 500 == 0)
 			    //return ;
 		}
-		kick_noobs(info);
+		kick_noobs(info, sdl);
 	}
 	printf("privet - %d\n\n", info->count_cycles);
 	exit(1); //Камиль нарисует победителя потом тут!!!
