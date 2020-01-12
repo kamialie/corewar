@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:35:59 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/12 15:04:32 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/12 17:03:41 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,28 +46,6 @@ void	show_players(t_info *info, t_sdl *sdl)
 	}
 }
 
-/*
-** no need to update surface if game is running
-*/
-
-void	update_game_status(int status, t_sdl *sdl)
-{
-	sdl->render_info->rect.x = GAME_STATUS_X_LOCATION;
-	sdl->render_info->rect.y = GAME_STATUS_Y_LOCATION;
-	if (status == 1)
-	{
-		sdl->render_info->font_color = sdl->colors[GREEN];
-		render_text("RUNNING", sdl->render_info, sdl->surface);
-	}
-	else
-	{
-		sdl->render_info->font_color = sdl->colors[RED];
-		SDL_FillRect(sdl->surface, &sdl->render_info->rect, 0);
-		render_text("PAUSED", sdl->render_info, sdl->surface);
-		SDL_UpdateWindowSurface(sdl->window);
-	}
-}
-
 void	draw_annotations(t_info *info, t_sdl *sdl)
 {
 	t_render render_info;
@@ -86,9 +64,9 @@ void	draw_annotations(t_info *info, t_sdl *sdl)
 	sdl->render_info->rect.y += TEXT_Y_SHIFT;
 	render_text("count_check - ", sdl->render_info, sdl->surface);
 	sdl->render_info->rect.y += TEXT_Y_SHIFT;
-	render_text("speed - ", sdl->render_info, sdl->surface);
+	render_text("delay - ", sdl->render_info, sdl->surface);
 	show_data(info, sdl);
-	udpate_speed(DEFAULT_GAME_SPEED, sdl);
+	udpate_delay(DEFAULT_GAME_SPEED, sdl);
 	update_game_status(0, sdl);
 	show_players(info, sdl);
 }

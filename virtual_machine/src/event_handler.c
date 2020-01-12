@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 15:50:24 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/12 15:37:59 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/12 17:03:14 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,16 @@ static void	game_controls(int key, t_controls *controls,
 		gladiatorial_fight(info, sdl);
 		SDL_UpdateWindowSurface(sdl->window); //draw surface
 	}
-	else if (key == SDLK_d && controls->speed > 0)
+	else if (key == SDLK_i && controls->speed > 0)
 	{
 		controls->speed -= 50;
-		udpate_speed(controls->speed, sdl);
+		udpate_delay(controls->speed, sdl);
 		SDL_UpdateWindowSurface(sdl->window); //draw surface
 	}
-	else if (key == SDLK_i && controls->speed < 1000)
+	else if (key == SDLK_d && controls->speed < 1000)
 	{
 		controls->speed += 50;
-		udpate_speed(controls->speed, sdl);
+		udpate_delay(controls->speed, sdl);
 		SDL_UpdateWindowSurface(sdl->window); //draw surface
 	}
 	/*else if (key == SDLK_a) //temporary

@@ -6,12 +6,38 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 17:49:29 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/11 19:02:11 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/12 17:04:27 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "visual.h"
 #include "corewar.h"
+
+/*
+** no need to update surface if game is running
+*/
+
+void	update_game_status(int status, t_sdl *sdl)
+{
+	t_render *render_info;
+
+	render_info = sdl->render_info;
+	render_info->rect.x = GAME_STATUS_X_LOCATION;
+	render_info->rect.y = GAME_STATUS_Y_LOCATION;
+	if (status == 1)
+	{
+		render_info->font_color = sdl->colors[GREEN];
+		render_text("RUNNING", render_info, sdl->surface);
+	}
+	else
+	{
+		render_info->rect.w = GAME_STATUS_WIDTH;
+		render_info->font_color = sdl->colors[RED];
+		SDL_FillRect(sdl->surface, &render_info->rect, 0);
+		render_text("PAUSED", render_info, sdl->surface);
+		SDL_UpdateWindowSurface(sdl->window);
+	}
+}
 
 void	update_value(int data, t_render *render_info, SDL_Surface *surface)
 {
@@ -21,20 +47,21 @@ void	update_value(int data, t_render *render_info, SDL_Surface *surface)
 	render_text(buffer, render_info, surface);
 }
 
-void	udpate_speed(int speed, t_sdl *sdl)
+void	udpate_delay(int delay, t_sdl *sdl)
 {
 	t_render *render_info;
 
 	render_info = sdl->render_info;
 	render_info->rect.x = SDL_DATA_X_LOCATION;
 	render_info->rect.y = SDL_DATA_Y_LOCATION;
+	render_info->rect.w = SDL_DATA_WIDTH;
 	render_info->font_color = sdl->colors[WHITE];
 	render_info->back_color = sdl->colors[BLACK];
 	SDL_FillRect(sdl->surface, &sdl->render_info->rect, 0);
-	if (speed == 0)
+	if (delay == 0)
 		render_text("no delay", render_info, sdl->surface);
 	else
-		update_value(speed, render_info, sdl->surface);
+		update_value(delay, render_info, sdl->surface);
 }
 
 void	show_data(t_info *info, t_sdl *sdl)

@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 16:09:49 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/12 15:39:19 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/12 17:04:08 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@
 
 # define GAME_STATUS_X_LOCATION 1400
 # define GAME_STATUS_Y_LOCATION 30
+# define GAME_STATUS_WIDTH 70
 
 # define PLAYER_ONE "Player 1: "
 # define PLAYER_TWO "Player 2: "
@@ -69,6 +70,7 @@
 
 # define SDL_DATA_X_LOCATION 1570
 # define SDL_DATA_Y_LOCATION 150
+# define SDL_DATA_WIDTH 90
 
 # define DEFAULT_GAME_SPEED 100
 
@@ -99,7 +101,7 @@ void			set_nibble_for_render(int location, int type, int player, t_sdl *sdl);
 void			set_render_color(int type, int player, t_render *render_info, SDL_Color *colors);
 void			draw_byte(unsigned char byte, t_render *render_info, SDL_Surface *surface);
 void			int_to_char(int number, char *str);
-void			udpate_speed(int speed, t_sdl *sdl);
+void			udpate_delay(int delay, t_sdl *sdl);
 void			draw_game_controls(t_sdl *sdl);
 
 void			draw_square(t_square *sq_info, int *img_data);
