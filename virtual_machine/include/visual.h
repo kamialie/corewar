@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 16:09:49 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/11 20:03:11 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/12 15:39:19 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void			draw_square(t_square *sq_info, int *img_data);
 
 void			update_game_status(int status, t_sdl *sdl);
 
-void			epileptic_square(int seed, t_sdl *sdl);
+void			epileptic_square(int seed, t_render *render_info, SDL_Surface *surface, t_sdl *sdl);
 
 void			render_text(char *text, t_render *render_info, SDL_Surface *surface);
 

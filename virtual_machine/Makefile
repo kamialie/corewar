@@ -6,7 +6,7 @@
 #    By: rgyles <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/16 14:20:48 by rgyles            #+#    #+#              #
-#    Updated: 2020/01/11 18:24:55 by rgyles           ###   ########.fr        #
+#    Updated: 2020/01/12 15:50:48 by rgyles           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -243,6 +243,8 @@ fclean: clean
 	@rm -rf $(NAME)
 	@echo "$(RED)Deleting libft...$(NC)"
 	@make -C $(LIBFT_DIR) fclean
+
+lclean:
 	@echo "$(RED)Deleting SDL, SDL_TTF, freetype libraries and header files...$(NC)"
 	@rm -rf $(SDL_LIB) $(SDL_INCLUDE)/SDL2 $(SDL_INCLUDE)/ft2build.h $(SDL_INCLUDE)/freetype2
 

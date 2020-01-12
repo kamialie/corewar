@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 15:50:24 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/12 14:39:15 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/12 15:37:59 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ static void	update_for_one_round(int speed, t_info *info, t_sdl *sdl)
 	printf("count_cycles %d\n", info->count_cycles);
 	show_data(info, sdl);
 	gladiatorial_fight(info, sdl);
-	SDL_UpdateWindowSurface(sdl->window); //draw surface
+	SDL_UpdateWindowSurface(sdl->window);
 	SDL_Delay(speed);
 }
 
-static void music_controls(int key, t_controls *controls, t_sdl *sdl)
+static void	music_controls(int key, t_controls *controls, t_sdl *sdl)
 {
 	if (key == SDLK_p)
 	{
@@ -38,7 +38,8 @@ static void music_controls(int key, t_controls *controls, t_sdl *sdl)
 		Mix_PlayChannel(-1, sdl->live_effect, 0);
 }
 
-static void	game_controls(int key, t_controls *controls, t_info *info, t_sdl *sdl)
+static void	game_controls(int key, t_controls *controls,
+								t_info *info, t_sdl *sdl)
 {
 	if (key == SDLK_SPACE)
 	{
@@ -81,25 +82,22 @@ static void	take_game_action(t_controls *controls, t_info *info, t_sdl *sdl)
 		update_for_one_round(controls->speed, info, sdl);
 	else if (controls->play == -1 && controls->show_time--)
 	{
-		epileptic_square(controls->seed++, sdl);
+		epileptic_square(controls->seed++, sdl->render_info, sdl->surface, sdl);
 		SDL_Delay(controls->speed);
 		if (controls->show_time == 0)
-			announce_winner(controls->seed++, (info->players)[info->last_live - 1], sdl);
+			announce_winner(controls->seed++,
+				(info->players)[info->last_live - 1], sdl);
 	}
 }
 
-//static void	handle_key_stroke(int key, t_controls *controls, t_info *info, t_sdl *sdl)
-//{
-//}
-
-void	event_handler(t_info *info, t_sdl *sdl)
+void		event_handler(t_info *info, t_sdl *sdl)
 {
-	int	key;
-	SDL_Event event;
+	int			key;
+	SDL_Event	event;
 	t_controls	controls;
 
 	controls = (t_controls) {0, DEFAULT_GAME_SPEED, 20, 0};
-    //Mix_PlayMusic(sdl->main_theme, 1); // commented for no music while debugging
+	//Mix_PlayMusic(sdl->main_theme, 1); // commented for no music while debugging
 	while (1)
 	{
 		take_game_action(&controls, info, sdl);

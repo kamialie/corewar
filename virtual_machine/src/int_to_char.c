@@ -6,14 +6,14 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/28 20:00:43 by rgyles            #+#    #+#             */
-/*   Updated: 2019/12/28 20:15:48 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/12 15:27:08 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-static int		get_size(int number)
+static int	get_size(int number)
 {
 	int	size;
-	
+
 	size = 0;
 	if (number < 0)
 	{
@@ -28,7 +28,7 @@ static int		get_size(int number)
 	return (size);
 }
 
-void	int_to_char(int number, char *str)
+void		int_to_char(int number, char *str)
 {
 	int		index;
 

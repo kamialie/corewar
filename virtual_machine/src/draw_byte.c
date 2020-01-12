@@ -1,8 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw_byte.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/12 15:05:41 by rgyles            #+#    #+#             */
+/*   Updated: 2020/01/12 15:07:40 by rgyles           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "visual.h"
 
 /*
- * nibble is 4 bits!
+** nibble is 4 bits!
 */
+
 char	get_nibble(unsigned char nibble)
 {
 	if (nibble < 10)
@@ -22,9 +35,10 @@ char	get_nibble(unsigned char nibble)
 }
 
 /*
- * set color and location for nibble
+** set color and location for nibble
 */
-void		set_nibble_for_render(int location, int type, int player, t_sdl *sdl)
+
+void	set_nibble_for_render(int location, int type, int player, t_sdl *sdl)
 {
 	if (type == EMPTY)
 	{
@@ -47,18 +61,24 @@ void		set_nibble_for_render(int location, int type, int player, t_sdl *sdl)
 
 /*
 ** render single byte:
-** divide byte into nibbles, get the corresponding base 16 symbols, form a string
-** render text using TTF, set coordinates, copy to window surface, free orginal surface created by TTF
+** divide byte into nibbles,
+** get the corresponding base 16 symbols,
+** form a string; then
+** render text using TTF, set coordinates,
+** copy to window surface, free orginal surface created by TTF
 */
-void	draw_byte(unsigned char byte, t_render *render_info, SDL_Surface *surface)
+
+void	draw_byte(unsigned char byte, t_render *render_info,
+										SDL_Surface *surface)
 {
-	char cell[3];
+	char		cell[3];
 	SDL_Surface	*text_surface;
 
 	cell[0] = get_nibble((byte & 0xf0) >> 4);
 	cell[1] = get_nibble(byte & 0xf);
 	cell[2] = '\0';
-	text_surface = TTF_RenderText_Shaded(render_info->font, cell, render_info->font_color, render_info->back_color);
+	text_surface = TTF_RenderText_Shaded(render_info->font, cell,
+					render_info->font_color, render_info->back_color);
 	SDL_BlitSurface(text_surface, NULL, surface, &render_info->rect);
 	SDL_FreeSurface(text_surface);
 }

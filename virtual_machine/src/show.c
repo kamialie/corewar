@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/28 20:00:07 by rgyles            #+#    #+#             */
-/*   Updated: 2019/12/28 20:46:53 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/12 15:40:50 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 #include "op.h"
 #include "visual.h"
 
-void	fill_in_vertial(int value, int index, int length, unsigned char *replica)
+void	fill_in_vertial(int value, int index,
+			int length, unsigned char *replica)
 {
 	int i;
 
@@ -23,7 +24,8 @@ void	fill_in_vertial(int value, int index, int length, unsigned char *replica)
 		replica[index + i * 64] = value;
 }
 
-void	fill_in_horizontal(int value, int index, int length, unsigned char *replica)
+void	fill_in_horizontal(int value, int index,
+				int length, unsigned char *replica)
 {
 	int i;
 
@@ -32,6 +34,12 @@ void	fill_in_horizontal(int value, int index, int length, unsigned char *replica
 		replica[index++] = value;
 }
 
+/*
+** length - side of square
+** shift - square side plus 1
+** while is till median
+*/
+
 void	form_squares(int seed, t_sdl *sdl)
 {
 	int start;
@@ -39,46 +47,44 @@ void	form_squares(int seed, t_sdl *sdl)
 	int	length;
 
 	start = 0;
-	length = 64; //side of square
-	shift = 65; // square side + 1
-	while (start < MEM_SIZE / 2) // median
+	length = 64;
+	shift = 65;
+	while (start < MEM_SIZE / 2)
 	{
 		fill_in_vertial(seed % 5, start, length, sdl->replica);
 		fill_in_vertial(seed % 5, start + length - 1, length, sdl->replica);
 		fill_in_horizontal(seed % 5, start, length, sdl->replica);
-		fill_in_horizontal(seed % 5, start + (length - 1) * 64, length, sdl->replica);
+		fill_in_horizontal(seed % 5, start + (length - 1) * 64,
+											length, sdl->replica);
 		++seed;
 		start += shift;
 		length -= 2;
 	}
 }
 
-void	epileptic_square(int seed, t_sdl *sdl)
+void	epileptic_square(int seed, t_render *render_info,
+							SDL_Surface *surface, t_sdl *sdl)
 {
-	int			index;
+	int			i;
 	int			end_of_row;
 	int			row;
-	t_render	*render_info;
-	SDL_Surface	*surface;
 
 	form_squares(seed, sdl);
-	index = 0;
-	set_nibble_for_render(index, EMPTY, 0, sdl);
-	render_info = sdl->render_info;
-	surface = sdl->surface;
-	row = index / 64;
+	i = 0;
+	set_nibble_for_render(i, EMPTY, 0, sdl);
+	row = i / 64;
 	end_of_row = (row + 1) * 64;
-	while (index < MEM_SIZE)
+	while (i < MEM_SIZE)
 	{
-		while (index < end_of_row)
+		while (i < end_of_row)
 		{
-			render_info->font_color = sdl->colors[sdl->replica[index] + FONT_COLOR];
-			draw_byte(sdl->arena[index++], render_info, surface);
+			render_info->font_color = sdl->colors[sdl->replica[i] + FONT_COLOR];
+			draw_byte(sdl->arena[i++], render_info, surface);
 			render_info->rect.x += NIBBLE_WIDTH;
 		}
 		render_info->rect.y += NIBBLE_HEIGHT;
 		render_info->rect.x = NIBBLE_X_SHIFT;
 		end_of_row = (++row + 1) * 64;
-		index = end_of_row - 64;
+		i = end_of_row - 64;
 	}
 }
