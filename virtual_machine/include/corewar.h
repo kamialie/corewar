@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 15:10:22 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/11 15:11:11 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/12 17:13:30 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ typedef struct	s_op
 
 void		read_arg(t_info *info, int argc, char *argv[]);
 void		error(int err);
-void		gladiatorial_fight(t_info *info, t_sdl *sdl);
+void		gladiatorial_fight(int *play, t_info *info, t_sdl *sdl);
 char		get_nibble(unsigned char nibble);
 void		print_arena(unsigned char *arena);
 int         get_bytes_to_skip(int num, unsigned char code_arg);

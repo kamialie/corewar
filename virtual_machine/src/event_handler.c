@@ -6,20 +6,20 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 15:50:24 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/12 17:03:14 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/12 17:30:42 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "visual.h"
 #include "corewar.h"
 
-static void	update_for_one_round(int speed, t_info *info, t_sdl *sdl)
+static void	update_for_one_round(int delay, int *play, t_info *info, t_sdl *sdl)
 {
 	printf("count_cycles %d\n", info->count_cycles);
 	show_data(info, sdl);
-	gladiatorial_fight(info, sdl);
+	gladiatorial_fight(play, info, sdl);
 	SDL_UpdateWindowSurface(sdl->window);
-	SDL_Delay(speed);
+	SDL_Delay(delay);
 }
 
 static void	music_controls(int key, t_controls *controls, t_sdl *sdl)
@@ -49,7 +49,7 @@ static void	game_controls(int key, t_controls *controls,
 	else if (key == SDLK_n)
 	{
 		show_data(info, sdl);
-		gladiatorial_fight(info, sdl);
+		gladiatorial_fight(&controls->play, info, sdl);
 		SDL_UpdateWindowSurface(sdl->window); //draw surface
 	}
 	else if (key == SDLK_i && controls->speed > 0)
@@ -78,15 +78,22 @@ static void	game_controls(int key, t_controls *controls,
 
 static void	take_game_action(t_controls *controls, t_info *info, t_sdl *sdl)
 {
+	//printf("play - %d\n", controls->play);
 	if (controls->play == 1)
-		update_for_one_round(controls->speed, info, sdl);
-	else if (controls->play == -1 && controls->show_time--)
+		update_for_one_round(controls->speed, &controls->play, info, sdl);
+	else if (controls->play == -1 && controls->show_time != 0)
 	{
+		controls->speed = 150;
+		controls->show_time--;
 		epileptic_square(controls->seed++, sdl->render_info, sdl->surface, sdl);
 		SDL_Delay(controls->speed);
 		if (controls->show_time == 0)
+		{
+			prepare_announcement(sdl);
 			announce_winner(controls->seed++,
 				(info->players)[info->last_live - 1], sdl);
+		}
+		SDL_UpdateWindowSurface(sdl->window); //draw surface
 	}
 }
 

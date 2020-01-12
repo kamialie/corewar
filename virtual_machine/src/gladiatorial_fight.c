@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 17:20:05 by bdudley           #+#    #+#             */
-/*   Updated: 2019/11/16 20:34:20 by bdudley          ###   ########.fr       */
+/*   Updated: 2020/01/12 17:22:14 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void		kick_noobs(t_info *info)
 	info->count_live = 0;
 }
 
-void		gladiatorial_fight(t_info *info, t_sdl *sdl)
+void		gladiatorial_fight(int *play, t_info *info, t_sdl *sdl)
 {
 	t_processes	*prs;
 
@@ -81,6 +81,8 @@ void		gladiatorial_fight(t_info *info, t_sdl *sdl)
 		}
 		kick_noobs(info);
 	}
-	printf("privet - %d\n\n", info->count_cycles);
-	exit(1); //Камиль нарисует победителя потом тут!!!
+	if (play != NULL)
+		*play = -1;
+	//printf("privet - %d\n\n", info->count_cycles);
+	//exit(1); //Камиль нарисует победителя потом тут!!!
 }
