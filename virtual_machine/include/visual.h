@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 16:09:49 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/11 18:59:09 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/11 20:03:11 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ typedef struct	s_controls
 {
 	int	play;
 	int	speed;
-	int	show;
+	int	show_time;
 	int	seed;
 }				t_controls;
 

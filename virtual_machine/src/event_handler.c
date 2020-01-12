@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 15:50:24 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/11 18:23:58 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/12 14:39:15 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,29 +63,46 @@ static void	game_controls(int key, t_controls *controls, t_info *info, t_sdl *sd
 		udpate_speed(controls->speed, sdl);
 		SDL_UpdateWindowSurface(sdl->window); //draw surface
 	}
+	/*else if (key == SDLK_a) //temporary
+	{
+		//show = show == 0 ? 1 : 0;
+		prepare_announcement(sdl);
+		announce_winner(controls.seed++, (info->players)[info->last_live - 1], sdl);
+		SDL_UpdateWindowSurface(sdl->window); //draw surface
+		//sdl->speed = 150;
+	}*/
 	else
 		music_controls(key, controls, sdl);
 }
 
+static void	take_game_action(t_controls *controls, t_info *info, t_sdl *sdl)
+{
+	if (controls->play == 1)
+		update_for_one_round(controls->speed, info, sdl);
+	else if (controls->play == -1 && controls->show_time--)
+	{
+		epileptic_square(controls->seed++, sdl);
+		SDL_Delay(controls->speed);
+		if (controls->show_time == 0)
+			announce_winner(controls->seed++, (info->players)[info->last_live - 1], sdl);
+	}
+}
+
+//static void	handle_key_stroke(int key, t_controls *controls, t_info *info, t_sdl *sdl)
+//{
+//}
+
 void	event_handler(t_info *info, t_sdl *sdl)
 {
 	int	key;
-	t_controls	controls;
 	SDL_Event event;
+	t_controls	controls;
 
-	controls = (t_controls) {0, DEFAULT_GAME_SPEED, 0, 0};
+	controls = (t_controls) {0, DEFAULT_GAME_SPEED, 20, 0};
     //Mix_PlayMusic(sdl->main_theme, 1); // commented for no music while debugging
 	while (1)
 	{
-		if (controls.play)
-			update_for_one_round(controls.speed, info, sdl);
-		if (controls.show)
-		{
-			//epileptic_square(seed++, sdl);
-			announce_winner(controls.seed++, (info->players)[info->last_live - 1], sdl);
-			SDL_UpdateWindowSurface(sdl->window); //draw surface
-			SDL_Delay(controls.speed);
-		}
+		take_game_action(&controls, info, sdl);
 		while (SDL_PollEvent(&event))
 		{
 			if (event.type == SDL_QUIT)
@@ -96,15 +113,8 @@ void	event_handler(t_info *info, t_sdl *sdl)
 				key = event.key.keysym.sym;
 				if (key == SDLK_ESCAPE)
 					return ;
-				else if (key == SDLK_a)
-				{
-					//show = show == 0 ? 1 : 0;
-					prepare_announcement(sdl);
-					announce_winner(controls.seed++, (info->players)[info->last_live - 1], sdl);
-					SDL_UpdateWindowSurface(sdl->window); //draw surface
-					//sdl->speed = 150;
-				}
-				game_controls(key, &controls, info, sdl);
+				if (controls.play != -1)
+					game_controls(key, &controls, info, sdl);
 			}
 		}
 	}
