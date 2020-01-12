@@ -33,29 +33,31 @@ void		live_op(t_info *info, t_processes **prs, t_sdl *sdl)
 void		ld_op(t_info *info, t_processes **prs, t_sdl *sdl)
 {
     unsigned char code_arg;
+    unsigned char   arg_reg;
     int           skiped_bytes;
     int           arg_dir;
     short int     arg_ind;
 
-    printf("ld ");
+    printf("ld \n");
     code_arg = ((info->arena)[((*prs)->index + 1) % MEM_SIZE]) & 0xf0;
     //printf("%d   %d\n", code_arg, ((info->arena)[((*prs)->index + 1) % MEM_SIZE]));
     if (code_arg == 208) //ind
     {
-
+        arg_ind = reverse_short_int(*((short int *)((info->arena) + ((*prs)->index + 2) % MEM_SIZE)));
+        arg_ind = (arg_ind + (*prs)->index) % MEM_SIZE;
     }
     else if (code_arg == 144) //dir
     {
         arg_dir = reverse_int(*((int *)((info->arena) + ((*prs)->index + 2) % MEM_SIZE))); //код операции + код аргументов 
-        code_arg = *((info->arena) + ((*prs)->index + 6) % MEM_SIZE);
-        if (code_arg >= 0 && code_arg < REG_NUMBER)
+        arg_reg = *((info->arena) + ((*prs)->index + 6) % MEM_SIZE);
+        if (arg_reg >= 0 && arg_reg < REG_NUMBER)
         {
-            (*prs)->reg[code_arg] = arg_dir; //может можно без приведения
+            (*prs)->reg[arg_reg] = arg_dir; //может можно без приведения
             (*prs)->carry = (arg_dir == 0) ? 1 : 0;
         }
-        printf("arg %d reg %d\n", arg_dir, code_arg);
     }
     skiped_bytes = get_bytes_to_skip(1, code_arg);
+    //printf("skiped bytes %d\n", skiped_bytes);
 	move_cursor((*prs)->index, skiped_bytes, (*prs)->reg[0] - 1, sdl);
     (*prs)->index = ((*prs)->index + skiped_bytes) % MEM_SIZE;
 }

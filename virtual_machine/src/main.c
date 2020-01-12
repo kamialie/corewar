@@ -48,7 +48,7 @@ int     get_bytes_to_skip(int num, unsigned char code_arg)
     summ = 2;
     while (++i < g_op_tab[num].count_args)
     {
-        copy = (code_arg >> (6 - i * 2)) & 00000011;
+        copy = (code_arg >> (6 - i * 2)) & 0x3;
         if (copy == 3)
             summ += 2;
         else if (copy== 1)

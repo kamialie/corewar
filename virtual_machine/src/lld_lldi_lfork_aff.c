@@ -52,12 +52,15 @@ void		aff_op(t_info *info, t_processes **prs, t_sdl *sdl)
 {
     unsigned char code_arg;
 
-    printf("aaa\n");
-    code_arg = *((info->arena) + ((*prs)->index + 1) % MEM_SIZE);
-    (*prs)->reg[code_arg] = 65;
-    if (code_arg >= 0 && code_arg < REG_NUMBER)
+
+    code_arg = ((info->arena)[((*prs)->index + 1) % MEM_SIZE]) & 0xc0;
+    if (code_arg == 64)
     {
-        printf("Aff : %c\n", (*prs)->reg[code_arg]);
+        code_arg = *((info->arena) + ((*prs)->index + 2) % MEM_SIZE);
+        if (code_arg >= 0 && code_arg < REG_NUMBER) {
+            printf("Aff : %c\n", (*prs)->reg[code_arg]);
+        }
+        move_cursor((*prs)->index, 3, (*prs)->reg[0] - 1, sdl);
+        (*prs)->index = (((*prs)->index) + 3) % MEM_SIZE;
     }
-    (*prs)->index = (((*prs)->index) + 2) % MEM_SIZE;
 }

@@ -14,19 +14,18 @@
 
 void		zjmp_op(t_info *info, t_processes **prs, t_sdl *sdl)
 {
-    int     current_location;
-    int     shift;
-//	printf("zjmp\n");
+    unsigned short int     current_location;
+    short int     shift;
     current_location = (*prs)->index;
-    shift = 3;
-	if ((*prs)->carry) //не проверено
+    shift = 2;
+	if ((*prs)->carry)
 	{
-	    shift = *((int *)(info->arena + (current_location + 1) % MEM_SIZE)) % IDX_MOD;
-		(*prs)->index = current_location + shift;
-	}
-	else
-	    (*prs)->index = (current_location + 3) % MEM_SIZE; //1 байт занимает код операции и 2 байта занимает аргумент
-    move_cursor(current_location, shift, (*prs)->reg[0] - 1, sdl);
+        shift = reverse_short_int(*((short int *)(info->arena + (current_location + 1) % MEM_SIZE)));
+        shift = shift % IDX_MOD;
+    }
+	printf("!!!shift %d\n", shift);
+	(*prs)->index = (current_location + shift) % MEM_SIZE; //1 байт занимает код операции и 2 байта занимает аргумент
+    move_cursor(current_location, shift , (*prs)->reg[0] - 1, sdl);
 }
 
 void		ldi_op(t_info *info, t_processes **prs, t_sdl *sdl)

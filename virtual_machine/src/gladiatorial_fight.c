@@ -16,8 +16,6 @@ void		take_actions(t_info *info, t_processes *prs, t_sdl *sdl)
 {
 	if (prs->cc_op == 0)  //получаем код следущей операции и если она валидна записываем количество циклов
 	{
-		prs->code_op = (info->arena)[prs->index];
-        printf("prs->code %d %d\n:", (info->arena)[prs->index], prs->code_op);
 		if ((info->arena)[prs->index] > 0 && (info->arena)[prs->index] < 17)
 			prs->cc_op = g_op_tab[prs->code_op - 1].cycle_for_exec;
 	}
@@ -28,7 +26,6 @@ void		take_actions(t_info *info, t_processes *prs, t_sdl *sdl)
 	{
 		//Если операция валидна, то вызываем исполняющую ее функцию
 		//Иначе смещаем на 1 байт
-        printf("prs->code %d\n:", (info->arena)[prs->index]);
 		if ((info->arena)[prs->index] > 0 && (info->arena)[prs->index] < 17)
             g_op_tab[IND((info->arena)[prs->index])].func(info, &prs, sdl);
 		else
@@ -49,6 +46,7 @@ void		kick_noobs(t_info *info, t_sdl *sdl)
 	ptr = info->processes;
 	while (ptr)
 	{
+
 		if (info->count_cycles - ptr->cc_live > info->cycle_to_die)
 		{
 		    update_byte(ptr->index, sdl);
