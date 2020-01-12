@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 17:20:29 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/11 18:56:23 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/12 14:55:36 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,9 @@ void	draw_range(int i, int end, unsigned char *arena, t_sdl *sdl)
 	}
 }
 
+/*
+ * increment start, as cursor will be initialized in another function
+ */
 void	draw_arena(t_processes *processes, t_info *info, t_sdl *sdl)
 {
 	int	start;
@@ -113,8 +116,9 @@ void	draw_arena(t_processes *processes, t_info *info, t_sdl *sdl)
 	player = 1;
 	while (processes != NULL)
 	{
-		start = processes->index + 1; //cursor will be initialized later, in anther function
+		start = processes->index; //cursor will be initialized later, in anther function
 		end = start + ((info->players)[player - 1]).prog_size;
+		++start;
 		set_nibble_for_render(start, CODE, player, sdl);
 		draw_range(start, end, info->arena, sdl);
 		set_nibble_for_render(end, EMPTY, player, sdl);
