@@ -36,7 +36,7 @@ typedef struct	s_processes
 	int					cc_live; //цикл, в котором была последний раз выполнена live
 	int					cc_op : 11; //количество циклов, оставшееся до исполнения операции
 	int 				carry : 1; //флаг, для некоторых операций
-	int					code_op : 5; //код операции
+	int					code_op : 6; //код операции
 	int 				index : 14; //местоположение каретки на арене
 	int 				c_byte_op : 4; //сколько перешагнуть до следущей операции
 	int 				reg[REG_NUMBER];
@@ -64,7 +64,7 @@ typedef struct	s_op
 	char					*name;
 	unsigned int			count_args : 2;
 	unsigned char			args_types[3];
-	unsigned int			code : 5; //код операции
+	unsigned int			code : 6; //код операции
 	unsigned int			cycle_for_exec : 11; //циклы ожидания для каждой операции
 	char					*comment;
 	unsigned int			change_carry : 1; //изменяет ли данная операция флаг carry
@@ -73,6 +73,7 @@ typedef struct	s_op
 	void					(*func)(t_info *, t_processes **, t_sdl *); // указатель на функцию с данной операцией
 }				t_op;
 
+unsigned short int reverse_short_int(unsigned short int num);
 void		read_arg(t_info *info, int argc, char *argv[]);
 void		error(int err);
 void		gladiatorial_fight(int *play, t_info *info, t_sdl *sdl);

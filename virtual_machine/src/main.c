@@ -13,6 +13,17 @@
 #include "visual.h"
 #include "corewar.h"
 
+
+unsigned short int reverse_short_int(unsigned short int num)
+{
+    unsigned short int  rev_num;
+
+    rev_num = 0;
+    rev_num += ((num & 0xff) << (8 * 1));
+    rev_num += ((num & 0xff00) >>                            (8 * 1));
+    return (rev_num);
+}
+
 //переместить
 int     reverse_int(int num)
 {
@@ -37,7 +48,7 @@ int     get_bytes_to_skip(int num, unsigned char code_arg)
     summ = 2;
     while (++i < g_op_tab[num].count_args)
     {
-        copy = (code_arg >> (6 - i * 2)) & 00000011;
+        copy = (code_arg >> (6 - i * 2)) & 0x3;
         if (copy == 3)
             summ += 2;
         else if (copy== 1)
