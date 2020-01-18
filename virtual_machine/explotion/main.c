@@ -1,7 +1,7 @@
 #include<math.h>
 #include"SDL.h"
 SDL_Window *w;
-//SDL_Surface*s;
+SDL_Surface*s;
 SDL_Event e;
 SDL_Rect p;
 int i,n, r = 0;

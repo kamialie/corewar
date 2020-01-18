@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 16:09:49 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/12 17:04:08 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/18 12:30:51 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ typedef struct	s_controls
 	int	speed;
 	int	show_time;
 	int	seed;
+	int exp; // temporary
 }				t_controls;
 
 int				init_sdl(unsigned char *arena, t_sdl *sdl);
