@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 16:09:49 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/18 12:30:51 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/18 15:25:15 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,19 @@ typedef struct	s_controls
 	int	seed;
 	int exp; // temporary
 }				t_controls;
+
+typedef struct	s_explosion
+{
+	int					n;
+	int					r;
+	int					x;
+	int					y;
+	int					start;
+	int					location;
+	double				q[256];
+	SDL_Rect			rect;
+	struct s_explosion	*next;
+}				t_explosion;
 
 int				init_sdl(unsigned char *arena, t_sdl *sdl);
 void			draw_byte(unsigned char byte, t_render *render_info, SDL_Surface *surface);
