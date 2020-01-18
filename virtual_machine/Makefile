@@ -6,7 +6,7 @@
 #    By: rgyles <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/16 14:20:48 by rgyles            #+#    #+#              #
-#    Updated: 2019/12/28 15:45:12 by rgyles           ###   ########.fr        #
+#    Updated: 2020/01/12 15:50:48 by rgyles           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,9 +71,13 @@ SDL_SRC = init_sdl.c \
 			 draw_byte.c \
 			 draw_shapes.c \
 			 draw_annotations.c \
+			 draw_game_controls.c \
+			 int_to_char.c \
+			 render_text.c \
 			 update_byte.c \
 			 show_data.c \
-			 announcment.c \
+			 show.c \
+			 announce_winner.c \
 			 event_handler.c
 
 SDL_OBJ = $(addprefix $(OBJ_DIR)/, $(SDL_SRC:.c=.o))
@@ -239,6 +243,8 @@ fclean: clean
 	@rm -rf $(NAME)
 	@echo "$(RED)Deleting libft...$(NC)"
 	@make -C $(LIBFT_DIR) fclean
+
+lclean:
 	@echo "$(RED)Deleting SDL, SDL_TTF, freetype libraries and header files...$(NC)"
 	@rm -rf $(SDL_LIB) $(SDL_INCLUDE)/SDL2 $(SDL_INCLUDE)/ft2build.h $(SDL_INCLUDE)/freetype2
 

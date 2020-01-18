@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_sdl.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/11 14:45:48 by rgyles            #+#    #+#             */
+/*   Updated: 2020/01/12 15:26:27 by rgyles           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "visual.h"
 #include "sound.h"
 #include "op.h"
@@ -17,15 +29,18 @@ static void	init_colors(SDL_Color *colors)
 	colors[RED_BACK] = (SDL_Color) {150, 0, 0};
 }
 
-static void	init_font(t_render *render_info) //need to add check
+/*
+** TODO add check for null return
+*/
+
+static void	init_font(t_render *render_info)
 {
-	TTF_Init(); //int sdl_ttf
-	render_info->font = TTF_OpenFont(FONT_PATH, 15); //open font
+	TTF_Init();
+	render_info->font = TTF_OpenFont(FONT_PATH, 15);
 	TTF_SetFontStyle(render_info->font, TTF_STYLE_BOLD);
-	//return (font);
 }
 
-void	init_music(t_sdl *sdl)
+void		init_music(t_sdl *sdl)
 {
     int flags = MIX_INIT_MP3;
 
@@ -78,7 +93,6 @@ int	init_sdl(unsigned char *arena, t_sdl *sdl)
 	ft_bzero(sdl->replica, MEM_SIZE);
 	init_music(sdl); // needs work and getting error
 	init_colors(sdl->colors);
-	sdl->speed = 100; // default game speed
 	sdl->arena = arena;
 	return (0);
 }

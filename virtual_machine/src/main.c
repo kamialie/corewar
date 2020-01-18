@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 13:34:54 by rgyles            #+#    #+#             */
-/*   Updated: 2019/12/14 16:50:04 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/12 17:15:32 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ int	main(int argc , char *argv[])
 	if (info.dump >= 0)
 	{
 		while (info.count_cycles <= info.dump) // temporary
-			gladiatorial_fight(&info, &sdl);
+			gladiatorial_fight(NULL, &info, &sdl);
 		print_arena(info.arena);
 	}
 	else

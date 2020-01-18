@@ -6,42 +6,22 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 17:09:14 by rgyles            #+#    #+#             */
-/*   Updated: 2019/11/23 19:23:48 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/12 15:29:19 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//TODO collect line to buffer for output, instead of each pair seperately
-
 #include "corewar.h"
-
-//exists in draw.c
-/*char	get_nibble(unsigned char bit)
-{
-	if (bit < 10)
-		return (bit + 48);
-	else if (bit == 10)
-		return('a');
-	else if (bit == 11)
-		return('b');
-	else if (bit == 12)
-		return('c');
-	else if (bit == 13)
-		return('d');
-	else if (bit == 14)
-		return('e');
-	else
-		return('f');
-}*/
 
 /*
 ** label is short int (2 bytes)
 ** print each 4 bits seperatly using char pointer
 */
+
 void	print_row_label(unsigned short int row_label)
 {
+	char			*str;
 	unsigned char	*num;
-	char	label[9];
-	char	*str;
+	char			label[9];
 
 	num = (unsigned char *)&row_label;
 	str = label;
@@ -62,9 +42,10 @@ void	print_row_label(unsigned short int row_label)
 ** pair of digits represents a byte(unsigned char), e.g. fa
 ** first half is low part, second half is high part of the byte
 */
+
 void	print_arena_row(unsigned char *arena, int row)
 {
-	int 	i;
+	int		i;
 	int		last;
 	char	line[LINE_SIZE];
 	char	*str;
@@ -85,11 +66,10 @@ void	print_arena_row(unsigned char *arena, int row)
 	ft_putstr(line);
 }
 
-
 void	print_arena(unsigned char *arena)
 {
-	int	row;
-	int	total;
+	int					row;
+	int					total;
 	unsigned short int	row_label;
 
 	row = 0;

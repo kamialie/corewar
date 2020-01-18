@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 15:10:22 by rgyles            #+#    #+#             */
-/*   Updated: 2019/12/14 18:02:25 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/12 17:13:30 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ typedef struct	s_op
 unsigned short int reverse_short_int(unsigned short int num);
 void		read_arg(t_info *info, int argc, char *argv[]);
 void		error(int err);
-void		gladiatorial_fight(t_info *info, t_sdl *sdl);
+void		gladiatorial_fight(int *play, t_info *info, t_sdl *sdl);
 char		get_nibble(unsigned char nibble);
 void		print_arena(unsigned char *arena);
 int         get_bytes_to_skip(int num, unsigned char code_arg);
@@ -92,11 +92,9 @@ void        update_bytes(int location, int length, int player, t_sdl *sdl);
 void		set_byte(int location, int player, t_sdl *sdl);
 void		move_cursor(int location, int shift, int player, t_sdl *sdl);
 
-//void		update_byte(unsigned char value, int location, int player, t_sdl *sdl);
-//void		create_cursor(unsigned char value, int location, int player, t_sdl *sdl);
 void		render_text(char *text, t_render *render_info, SDL_Surface *surface);
 void		show_data(t_info *info, t_sdl *sdl);
-//void		move_cursor(int cur_location, int new_location, int player, t_sdl *sdl);
+void		announce_winner(int seed, header_t player, t_sdl *sdl);
 void		free_resources(t_sdl *sdl);
 short int   get_address(short int shift);
 /*

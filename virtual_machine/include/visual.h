@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 16:09:49 by rgyles            #+#    #+#             */
-/*   Updated: 2019/12/28 16:19:35 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/12 17:04:08 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@
 
 # define GAME_STATUS_X_LOCATION 1400
 # define GAME_STATUS_Y_LOCATION 30
+# define GAME_STATUS_WIDTH 70
 
 # define PLAYER_ONE "Player 1: "
 # define PLAYER_TWO "Player 2: "
@@ -60,13 +61,18 @@
 # define INFO_X_LOCATION 1420
 # define INFO_Y_LOCATION 50
 
-# define INFO_Y_SHIFT 20
+# define TEXT_Y_SHIFT 20
 
 # define DATA_X_LOCATION 1570
 # define DATA_Y_LOCATION 50
 
+# define CONTROLS_Y_LOCATION 700
+
 # define SDL_DATA_X_LOCATION 1570
 # define SDL_DATA_Y_LOCATION 150
+# define SDL_DATA_WIDTH 90
+
+# define DEFAULT_GAME_SPEED 100
 
 /*
  * x0, y0 - lower left corner
@@ -81,17 +87,31 @@ typedef struct	s_square
 	int	color;
 }				t_square;
 
+typedef struct	s_controls
+{
+	int	play;
+	int	speed;
+	int	show_time;
+	int	seed;
+}				t_controls;
+
 int				init_sdl(unsigned char *arena, t_sdl *sdl);
 void			draw_byte(unsigned char byte, t_render *render_info, SDL_Surface *surface);
 void			set_nibble_for_render(int location, int type, int player, t_sdl *sdl);
 void			set_render_color(int type, int player, t_render *render_info, SDL_Color *colors);
 void			draw_byte(unsigned char byte, t_render *render_info, SDL_Surface *surface);
-void			show_sdl_data(t_sdl *sdl);
+void			int_to_char(int number, char *str);
+void			udpate_delay(int delay, t_sdl *sdl);
+void			draw_game_controls(t_sdl *sdl);
 
-void			draw_square(t_square sq_info, int *img_data);
+void			draw_square(t_square *sq_info, int *img_data);
 
 void			update_game_status(int status, t_sdl *sdl);
 
-void			update_arena(int seed, t_sdl *sdl);
+void			epileptic_square(int seed, t_render *render_info, SDL_Surface *surface, t_sdl *sdl);
+
+void			render_text(char *text, t_render *render_info, SDL_Surface *surface);
+
+void			prepare_announcement(t_sdl *sdl);
 
 #endif
