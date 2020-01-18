@@ -35,7 +35,7 @@ typedef struct	s_processes
 {
 	int					cc_live; //цикл, в котором была последний раз выполнена live
 	int					cc_op : 11; //количество циклов, оставшееся до исполнения операции
-	int 				carry : 1; //флаг, для некоторых операций
+	int 				carry : 2; //флаг, для некоторых операций
 	int					code_op : 6; //код операции
 	int 				index : 14; //местоположение каретки на арене
 	int 				c_byte_op : 4; //сколько перешагнуть до следущей операции
@@ -88,6 +88,7 @@ void        event_handler(t_info *info, t_sdl *sdl);
 
 void		update_byte(int location, t_sdl *sdl);
 void		create_cursor(int location, int player, t_sdl *sdl);
+void        update_bytes(int location, int length, int player, t_sdl *sdl);
 void		set_byte(int location, int player, t_sdl *sdl);
 void		move_cursor(int location, int shift, int player, t_sdl *sdl);
 
@@ -97,7 +98,7 @@ void		render_text(char *text, t_render *render_info, SDL_Surface *surface);
 void		show_data(t_info *info, t_sdl *sdl);
 //void		move_cursor(int cur_location, int new_location, int player, t_sdl *sdl);
 void		free_resources(t_sdl *sdl);
-
+short int   get_address(short int shift);
 /*
 ** Создание и удаление кареток
 */

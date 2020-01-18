@@ -14,13 +14,24 @@
 #include "corewar.h"
 
 
+//shift
+short int   get_address(short int shift)
+{
+    if (shift < 0)
+        shift += MEM_SIZE;
+    else if (shift > 4095)
+        shift -= MEM_SIZE;
+    return (shift);
+}
+
+//shift
 unsigned short int reverse_short_int(unsigned short int num)
 {
     unsigned short int  rev_num;
 
     rev_num = 0;
     rev_num += ((num & 0xff) << (8 * 1));
-    rev_num += ((num & 0xff00) >>                            (8 * 1));
+    rev_num += ((num & 0xff00) >> (8 * 1));
     return (rev_num);
 }
 
