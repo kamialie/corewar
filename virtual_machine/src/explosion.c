@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 17:22:02 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/18 18:16:30 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/18 20:31:54 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,22 +85,26 @@ void	draw_explosion(t_explosion *e, t_sdl *sdl)
 	int i;
 	SDL_Rect	rect;
 
-   	i = 256 * !(e->n);
-	while (i)
-		e->q[--i] = rand() % 65536 * 9.5874e-5;
-	redraw_range(e->start, &(e->rect), sdl);
-	if (e->n == 63)
-		remove_explosion(e, &sdl->head_explosion);
-	else {
-		int i = -1;
-		while (++i < 256)
-		{
-			rect.x = e->x + cos(e->q[i]) * e->q[i - 1] * e->n / 10; // first number currects the position (middle), division controls the size
-			rect.y = e->y + sin(e->q[i]) * e->q[i - 1] * e->n / 10; // first number currects the position (middle), division controls the size
-			rect.w = 2; // width of all little particles 
-			rect.h = 1; // height of all little particles
-			SDL_FillRect(sdl->surface, &rect, 0xFFFFFF << e->r++);// for colorful effect replace color with 0xFFFFFF << r++, original - -n*67372030
+	while (e)
+	{
+		i = 256 * !(e->n);
+		while (i)
+			e->q[--i] = rand() % 65536 * 9.5874e-5;
+		redraw_range(e->start, &(e->rect), sdl);
+		if (e->n == 43)
+			remove_explosion(e, &sdl->head_explosion);
+		else {
+			i = -1;
+			while (++i < 256)
+			{
+				rect.x = e->x + cos(e->q[i]) * e->q[i - 1] * e->n / 10; // first number currects the position (middle), division controls the size
+				rect.y = e->y + sin(e->q[i]) * e->q[i - 1] * e->n / 10; // first number currects the position (middle), division controls the size
+				rect.w = 2; // width of all little particles 
+				rect.h = 1; // height of all little particles
+				SDL_FillRect(sdl->surface, &rect, 0xFFFFFF << e->r++);// for colorful effect replace color with 0xFFFFFF << r++, original - -n*67372030
+			}
 		}
+		e->n++;
+		e = e->next;
 	}
-	e->n = -~(e->n)%64;
 }

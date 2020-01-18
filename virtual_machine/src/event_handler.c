@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 15:50:24 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/18 18:17:59 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/18 21:02:02 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,9 @@
 
 static void	update_for_one_round(int delay, int *play, t_info *info, t_sdl *sdl)
 {
-	t_explosion *head;
-
 	printf("count_cycles %d\n", info->count_cycles);
 	show_data(info, sdl);
 	gladiatorial_fight(play, info, sdl);
-	if (sdl->head_explosion)
-	{
-		head = sdl->head_explosion;
-		while (head)
-		{
-			draw_explosion(head, sdl);
-			head = head->next;
-		}
-	}
-	SDL_UpdateWindowSurface(sdl->window);
-	SDL_Delay(delay);
 }
 
 static void	music_controls(int key, t_controls *controls, t_sdl *sdl)
@@ -58,27 +45,24 @@ static void	game_controls(int key, t_controls *controls,
 		update_game_status(controls->play, sdl);
 	}
 	else if (key == SDLK_n)
+	{
 		update_for_one_round(controls->speed, &controls->play, info, sdl);
+		SDL_UpdateWindowSurface(sdl->window);
+	}
 	else if (key == SDLK_i && controls->speed > 0)
 	{
 		controls->speed -= 50;
 		udpate_delay(controls->speed, sdl);
-		SDL_UpdateWindowSurface(sdl->window); //draw surface
+		SDL_UpdateWindowSurface(sdl->window);
 	}
 	else if (key == SDLK_d && controls->speed < 1000)
 	{
 		controls->speed += 50;
 		udpate_delay(controls->speed, sdl);
-		SDL_UpdateWindowSurface(sdl->window); //draw surface
+		SDL_UpdateWindowSurface(sdl->window);
 	}
-	/*else if (key == SDLK_a) //temporary
-	{
-		//show = show == 0 ? 1 : 0;
-		prepare_announcement(sdl);
-		announce_winner(controls.seed++, (info->players)[info->last_live - 1], sdl);
-		SDL_UpdateWindowSurface(sdl->window); //draw surface
-		//sdl->speed = 150;
-	}*/
+	else if (key == SDLK_a) //temporary
+		controls->play = -1;
 	else if (key == SDLK_e) //temporary
 		add_explosion(create_explosion(224), &sdl->head_explosion);
 	else
@@ -87,34 +71,27 @@ static void	game_controls(int key, t_controls *controls,
 
 static void	take_game_action(t_controls *controls, t_info *info, t_sdl *sdl)
 {
-	//printf("play - %d\n", controls->play);
 	if (controls->play == 1)
 		update_for_one_round(controls->speed, &controls->play, info, sdl);
-	else if (controls->play == -1 && controls->show_time != 0)
+	else if (controls->play == -1 && sdl->head_explosion == NULL)
 	{
 		controls->speed = 150;
-		controls->show_time--;
 		epileptic_square(controls->seed++, sdl->render_info, sdl->surface, sdl);
-		SDL_Delay(controls->speed);
-		if (controls->show_time == 0)
+		if (--controls->show_time == 0)
 		{
 			prepare_announcement(sdl);
 			announce_winner(controls->seed++,
 				(info->players)[info->last_live - 1], sdl);
+			controls->play = -2;
 		}
-		SDL_UpdateWindowSurface(sdl->window); //draw surface
 	}
-	/*if (sdl->head_explosion)
+	if (sdl->head_explosion)
+		draw_explosion(sdl->head_explosion, sdl);
+	if (controls->play != 0 || sdl->head_explosion)
 	{
-		t_explosion *head = sdl->head_explosion;
-		while (head)
-		{
-			draw_explosion(head, controls, sdl);
-			head = head->next;
-		}
 		SDL_UpdateWindowSurface(sdl->window);
-		SDL_Delay(50);
-	}*/
+		SDL_Delay(controls->speed);
+	}
 }
 
 void		event_handler(t_info *info, t_sdl *sdl)
@@ -138,7 +115,7 @@ void		event_handler(t_info *info, t_sdl *sdl)
 				key = event.key.keysym.sym;
 				if (key == SDLK_ESCAPE)
 					return ;
-				if (controls.play != -1)
+				if (controls.play > 0)
 					game_controls(key, &controls, info, sdl);
 			}
 		}
