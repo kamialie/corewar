@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 16:17:50 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/11 17:53:55 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/18 17:17:08 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,19 @@ typedef struct	s_render
 	TTF_Font	*font;
 }				t_render;
 
+typedef struct	s_explosion
+{
+	int					n;
+	int					r;
+	int					x;
+	int					y;
+	int					start;
+	int					location;
+	double				q[256];
+	SDL_Rect			rect;
+	struct s_explosion	*next;
+}				t_explosion;
+
 typedef struct	s_sdl
 {
 	int				*img_data;
@@ -36,6 +49,7 @@ typedef struct	s_sdl
 	Mix_Music		*main_theme;
 	Mix_Chunk		*live_effect;
 	t_render		*render_info;
+	t_explosion		*head_explosion;
 }				t_sdl;
 
 #endif

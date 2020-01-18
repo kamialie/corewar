@@ -6,7 +6,7 @@
 #    By: rgyles <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/16 14:20:48 by rgyles            #+#    #+#              #
-#    Updated: 2020/01/12 15:50:48 by rgyles           ###   ########.fr        #
+#    Updated: 2020/01/18 17:49:13 by rgyles           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,6 +77,7 @@ SDL_SRC = init_sdl.c \
 			 update_byte.c \
 			 show_data.c \
 			 show.c \
+			 explosion.c \
 			 announce_winner.c \
 			 event_handler.c
 

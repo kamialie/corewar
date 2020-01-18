@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 14:45:48 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/12 15:26:27 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/18 17:24:56 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int	init_sdl(unsigned char *arena, t_sdl *sdl)
 		printf("SDL_GetWindowSurface Error: %s\n", SDL_GetError());
 		return (1);
 	}
+	sdl->head_explosion = NULL;
 	SDL_FreeSurface(sdl->surface);
 	sdl->render_info = (t_render *)malloc(sizeof(t_render)); //check failure
 	init_font(sdl->render_info); // check for return status
