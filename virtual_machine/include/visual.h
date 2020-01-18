@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 16:09:49 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/18 17:48:45 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/18 18:17:35 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,6 @@ void			prepare_announcement(t_sdl *sdl);
 t_explosion		*create_explosion(int location);
 void			add_explosion(t_explosion *e, t_explosion **head);
 void			remove_explosion(t_explosion *e, t_explosion **head);
-void			draw_explosion(t_explosion *e, t_controls *controls, t_sdl *sdl);
+void			draw_explosion(t_explosion *e, t_sdl *sdl);
 
 #endif

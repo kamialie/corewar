@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 15:50:24 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/18 17:50:58 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/18 18:17:59 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,20 @@
 
 static void	update_for_one_round(int delay, int *play, t_info *info, t_sdl *sdl)
 {
+	t_explosion *head;
+
 	printf("count_cycles %d\n", info->count_cycles);
 	show_data(info, sdl);
 	gladiatorial_fight(play, info, sdl);
+	if (sdl->head_explosion)
+	{
+		head = sdl->head_explosion;
+		while (head)
+		{
+			draw_explosion(head, sdl);
+			head = head->next;
+		}
+	}
 	SDL_UpdateWindowSurface(sdl->window);
 	SDL_Delay(delay);
 }
@@ -47,11 +58,7 @@ static void	game_controls(int key, t_controls *controls,
 		update_game_status(controls->play, sdl);
 	}
 	else if (key == SDLK_n)
-	{
-		show_data(info, sdl);
-		gladiatorial_fight(&controls->play, info, sdl);
-		SDL_UpdateWindowSurface(sdl->window); //draw surface
-	}
+		update_for_one_round(controls->speed, &controls->play, info, sdl);
 	else if (key == SDLK_i && controls->speed > 0)
 	{
 		controls->speed -= 50;
@@ -97,25 +104,17 @@ static void	take_game_action(t_controls *controls, t_info *info, t_sdl *sdl)
 		}
 		SDL_UpdateWindowSurface(sdl->window); //draw surface
 	}
-	/*if (controls->exp)
+	/*if (sdl->head_explosion)
 	{
-		double q[256];
-		SDL_Rect p;
-		for(controls->i=256*!(controls->n); controls->i ; q[--(controls->i)]=rand()%65536*9.5874e-5); {
-			SDL_FillRect(sdl->surface,0,controls->i=0); // clear view
-			for(; controls->i < 256 ; controls->i++) {
-				p.x = 560 + cos(q[controls->i]) * q[controls->i-1] * controls->n / 10; // first number currects the position (middle), division controls the size
-				p.y = 560 + sin(q[controls->i]) * q[controls->i-1] * controls->n / 10; // first number currects the position (middle), division controls the size
-				p.w = 2; // width of all little particles 
-				p.h = 1; // height of all little particles
-				SDL_FillRect(sdl->surface,&p,0xFFFFFF);//<< controls->r++);// for colorful effect replace color with 0xFFFFFF << r++, original - -n*67372030
-			}
+		t_explosion *head = sdl->head_explosion;
+		while (head)
+		{
+			draw_explosion(head, controls, sdl);
+			head = head->next;
 		}
 		SDL_UpdateWindowSurface(sdl->window);
 		SDL_Delay(50);
-		printf("GOT OUT\n");
 	}*/
-			
 }
 
 void		event_handler(t_info *info, t_sdl *sdl)
@@ -128,18 +127,7 @@ void		event_handler(t_info *info, t_sdl *sdl)
 	//Mix_PlayMusic(sdl->main_theme, 1); // commented for no music while debugging
 	while (1)
 	{
-		//take_game_action(&controls, info, sdl);
-		if (sdl->head_explosion)
-		{
-			t_explosion *head = sdl->head_explosion;
-			while (head)
-			{
-				draw_explosion(head, &controls, sdl);
-				head = head->next;
-			}
-			SDL_UpdateWindowSurface(sdl->window);
-			SDL_Delay(50);
-		}
+		take_game_action(&controls, info, sdl);
 		if (SDL_PollEvent(&event))
 		{
 			if (event.type == SDL_QUIT)

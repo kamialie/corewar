@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 17:22:02 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/18 18:03:28 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/18 18:16:30 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	remove_explosion(t_explosion *e, t_explosion **head)
 /*
 ** magic!
 */
-void	draw_explosion(t_explosion *e, t_controls *controls, t_sdl *sdl)
+void	draw_explosion(t_explosion *e, t_sdl *sdl)
 {
 	int i;
 	SDL_Rect	rect;
@@ -91,7 +91,6 @@ void	draw_explosion(t_explosion *e, t_controls *controls, t_sdl *sdl)
 	redraw_range(e->start, &(e->rect), sdl);
 	if (e->n == 63)
 		remove_explosion(e, &sdl->head_explosion);
-		//controls->exp = controls->exp == 0 ? 1 : 0;
 	else {
 		int i = -1;
 		while (++i < 256)
