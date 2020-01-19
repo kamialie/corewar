@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 15:50:24 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/19 20:45:26 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/19 21:31:38 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void		event_handler(t_info *info, t_sdl *sdl)
 				key = event.key.keysym.sym;
 				if (key == SDLK_ESCAPE)
 					return ;
-				if (controls.play > 0)
+				if (controls.play >= 0)
 					game_controls(key, &controls, info, sdl);
 			}
 		}
