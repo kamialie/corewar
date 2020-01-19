@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 16:09:49 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/18 18:17:35 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/19 15:49:58 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,14 @@
 
 # define DEFAULT_GAME_SPEED 100
 
+# define RED_TERM "\033[0;31m"
+# define NC_TERM "\033[0m"
+
 /*
- * x0, y0 - lower left corner
- * x1, y1 - top right corner
+** x0, y0 - lower left corner
+** x1, y1 - top right corner
 */
+
 typedef struct	s_square
 {
 	int	x0;
@@ -93,28 +97,28 @@ typedef struct	s_controls
 	int	speed;
 	int	show_time;
 	int	seed;
-	int exp; // temporary
 }				t_controls;
 
 int				init_sdl(unsigned char *arena, t_sdl *sdl);
-void			draw_byte(unsigned char byte, t_render *render_info, SDL_Surface *surface);
-void			set_nibble_for_render(int location, int type, int player, t_sdl *sdl);
-void			set_render_color(int type, int player, t_render *render_info, SDL_Color *colors);
-void			draw_byte(unsigned char byte, t_render *render_info, SDL_Surface *surface);
+int				error_message(const char *subject, const char *message);
+void			draw_byte(unsigned char byte, t_render *render_info,
+												SDL_Surface *surface);
+void			set_nibble_for_render(int location, int type, int player,
+																t_sdl *sdl);
+void			set_render_color(int type, int player, t_render *render_info,
+															SDL_Color *colors);
+void			draw_byte(unsigned char byte, t_render *render_info,
+												SDL_Surface *surface);
 void			int_to_char(int number, char *str);
 void			udpate_delay(int delay, t_sdl *sdl);
 void			draw_game_controls(t_sdl *sdl);
-
 void			draw_square(t_square *sq_info, int *img_data);
-
 void			update_game_status(int status, t_sdl *sdl);
-
-void			epileptic_square(int seed, t_render *render_info, SDL_Surface *surface, t_sdl *sdl);
-
-void			render_text(char *text, t_render *render_info, SDL_Surface *surface);
-
+void			epileptic_square(int seed, t_render *render_info,
+								SDL_Surface *surface, t_sdl *sdl);
+void			render_text(char *text, t_render *render_info,
+											SDL_Surface *surface);
 void			prepare_announcement(t_sdl *sdl);
-
 t_explosion		*create_explosion(int location);
 void			add_explosion(t_explosion *e, t_explosion **head);
 void			remove_explosion(t_explosion *e, t_explosion **head);

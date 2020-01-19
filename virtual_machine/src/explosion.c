@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 17:22:02 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/18 20:31:54 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/19 15:36:10 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,14 @@
 /*
 ** free space where the explosion takes place
 */
+
 void		redraw_range(int start, SDL_Rect *r, t_sdl *sdl)
 {
 	int i;
-	int j = -1;
-	SDL_FillRect(sdl->surface, r, 0); // clear view
+	int j;
+
+	j = -1;
+	SDL_FillRect(sdl->surface, r, 0);
 	while (++j < 5)
 	{
 		i = -1;
@@ -35,9 +38,10 @@ void		redraw_range(int start, SDL_Rect *r, t_sdl *sdl)
 ** 8 is the shift to move to nibble's center
 ** rect to redraw region, 5 x 5 square
 */
+
 t_explosion	*create_explosion(int location)
 {
-	int	start;
+	int			start;
 	t_explosion *e;
 
 	e = malloc(sizeof(t_explosion));
@@ -55,7 +59,7 @@ t_explosion	*create_explosion(int location)
 	return (e);
 }
 
-void	add_explosion(t_explosion *e, t_explosion **head)
+void		add_explosion(t_explosion *e, t_explosion **head)
 {
 	if (*head == NULL)
 		*head = e;
@@ -66,7 +70,7 @@ void	add_explosion(t_explosion *e, t_explosion **head)
 	}
 }
 
-void	remove_explosion(t_explosion *e, t_explosion **head)
+void		remove_explosion(t_explosion *e, t_explosion **head)
 {
 	t_explosion *cur;
 
@@ -78,11 +82,15 @@ void	remove_explosion(t_explosion *e, t_explosion **head)
 }
 
 /*
-** magic!
+** MAGIC!
+** rect height and width are for each particle
+** rect x and y division controls the size of explosion
+** addition controls position
 */
-void	draw_explosion(t_explosion *e, t_sdl *sdl)
+
+void		draw_explosion(t_explosion *e, t_sdl *sdl)
 {
-	int i;
+	int			i;
 	SDL_Rect	rect;
 
 	while (e)
@@ -91,20 +99,20 @@ void	draw_explosion(t_explosion *e, t_sdl *sdl)
 		while (i)
 			e->q[--i] = rand() % 65536 * 9.5874e-5;
 		redraw_range(e->start, &(e->rect), sdl);
-		if (e->n == 43)
+		if (++e->n == 43)
 			remove_explosion(e, &sdl->head_explosion);
-		else {
+		else
+		{
 			i = -1;
 			while (++i < 256)
 			{
-				rect.x = e->x + cos(e->q[i]) * e->q[i - 1] * e->n / 10; // first number currects the position (middle), division controls the size
-				rect.y = e->y + sin(e->q[i]) * e->q[i - 1] * e->n / 10; // first number currects the position (middle), division controls the size
-				rect.w = 2; // width of all little particles 
-				rect.h = 1; // height of all little particles
-				SDL_FillRect(sdl->surface, &rect, 0xFFFFFF << e->r++);// for colorful effect replace color with 0xFFFFFF << r++, original - -n*67372030
+				rect.x = e->x + cos(e->q[i]) * e->q[i - 1] * e->n / 10;
+				rect.y = e->y + sin(e->q[i]) * e->q[i - 1] * e->n / 10;
+				rect.w = 2;
+				rect.h = 1;
+				SDL_FillRect(sdl->surface, &rect, 0xFFFFFF << e->r++);
 			}
 		}
-		e->n++;
 		e = e->next;
 	}
 }

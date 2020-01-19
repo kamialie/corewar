@@ -6,12 +6,12 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 16:17:50 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/18 17:17:08 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/19 15:47:34 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PROJECT_SDL
-# define PROJECT_SDL
+#ifndef PROJECT_SDL_H
+# define PROJECT_SDL_H
 
 # include "SDL.h"
 # include "SDL_ttf.h"

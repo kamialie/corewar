@@ -6,7 +6,7 @@
 #    By: rgyles <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/16 14:20:48 by rgyles            #+#    #+#              #
-#    Updated: 2020/01/18 17:49:13 by rgyles           ###   ########.fr        #
+#    Updated: 2020/01/19 15:46:01 by rgyles           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,19 +67,21 @@ SRC = main.c \
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
 SDL_SRC = init_sdl.c \
-			 initialize_visual_arena.c \
-			 draw_byte.c \
-			 draw_shapes.c \
-			 draw_annotations.c \
-			 draw_game_controls.c \
-			 int_to_char.c \
-			 render_text.c \
-			 update_byte.c \
-			 show_data.c \
-			 show.c \
-			 explosion.c \
-			 announce_winner.c \
-			 event_handler.c
+		  error_message.c \
+		  initialize_visual_arena.c \
+		  set_replica.c \
+		  draw_byte.c \
+		  draw_shapes.c \
+		  draw_annotations.c \
+		  draw_game_controls.c \
+		  int_to_char.c \
+		  render_text.c \
+		  update_byte.c \
+		  show_data.c \
+		  show.c \
+		  explosion.c \
+		  announce_winner.c \
+		  event_handler.c
 
 SDL_OBJ = $(addprefix $(OBJ_DIR)/, $(SDL_SRC:.c=.o))
 

@@ -6,20 +6,22 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/28 20:00:09 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/12 15:01:42 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/19 15:30:39 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "visual.h"
 #include "corewar.h"
 
-static void	set_new_font_size(t_render *render_info) //need to add check
+static void	set_new_font_size(t_render *render_info)
 {
 	TTF_Font *font;
 
 	font = render_info->font;
-	TTF_CloseFont(font); //free memory used by font
-	font = TTF_OpenFont(FONT_PATH, 50); //open font
+	TTF_CloseFont(font);
+	font = TTF_OpenFont(FONT_PATH, 50);
+	if (font == NULL)
+		exit(error_message("TTF_OpenFont", TTF_GetError()));
 	TTF_SetFontStyle(font, TTF_STYLE_BOLD);
 	render_info->font = font;
 }
