@@ -67,6 +67,7 @@ void		ld_op(t_info *info, t_processes **prs, t_sdl *sdl)
     skiped_bytes = get_bytes_to_skip(1, code_arg);
 	move_cursor((*prs)->index, skiped_bytes, (*prs)->reg[0] - 1, sdl);
     (*prs)->index = ((*prs)->index + skiped_bytes) % MEM_SIZE;
+    printf("%d \n", (*prs)->reg[1]);
 }
 
 void		st_op(t_info *info, t_processes **prs, t_sdl *sdl)

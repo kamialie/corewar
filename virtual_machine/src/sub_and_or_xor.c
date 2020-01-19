@@ -39,21 +39,216 @@ void		sub_op(t_info *info, t_processes **prs, t_sdl *sdl)
 
 void		and_op(t_info *info, t_processes **prs, t_sdl *sdl)
 {
-//    create_cursor(info->arena[((*prs)->index + 1) % MEM_SIZE], ((*prs)->index + 1) % MEM_SIZE, (*prs)->reg[0] - 1, sdl);
-//    update_byte(info->arena[(*prs)->index], (*prs)->index, (*prs)->reg[0] - 1, sdl);
-//    (*prs)->index = (++((*prs)->index)) % MEM_SIZE;
+	unsigned char code_arg;
+	int           skiped_bytes;
+	int				flag;
+	short int		arg_ind;
+	unsigned char   arg_reg;
+	int   arg;
+	int   arg2;
+
+	flag = 0;
+	code_arg = ((info->arena)[((*prs)->index + 1) % MEM_SIZE]) & 0xfc;
+	if (code_arg == 84 || code_arg == 100 || code_arg == 116)
+	{
+		arg_reg = *((info->arena) + ((*prs)->index + 2) % MEM_SIZE);
+		if (arg_reg < 0 && arg_reg >= REG_NUMBER)
+			flag = 0;
+		else
+		{
+			arg = (*prs)->reg[arg_reg];
+			flag = 1;
+		}
+	}
+	else if (code_arg == 148 || code_arg == 164 || code_arg == 180)
+	{
+		arg = reverse_int(*((int *)((info->arena) + ((*prs)->index + 2) % MEM_SIZE)));
+		flag = 4;
+	}
+	else if (code_arg == 212 || code_arg == 228 || code_arg == 244)
+	{
+		arg_ind = reverse_short_int(*((short int *)((info->arena) + ((*prs)->index + 2) % MEM_SIZE))) % IDX_MOD;
+		arg_ind = get_address(arg_ind % IDX_MOD + (*prs)->index);
+		arg = reverse_int(*((int *)(info->arena + arg_ind)));
+		flag = 2;
+	}
+	if (flag && (code_arg == 84 || code_arg == 212 || code_arg == 148))
+	{
+		arg_reg = *((info->arena) + ((*prs)->index + 2 + flag) % MEM_SIZE);
+		if (arg_reg < 0 && arg_reg >= REG_NUMBER)
+			flag = 0;
+		else
+		{
+			arg2 = (*prs)->reg[arg_reg];
+			flag++;
+		}
+	}
+	else if (flag && (code_arg == 100 || code_arg == 228 || code_arg == 164))
+	{
+		arg2 = reverse_int(*((int *)((info->arena) + ((*prs)->index + 2 + flag) % MEM_SIZE)));
+		flag += 4;
+	}
+	else if (flag && (code_arg == 116 || code_arg == 244 || code_arg == 180))
+	{
+		arg_ind = reverse_short_int(*((short int *)((info->arena) + ((*prs)->index + 2 + flag ) % MEM_SIZE))) % IDX_MOD;
+		arg_ind = get_address(arg_ind % IDX_MOD + (*prs)->index);
+		arg2 = reverse_int(*((int *)(info->arena + arg_ind)));
+		flag += 2;
+	}
+	if (flag)
+	{
+		arg_reg = *((info->arena) + ((*prs)->index + 2 + flag) % MEM_SIZE);
+		if (arg_reg >= 0 && arg_reg < REG_NUMBER)
+		{
+			(*prs)->reg[arg_reg] = arg & arg2;
+			(*prs)->carry = ((*prs)->reg[arg_reg] == 0) ? 1 : 0;
+		}
+	}
+	skiped_bytes = get_bytes_to_skip(5, code_arg);
+	move_cursor((*prs)->index, skiped_bytes, (*prs)->reg[0] - 1, sdl);
+	(*prs)->index = get_address((*prs)->index + skiped_bytes);
 }
 
 void		or_op(t_info *info, t_processes **prs, t_sdl *sdl)
 {
-//    create_cursor(info->arena[((*prs)->index + 1) % MEM_SIZE], ((*prs)->index + 1) % MEM_SIZE, (*prs)->reg[0] - 1, sdl);
-//    update_byte(info->arena[(*prs)->index], (*prs)->index, (*prs)->reg[0] - 1, sdl);
-//    (*prs)->index = (++((*prs)->index)) % MEM_SIZE;
+	unsigned char code_arg;
+	int           skiped_bytes;
+	int				flag;
+	short int		arg_ind;
+	unsigned char   arg_reg;
+	int   arg;
+	int   arg2;
+
+	flag = 0;
+	code_arg = ((info->arena)[((*prs)->index + 1) % MEM_SIZE]) & 0xfc;
+	if (code_arg == 84 || code_arg == 100 || code_arg == 116)
+	{
+		arg_reg = *((info->arena) + ((*prs)->index + 2) % MEM_SIZE);
+		if (arg_reg < 0 && arg_reg >= REG_NUMBER)
+			flag = 0;
+		else
+		{
+			arg = (*prs)->reg[arg_reg];
+			flag = 1;
+		}
+	}
+	else if (code_arg == 148 || code_arg == 164 || code_arg == 180)
+	{
+		arg = reverse_int(*((int *)((info->arena) + ((*prs)->index + 2) % MEM_SIZE)));
+		flag = 4;
+	}
+	else if (code_arg == 212 || code_arg == 228 || code_arg == 244)
+	{
+		arg_ind = reverse_short_int(*((short int *)((info->arena) + ((*prs)->index + 2) % MEM_SIZE))) % IDX_MOD;
+		arg_ind = get_address(arg_ind % IDX_MOD + (*prs)->index);
+		arg = reverse_int(*((int *)(info->arena + arg_ind)));
+		flag = 2;
+	}
+	if (flag && (code_arg == 84 || code_arg == 212 || code_arg == 148))
+	{
+		arg_reg = *((info->arena) + ((*prs)->index + 2 + flag) % MEM_SIZE);
+		if (arg_reg < 0 && arg_reg >= REG_NUMBER)
+			flag = 0;
+		else
+		{
+			arg2 = (*prs)->reg[arg_reg];
+			flag++;
+		}
+	}
+	else if (flag && (code_arg == 100 || code_arg == 228 || code_arg == 164))
+	{
+		arg2 = reverse_int(*((int *)((info->arena) + ((*prs)->index + 2 + flag) % MEM_SIZE)));
+		flag += 4;
+	}
+	else if (flag && (code_arg == 116 || code_arg == 244 || code_arg == 180))
+	{
+		arg_ind = reverse_short_int(*((short int *)((info->arena) + ((*prs)->index + 2 + flag ) % MEM_SIZE))) % IDX_MOD;
+		arg_ind = get_address(arg_ind % IDX_MOD + (*prs)->index);
+		arg2 = reverse_int(*((int *)(info->arena + arg_ind)));
+		flag += 2;
+	}
+	if (flag)
+	{
+		arg_reg = *((info->arena) + ((*prs)->index + 2 + flag) % MEM_SIZE);
+		if (arg_reg >= 0 && arg_reg < REG_NUMBER)
+		{
+			(*prs)->reg[arg_reg] = arg | arg2;
+			(*prs)->carry = ((*prs)->reg[arg_reg] == 0) ? 1 : 0;
+		}
+	}
+	skiped_bytes = get_bytes_to_skip(5, code_arg);
+	move_cursor((*prs)->index, skiped_bytes, (*prs)->reg[0] - 1, sdl);
+	(*prs)->index = get_address((*prs)->index + skiped_bytes);
 }
 
 void		xor_op(t_info *info, t_processes **prs, t_sdl *sdl)
 {
-//    create_cursor(info->arena[((*prs)->index + 1) % MEM_SIZE], ((*prs)->index + 1) % MEM_SIZE, (*prs)->reg[0] - 1, sdl);
-//    update_byte(info->arena[(*prs)->index], (*prs)->index, (*prs)->reg[0] - 1, sdl);
-//    (*prs)->index = (++((*prs)->index)) % MEM_SIZE;
+	unsigned char code_arg;
+	int           skiped_bytes;
+	int				flag;
+	short int		arg_ind;
+	unsigned char   arg_reg;
+	int   arg;
+	int   arg2;
+
+	flag = 0;
+	code_arg = ((info->arena)[((*prs)->index + 1) % MEM_SIZE]) & 0xfc;
+	if (code_arg == 84 || code_arg == 100 || code_arg == 116)
+	{
+		arg_reg = *((info->arena) + ((*prs)->index + 2) % MEM_SIZE);
+		if (arg_reg < 0 && arg_reg >= REG_NUMBER)
+			flag = 0;
+		else
+		{
+			arg = (*prs)->reg[arg_reg];
+			flag = 1;
+		}
+	}
+	else if (code_arg == 148 || code_arg == 164 || code_arg == 180)
+	{
+		arg = reverse_int(*((int *)((info->arena) + ((*prs)->index + 2) % MEM_SIZE)));
+		flag = 4;
+	}
+	else if (code_arg == 212 || code_arg == 228 || code_arg == 244)
+	{
+		arg_ind = reverse_short_int(*((short int *)((info->arena) + ((*prs)->index + 2) % MEM_SIZE))) % IDX_MOD;
+		arg_ind = get_address(arg_ind % IDX_MOD + (*prs)->index);
+		arg = reverse_int(*((int *)(info->arena + arg_ind)));
+		flag = 2;
+	}
+	if (flag && (code_arg == 84 || code_arg == 212 || code_arg == 148))
+	{
+		arg_reg = *((info->arena) + ((*prs)->index + 2 + flag) % MEM_SIZE);
+		if (arg_reg < 0 && arg_reg >= REG_NUMBER)
+			flag = 0;
+		else
+		{
+			arg2 = (*prs)->reg[arg_reg];
+			flag++;
+		}
+	}
+	else if (flag && (code_arg == 100 || code_arg == 228 || code_arg == 164))
+	{
+		arg2 = reverse_int(*((int *)((info->arena) + ((*prs)->index + 2 + flag) % MEM_SIZE)));
+		flag += 4;
+	}
+	else if (flag && (code_arg == 116 || code_arg == 244 || code_arg == 180))
+	{
+		arg_ind = reverse_short_int(*((short int *)((info->arena) + ((*prs)->index + 2 + flag ) % MEM_SIZE))) % IDX_MOD;
+		arg_ind = get_address(arg_ind % IDX_MOD + (*prs)->index);
+		arg2 = reverse_int(*((int *)(info->arena + arg_ind)));
+		flag += 2;
+	}
+	if (flag)
+	{
+		arg_reg = *((info->arena) + ((*prs)->index + 2 + flag) % MEM_SIZE);
+		if (arg_reg >= 0 && arg_reg < REG_NUMBER)
+		{
+			(*prs)->reg[arg_reg] = arg ^ arg2;
+			(*prs)->carry = ((*prs)->reg[arg_reg] == 0) ? 1 : 0;
+		}
+	}
+	skiped_bytes = get_bytes_to_skip(5, code_arg);
+	move_cursor((*prs)->index, skiped_bytes, (*prs)->reg[0] - 1, sdl);
+	(*prs)->index = get_address((*prs)->index + skiped_bytes);
 }
