@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 15:50:24 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/18 21:21:14 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/19 20:24:21 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 static void	update_for_one_round(int delay, int *play, t_info *info, t_sdl *sdl)
 {
-	printf("count_cycles %d\n", info->count_cycles);
+	printf("count_cycles %d\n", info->count_cycles); // tmp
 	gladiatorial_fight(play, info, sdl);
 	show_data(info, sdl);
 }
@@ -24,7 +24,7 @@ static void	music_controls(int key, t_controls *controls, t_sdl *sdl)
 {
 	if (key == SDLK_p)
 	{
-		printf("music on/off\n");
+		printf("music on/off\n"); //tmo
 		if (Mix_PausedMusic())
 			Mix_ResumeMusic();
 		else
