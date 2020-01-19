@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 16:09:49 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/19 15:49:58 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/19 20:45:02 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int				init_sdl(unsigned char *arena, t_sdl *sdl);
 int				error_message(const char *subject, const char *message);
 void			draw_byte(unsigned char byte, t_render *render_info,
 												SDL_Surface *surface);
+void			set_replica(t_processes *processes, t_info *info, t_sdl *sdl);
 void			set_nibble_for_render(int location, int type, int player,
 																t_sdl *sdl);
 void			set_render_color(int type, int player, t_render *render_info,

@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 15:50:24 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/19 20:24:21 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/19 20:45:26 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void		event_handler(t_info *info, t_sdl *sdl)
 	SDL_Event	event;
 	t_controls	controls;
 
-	controls = (t_controls) {0, DEFAULT_GAME_SPEED, 20, 0, 0};
+	controls = (t_controls) {0, DEFAULT_GAME_SPEED, 20, 0};
 	//Mix_PlayMusic(sdl->main_theme, 1); // commented for no music while debugging
 	while (1)
 	{
