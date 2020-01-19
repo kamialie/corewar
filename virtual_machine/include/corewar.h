@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 15:10:22 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/12 17:13:30 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/19 20:48:46 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void		print_arena(unsigned char *arena);
 int         get_bytes_to_skip(int num, unsigned char code_arg);
 int         reverse_int(int num);
 void		initialize_visual_arena(t_sdl *sdl, t_info *info);
+void		set_replica(t_processes *processes, t_info *info, t_sdl *sdl);
 void		draw_annotations(t_info *info, t_sdl *sdl);
 void        event_handler(t_info *info, t_sdl *sdl);
 
