@@ -20,28 +20,33 @@
 # include "op.h"
 # include "sdl_struct.h"
 
-# define DUMP "-dump"
-# define N "-n"
-# define COR ".cor"
-# define LINE_SIZE 97
-
-# define IND(x) (x - 1)
 // TEMPORARY
 # include <stdio.h>
 // END
 
-//cc - count cycle
+# define DUMP "-dump"
+# define N "-n"
+# define COR ".cor"
+# define LINE_SIZE 97
+# define IND(x) (x - 1)
+
+/*
+** cc_live - cycle in which the live operation was last performed
+** cc_op - number of cycles remaining before the operation is executed
+** c_byte_op - how much to step over before the next operation
+*/
+
 typedef struct	s_processes
 {
-	int					cc_live; //цикл, в котором была последний раз выполнена live
-	int					cc_op : 11; //количество циклов, оставшееся до исполнения операции
-	int 				carry : 1; //флаг, для некоторых операций
-	int					code_op : 6; //код операции
-	int 				index : 14; //местоположение каретки на арене
-	int 				c_byte_op : 4; //сколько перешагнуть до следущей операции
+	int					cc_live;
+	int					cc_op : 11;
+	int					carry : 2;
+	int					code_op : 6;
+	int 				index : 14;
+	int 				c_byte_op : 4;
 	int 				reg[REG_NUMBER];
 	struct s_processes	*next;
-	struct s_processes	*prev; //???
+	struct s_processes	*prev;
 }				t_processes;
 
 typedef struct	s_info
@@ -88,6 +93,7 @@ void        event_handler(t_info *info, t_sdl *sdl);
 
 void		update_byte(int location, t_sdl *sdl);
 void		create_cursor(int location, int player, t_sdl *sdl);
+void        update_bytes(int location, int length, int player, t_sdl *sdl);
 void		set_byte(int location, int player, t_sdl *sdl);
 void		move_cursor(int location, int shift, int player, t_sdl *sdl);
 
@@ -95,7 +101,7 @@ void		render_text(char *text, t_render *render_info, SDL_Surface *surface);
 void		show_data(t_info *info, t_sdl *sdl);
 void		announce_winner(int seed, header_t player, t_sdl *sdl);
 void		free_resources(t_sdl *sdl);
-
+short int   get_address(short int shift);
 /*
 ** Создание и удаление кареток
 */
@@ -105,7 +111,7 @@ void		add_elem(t_processes **processes, int index, int number_player);
 void		delete_elem(t_processes **processes, t_info *info);
 
 /*
-** Функции, на которые указывает структура g_op_tab
+** Functions pointed to by the g_op_tab structure
 */
 
 void		live_op(t_info *info, t_processes **prs, t_sdl *sdl);
@@ -126,8 +132,7 @@ void		lfork_op(t_info *info, t_processes **prs, t_sdl *sdl);
 void		aff_op(t_info *info, t_processes **prs, t_sdl *sdl);
 
 
-static t_op	g_op_tab[16] =
-		{
+static t_op	g_op_tab[16] = {
 				{"live", 1, {T_DIR}, 1, 10, "alive", 0, 0, 4, &live_op},
 				{"ld", 2, {T_DIR | T_IND, T_REG}, 2, 5, "load", 1, 1, 4, &ld_op},
 				{"st", 2, {T_REG, T_IND | T_REG}, 3, 5, "store", 1, 1, 4, &st_op},

@@ -29,17 +29,18 @@ void	update_byte(int location, t_sdl *sdl)
 
 void    update_bytes(int location, int length, int player, t_sdl *sdl)
 {
-    int i = 0;
+    int i;
 
+    i = 0;
     while (i < length)
     {
         set_byte(location + i, player, sdl);
         i++;
     }
-    set_nibble_for_render(location, CODE, sdl->replica[location], sdl);
+    i = 0;
     while (i < length)
     {
-        draw_byte(sdl->arena[location + i], sdl->render_info, sdl->surface);
+		update_byte(location + i, sdl);
         i++;
     }
 }
