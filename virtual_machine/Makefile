@@ -100,11 +100,11 @@ GREEN_UNDERLINE = \033[4;32m
 NC = \033[0m
 
 all: $(NAME)
-	@echo $(SHIFT) " $(CHECK_MARK)$(GREEN) Corewar is ready!$(NC)"
 
-$(NAME): $(LIBFT) $(SDL_LIB) $(OBJ) $(SDL_OBJ)
+$(NAME): $(SDL_LIB) $(OBJ) $(SDL_OBJ)
 	@echo "\n" $(SHIFT) "$(CHECK_MARK)$(BLUE) Linking Corewar...$(NC)"
 	@gcc $(FLAGS) $(LIBFT) $(LIB) -o $(NAME) $(OBJ) $(SDL_OBJ)
+	@echo $(SHIFT) " $(CHECK_MARK)$(GREEN) Corewar is ready!$(NC)"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c include/corewar.h | $(OBJ_DIR)
 	gcc $(FLAGS) $(INCLUDE) -o $@ -c $<
@@ -115,17 +115,9 @@ $(SDL_OBJ): include/visual.h include/sdl_struct.h
 
 $(OBJ_DIR)/init_sdl.o: include/sound.h
 
-build_summary:
-	@echo "\n" $(SHIFT) "$(RED)***$(GREEN_UNDERLINE)Wonderful virtual machine build summary$(NC)$(RED)***$(NC)   \n"
-
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
 	@echo $(SHIFT) "$(CHECK_MARK)$(GREEN) Object directory is created! (./obj)$(NC)\n"
-
-$(LIBFT):
-	@echo $(SHIFT) "$(CLEAR)$(BLUE)Checking libft...$(NC)"
-	@make -C $(LIBFT_DIR)
-	@echo $(SHIFT) "$(UP)$(CLEAR)$(CHECK_MARK)$(YELLOW) Libft is ready!$(NC)"
 
 $(SDL_LIB): $(SDL_TARGET) $(SDL_TTF_TARGET) $(SDL_MIXER_TARGET)
 	@echo $(SHIFT) "$(CHECK_MARK)$(GREEN) SDL libraries are installed at $(SDL_LIB) (./lib)!$(NC)"
@@ -237,18 +229,16 @@ $(LIBMAD_TARGET):
 	@echo $(SHIFT) "$(GREEN)Progress: #$(CYAN)----------------$(RED)>    $(GREEN)#$(NC)\r\c"
 
 clean:
-	@echo "$(RED)Deleting object files...$(NC)"
+	@echo $(SHIFT) "$(RED)Deleting object files...$(NC)"
 	@rm -rf $(OBJ_DIR)
 	@make -C $(LIBFT_DIR) clean
 
 fclean: clean
-	@echo "$(RED)Deleting program...$(NC)"
+	@echo $(SHIFT) "$(RED)Deleting program...$(NC)"
 	@rm -rf $(NAME)
-	@echo "$(RED)Deleting libft...$(NC)"
-	@make -C $(LIBFT_DIR) fclean
 
 lclean:
-	@echo "$(RED)Deleting SDL, SDL_TTF, freetype libraries and header files...$(NC)"
+	@echo $(SHIFT) "$(RED)Deleting SDL, SDL_TTF, freetype libraries and header files...$(NC)"
 	@rm -rf $(SDL_LIB) $(SDL_INCLUDE)/SDL2 $(SDL_INCLUDE)/ft2build.h $(SDL_INCLUDE)/freetype2
 
 re: fclean all
