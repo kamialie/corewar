@@ -48,6 +48,7 @@ typedef struct	s_sdl
 	SDL_Color		colors[9];
 	Mix_Music		*main_theme;
 	Mix_Chunk		*live_effect;
+	TTF_Font		*outline_font;
 	t_render		*render_info;
 	t_explosion		*head_explosion;
 }				t_sdl;

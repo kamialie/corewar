@@ -29,14 +29,22 @@ static void	init_colors(SDL_Color *colors)
 	colors[RED_BACK] = (SDL_Color) {150, 0, 0};
 }
 
-static void	init_font(t_render *render_info)
+static void	init_font(TTF_Font **outline_font, t_render *render_info)
 {
+	TTF_Font *font;
+
 	if (TTF_Init() == -1)
 		exit(error_message("TTF_Init", TTF_GetError()));
-	render_info->font = TTF_OpenFont(FONT_PATH, 15);
+	render_info->font = TTF_OpenFont(FONT_PATH, FONT_SIZE);
 	if (render_info->font == NULL)
 		exit(error_message("TTF_OpenFont", TTF_GetError()));
+	font = TTF_OpenFont(FONT_PATH, FONT_SIZE_ANNOUNCE);
+	if (font == NULL)
+		exit(error_message("TTF_OpenFont", TTF_GetError()));
 	TTF_SetFontStyle(render_info->font, TTF_STYLE_BOLD);
+	TTF_SetFontStyle(font, TTF_STYLE_BOLD);
+	TTF_SetFontOutline(font, OUTLINE);
+	*outline_font = font;
 }
 
 void		init_music(t_sdl *sdl)
@@ -72,7 +80,7 @@ int			init_sdl(unsigned char *arena, t_sdl *sdl)
 	sdl->render_info = (t_render *)malloc(sizeof(t_render));
 	if (sdl->render_info == NULL)
 		exit(error_message("malloc", "sdl->render_info"));
-	init_font(sdl->render_info);
+	init_font(&sdl->outline_font, sdl->render_info);
 	sdl->img_data = (int *)sdl->surface->pixels;
 	if ((sdl->replica = malloc(MEM_SIZE)) == NULL)
 		exit(error_message("malloc", "sdl->replica"));

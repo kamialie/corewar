@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "sdl_struct.h"
 
 /*
 ** from top to bottom:
@@ -31,6 +31,7 @@ void	free_music(t_sdl *sdl)
 void	free_ttf(t_sdl *sdl)
 {
 	TTF_CloseFont(sdl->render_info->font);
+	TTF_CloseFont(sdl->outline_font);
 	TTF_Quit();
 }
 

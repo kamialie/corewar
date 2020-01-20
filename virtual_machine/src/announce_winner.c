@@ -42,8 +42,8 @@ void		prepare_announcement(t_sdl *sdl)
 	SDL_FillRect(sdl->surface, &rect, 0);
 	render_info = sdl->render_info;
 	set_new_font_size(render_info);
-	render_info->font_color = sdl->colors[WHITE];
-	render_info->back_color = sdl->colors[BLACK];
+	render_info->font_color = sdl->colors[GREEN];
+	render_info->back_color = sdl->colors[RED];
 }
 
 /*
@@ -59,7 +59,7 @@ void		announce_winner(int seed, header_t player, t_sdl *sdl)
 	surface = sdl->surface;
 	render_info->rect.x = 500;
 	render_info->rect.y = 500;
-	render_text("Winner is:", render_info, surface);
+	render_text_outline("Winner is:", render_info, sdl);
 	render_info->rect.y += 100;
-	render_text(player.prog_name, render_info, surface);
+	render_text_outline(player.prog_name, render_info, sdl);
 }

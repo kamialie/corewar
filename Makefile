@@ -20,6 +20,7 @@ LIBFT_DIR = libft/
 
 LIBFT = libft/libft.a
 
+CHECK_MARK= \033[0;32m\xE2\x9C\x94\033[0m
 SHIFT = "    "
 
 CLEAR = \033[2K
@@ -33,12 +34,12 @@ CYAN = \033[1;36m
 GREEN_UNDERLINE = \033[4;32m
 NC = \033[0m
 
-all: $(VIR_NAME)
+all: $(LIBFT) vm
 
-$(VIR_NAME): $(LIBFT)
-	@echo $(SHIFT) "$(GREEN)*** $(GREEN_UNDERLINE)Corewar build summary$(NC)$(GREEN) ***$(NC)"
+vm:
+	@echo $(SHIFT) "\n$(GREEN)*** $(GREEN_UNDERLINE)Corewar build summary$(NC)$(GREEN) ***$(NC)\n"
 	@make -C $(VIR_DIR)
-	@ln -s $(VIR_DIR)/$(VIR_NAME) $(VIR_NAME)
+	@ln -fs $(VIR_DIR)/$(VIR_NAME) $(VIR_NAME)
 
 $(LIBFT):
 	@echo $(SHIFT) "$(CLEAR)$(BLUE)Checking libft...$(NC)"
