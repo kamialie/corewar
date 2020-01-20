@@ -78,6 +78,11 @@
 
 # define DEFAULT_GAME_SPEED 100
 
+# define GAME_PAUSED 0
+# define GAME_RUNNING 1
+# define GAME_SHOW -1
+# define GAME_OVER -2
+
 # define RED_TERM "\033[0;31m"
 # define NC_TERM "\033[0m"
 

@@ -71,9 +71,9 @@ static void	game_controls(int key, t_controls *controls,
 
 static void	take_game_action(t_controls *controls, t_info *info, t_sdl *sdl)
 {
-	if (controls->play == 1)
+	if (controls->play == GAME_RUNNING)
 		update_for_one_round(controls->speed, &controls->play, info, sdl);
-	else if (controls->play == -1 && sdl->head_explosion == NULL)
+	else if (controls->play == GAME_SHOW && sdl->head_explosion == NULL)
 	{
 		controls->speed = 150;
 		epileptic_square(controls->seed++, sdl->render_info, sdl->surface, sdl);
@@ -82,12 +82,12 @@ static void	take_game_action(t_controls *controls, t_info *info, t_sdl *sdl)
 			prepare_announcement(sdl);
 			announce_winner(controls->seed++,
 				(info->players)[info->last_live - 1], sdl);
-			controls->play = -2;
+			controls->play = GAME_OVER;
 		}
 	}
 	if (sdl->head_explosion)
 		draw_explosion(sdl->head_explosion, sdl);
-	if (controls->play != 0 || sdl->head_explosion)
+	if (controls->play != GAME_PAUSED || sdl->head_explosion)
 	{
 		SDL_UpdateWindowSurface(sdl->window);
 		SDL_Delay(controls->speed);
@@ -100,11 +100,12 @@ void		event_handler(t_info *info, t_sdl *sdl)
 	SDL_Event	event;
 	t_controls	controls;
 
-	controls = (t_controls) {0, DEFAULT_GAME_SPEED, 20, 0};
+	controls = (t_controls) {GAME_PAUSED, DEFAULT_GAME_SPEED, 1, 0}; // return third argument to 20
 	//Mix_PlayMusic(sdl->main_theme, 1); // commented for no music while debugging
 	while (1)
 	{
-		take_game_action(&controls, info, sdl);
+		if (controls.play != GAME_OVER)
+			take_game_action(&controls, info, sdl);
 		if (SDL_PollEvent(&event))
 		{
 			if (event.type == SDL_QUIT)
@@ -115,7 +116,7 @@ void		event_handler(t_info *info, t_sdl *sdl)
 				key = event.key.keysym.sym;
 				if (key == SDLK_ESCAPE)
 					return ;
-				if (controls.play >= 0)
+				else if (controls.play >= GAME_PAUSED)
 					game_controls(key, &controls, info, sdl);
 			}
 		}
