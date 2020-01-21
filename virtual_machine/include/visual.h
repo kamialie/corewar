@@ -20,8 +20,8 @@
 
 # define FONT_PATH "fonts/FreeMono.ttf"
 # define FONT_SIZE 15
-# define FONT_SIZE_ANNOUNCE 50
-# define OUTLINE 5
+# define FONT_SIZE_ANNOUNCE 70
+# define OUTLINE 2
 
 # define NIBBLE_X_SHIFT 7
 # define NIBBLE_Y_SHIFT 5
@@ -129,7 +129,6 @@ void			render_text(char *text, t_render *render_info,
 											SDL_Surface *surface);
 void			render_text_outline(char *text,
 					t_render *render_info, t_sdl *sdl);
-void			prepare_announcement(t_sdl *sdl);
 t_explosion		*create_explosion(int location);
 void			add_explosion(t_explosion *e, t_explosion **head);
 void			remove_explosion(t_explosion *e, t_explosion **head);

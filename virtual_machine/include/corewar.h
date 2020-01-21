@@ -100,7 +100,7 @@ void		move_cursor(int location, int shift, int player, t_sdl *sdl);
 
 void		render_text(char *text, t_render *render_info, SDL_Surface *surface);
 void		show_data(t_info *info, t_sdl *sdl);
-void		announce_winner(int seed, header_t player, t_sdl *sdl);
+void		announce_winner(int player, t_info *info, t_sdl *sdl);
 void		free_resources(t_sdl *sdl);
 short int   get_address(short int shift);
 /*

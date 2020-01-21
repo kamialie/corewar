@@ -79,9 +79,7 @@ static void	take_game_action(t_controls *controls, t_info *info, t_sdl *sdl)
 		epileptic_square(controls->seed++, sdl->render_info, sdl->surface, sdl);
 		if (--controls->show_time == 0)
 		{
-			prepare_announcement(sdl);
-			announce_winner(controls->seed++,
-				(info->players)[info->last_live - 1], sdl);
+			announce_winner(info->last_live - 1, info, sdl);
 			controls->play = GAME_OVER;
 		}
 	}
