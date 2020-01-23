@@ -69,17 +69,21 @@ static void	game_controls(int key, t_controls *controls,
 		music_controls(key, controls, sdl);
 }
 
-static void	take_game_action(t_controls *controls, t_info *info, t_sdl *sdl)
+static void	take_game_action(t_controls *controls, t_info *info, t_sdl *sdl) // version with winner anoouncement animation or without 
 {
 	if (controls->play == GAME_RUNNING)
 		update_for_one_round(controls->speed, &controls->play, info, sdl);
 	else if (controls->play == GAME_SHOW && sdl->head_explosion == NULL)
 	{
-		controls->speed = 150;
-		epileptic_square(controls->seed++, sdl->render_info, sdl->surface, sdl);
-		if (--controls->show_time == 0)
+		if (controls->show_time > 0)
 		{
-			announce_winner(info->last_live - 1, info, sdl);
+			controls->speed = 150;
+			epileptic_square(controls->seed++, sdl->render_info, sdl->surface, sdl);
+			controls->show_time--;
+		}
+		else
+		{
+			announce_winner(info->last_live, info, sdl);
 			controls->play = GAME_OVER;
 		}
 	}
@@ -98,7 +102,7 @@ void		event_handler(t_info *info, t_sdl *sdl)
 	SDL_Event	event;
 	t_controls	controls;
 
-	controls = (t_controls) {GAME_PAUSED, DEFAULT_GAME_SPEED, 1, 0}; // return third argument to 20
+	controls = (t_controls) {GAME_PAUSED, DEFAULT_GAME_SPEED, 20, 0}; // return third argument to 20
 	//Mix_PlayMusic(sdl->main_theme, 1); // commented for no music while debugging
 	while (1)
 	{

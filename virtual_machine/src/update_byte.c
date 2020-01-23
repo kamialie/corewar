@@ -14,8 +14,8 @@
 #include "op.h"
 
 /*
- * закрепить байт под индексом за определенным игроком
- */
+** закрепить байт под индексом за определенным игроком
+*/
 void	set_byte(int location, int player, t_sdl *sdl)
 {
 	sdl->replica[location] = player + 1;
@@ -44,6 +44,7 @@ void    update_bytes(int location, int length, int player, t_sdl *sdl)
         i++;
     }
 }
+
 /*
 ** player comes from processes info.
 ** where player number start from 0
@@ -56,9 +57,9 @@ void	create_cursor(int location, int player, t_sdl *sdl)
 }
 
 /*
- * location - индекс где курсор сейчас
- * shift - сдвиг
- */
+** location - индекс где курсор сейчас
+** shift - сдвиг
+*/
 void	move_cursor(int location, int shift, int player, t_sdl *sdl)
 {
 	create_cursor((location + shift) % MEM_SIZE, player, sdl);

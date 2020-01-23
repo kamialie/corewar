@@ -42,9 +42,8 @@ static void	prepare_announcement(int player, t_sdl *sdl)
 	SDL_FillRect(sdl->surface, &rect, 0);
 	render_info = sdl->render_info;
 	set_new_font_size(render_info);
-	//render_info->font_color = sdl->colors[BLACK];
-	render_info->back_color = sdl->colors[player + 2];
-	render_info->font_color = (SDL_Color) {0x33, 0x33, 0x33};
+	render_info->back_color = sdl->colors[player + FONT_COLOR];
+	render_info->font_color = (SDL_Color) {0, 0, 0x4d};
 }
 
 /*
@@ -53,6 +52,7 @@ static void	prepare_announcement(int player, t_sdl *sdl)
 
 void		announce_winner(int player, t_info *info, t_sdl *sdl)
 {
+	char		*winner_name;
 	t_render	*render_info;
 
 	prepare_announcement(player, sdl);
@@ -60,6 +60,10 @@ void		announce_winner(int player, t_info *info, t_sdl *sdl)
 	render_info->rect.x = 400;
 	render_info->rect.y = 300;
 	render_text_outline("Winner is:", render_info, sdl);
+	render_info->rect.x -= 300;
 	render_info->rect.y += 300;
-	render_text_outline(info->players[player].prog_name, render_info, sdl);
+	winner_name = (info->players)[player - 1].prog_name;
+	if (ft_strlen(winner_name) > 25)
+		winner_name[25] = '\0';
+	render_text_outline(winner_name, render_info, sdl);
 }
