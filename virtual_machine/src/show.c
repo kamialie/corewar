@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/28 20:00:07 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/12 15:40:50 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/25 13:54:22 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	form_squares(int seed, t_sdl *sdl)
 	}
 }
 
-void	epileptic_square(int seed, t_render *render_info,
+void	epilepsy(int seed, t_render *render_info,
 							SDL_Surface *surface, t_sdl *sdl)
 {
 	int			i;

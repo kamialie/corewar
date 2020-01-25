@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 14:45:48 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/19 15:26:02 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/25 13:36:21 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,10 @@ void		init_music(t_sdl *sdl)
 	Mix_VolumeMusic(50);
 	if ((sdl->live_effect = Mix_LoadWAV(LIVE_EFFECT)) == NULL)
 		exit(error_message("MixLoadWAV", Mix_GetError()));
+	if ((sdl->birth_effect = Mix_LoadWAV(BIRTH_EFFECT)) == NULL)
+		exit(error_message("MixLoadWAV", Mix_GetError()));
 	Mix_VolumeChunk(sdl->live_effect, MIX_MAX_VOLUME);
+	Mix_VolumeChunk(sdl->birth_effect, MIX_MAX_VOLUME);
 }
 
 int			init_sdl(unsigned char *arena, t_sdl *sdl)

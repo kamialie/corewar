@@ -6,25 +6,17 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 15:50:24 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/19 21:31:38 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/25 14:55:25 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "visual.h"
 #include "corewar.h"
 
-static void	update_for_one_round(int delay, int *play, t_info *info, t_sdl *sdl)
-{
-	printf("count_cycles %d\n", info->count_cycles); // tmp
-	gladiatorial_fight(play, info, sdl);
-	show_data(info, sdl);
-}
-
 static void	music_controls(int key, t_controls *controls, t_sdl *sdl)
 {
 	if (key == SDLK_p)
 	{
-		printf("music on/off\n"); //tmo
 		if (Mix_PausedMusic())
 			Mix_ResumeMusic();
 		else
@@ -34,6 +26,8 @@ static void	music_controls(int key, t_controls *controls, t_sdl *sdl)
 		Mix_FadeOutMusic(3000);
 	else if (key == SDLK_l)
 		Mix_PlayChannel(-1, sdl->live_effect, 0);
+	else if (key == SDLK_b)
+		Mix_PlayChannel(-1, sdl->birth_effect, 0);
 }
 
 static void	game_controls(int key, t_controls *controls,
@@ -46,7 +40,8 @@ static void	game_controls(int key, t_controls *controls,
 	}
 	else if (key == SDLK_n)
 	{
-		update_for_one_round(controls->speed, &controls->play, info, sdl);
+		gladiatorial_fight(&controls->play, info, sdl);
+		show_data(info, sdl);
 		SDL_UpdateWindowSurface(sdl->window);
 	}
 	else if (key == SDLK_i && controls->speed > 0)
@@ -69,17 +64,19 @@ static void	game_controls(int key, t_controls *controls,
 		music_controls(key, controls, sdl);
 }
 
-static void	take_game_action(t_controls *controls, t_info *info, t_sdl *sdl) // version with winner anoouncement animation or without 
+static void	take_game_action(t_controls *controls, t_info *info, t_sdl *sdl)
 {
 	if (controls->play == GAME_RUNNING)
-		update_for_one_round(controls->speed, &controls->play, info, sdl);
+	{
+		gladiatorial_fight(&controls->play, info, sdl);
+		show_data(info, sdl);
+	}
 	else if (controls->play == GAME_SHOW && sdl->head_explosion == NULL)
 	{
-		if (controls->show_time > 0)
+		if (controls->show_time-- > 0)
 		{
 			controls->speed = 150;
-			epileptic_square(controls->seed++, sdl->render_info, sdl->surface, sdl);
-			controls->show_time--;
+			epilepsy(controls->seed++, sdl->render_info, sdl->surface, sdl);
 		}
 		else
 		{
@@ -87,10 +84,9 @@ static void	take_game_action(t_controls *controls, t_info *info, t_sdl *sdl) // 
 			controls->play = GAME_OVER;
 		}
 	}
-	if (sdl->head_explosion)
-		draw_explosion(sdl->head_explosion, sdl);
 	if (controls->play != GAME_PAUSED || sdl->head_explosion)
 	{
+		draw_explosion(sdl->head_explosion, sdl);
 		SDL_UpdateWindowSurface(sdl->window);
 		SDL_Delay(controls->speed);
 	}
@@ -102,7 +98,7 @@ void		event_handler(t_info *info, t_sdl *sdl)
 	SDL_Event	event;
 	t_controls	controls;
 
-	controls = (t_controls) {GAME_PAUSED, DEFAULT_GAME_SPEED, 20, 0}; // return third argument to 20
+	controls = (t_controls) {GAME_PAUSED, DEFAULT_GAME_SPEED, 20, 0};
 	//Mix_PlayMusic(sdl->main_theme, 1); // commented for no music while debugging
 	while (1)
 	{

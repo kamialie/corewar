@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/25 12:26:43 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/25 12:26:56 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/25 13:32:12 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct	s_sdl
 	SDL_Color		colors[9];
 	Mix_Music		*main_theme;
 	Mix_Chunk		*live_effect;
+	Mix_Chunk		*birth_effect;
 	TTF_Font		*outline_font;
 	t_render		*render_info;
 	t_explosion		*head_explosion;
