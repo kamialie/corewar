@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/28 20:00:09 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/19 15:30:39 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/25 13:18:49 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ static void	prepare_announcement(int player, t_sdl *sdl)
 
 void		announce_winner(int player, t_info *info, t_sdl *sdl)
 {
+	size_t		len;
 	char		*winner_name;
 	t_render	*render_info;
 
@@ -60,10 +61,14 @@ void		announce_winner(int player, t_info *info, t_sdl *sdl)
 	render_info->rect.x = 400;
 	render_info->rect.y = 300;
 	render_text_outline("Winner is:", render_info, sdl);
-	render_info->rect.x -= 300;
-	render_info->rect.y += 300;
 	winner_name = (info->players)[player - 1].prog_name;
-	if (ft_strlen(winner_name) > 25)
+	len = ft_strlen(winner_name);
+	if (len > 25)
+	{
 		winner_name[25] = '\0';
+		len = 25;
+	}
+	render_info->rect.x -= (len - 10) * 20;
+	render_info->rect.y += 300;
 	render_text_outline(winner_name, render_info, sdl);
 }

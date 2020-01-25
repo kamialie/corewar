@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 18:18:09 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/12 15:08:50 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/25 12:30:50 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ void	draw_game_controls(t_sdl *sdl)
 	render_text("run one cycle - N", sdl->render_info, sdl->surface);
 	sdl->render_info->rect.y += TEXT_Y_SHIFT;
 	render_text("increase / decrease speed - I / D",
+						sdl->render_info, sdl->surface);
+	sdl->render_info->rect.y += TEXT_Y_SHIFT;
+	render_text("exit game - ESC",
 						sdl->render_info, sdl->surface);
 	sdl->render_info->rect.y += TEXT_Y_SHIFT;
 }
