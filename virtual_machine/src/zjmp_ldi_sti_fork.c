@@ -20,7 +20,7 @@ void				zjmp_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	current_location = (*prs)->index;
 	shift = 3;
 	if ((*prs)->carry)
-		shift = get_T_IND(current_location, 1, info->arena, 1);
+		shift = get_t_ind(current_location, 1, info->arena, 1);
 	(*prs)->index = get_address(shift + current_location);
 	move_cursor(current_location, shift, IND((*prs)->reg[0]), sdl);
 }
@@ -90,7 +90,7 @@ void				fork_op(t_info *info, t_processes **prs, t_sdl *sdl)
 
 	current_location = (*prs)->index;
 	num_player = ((*prs)->reg)[0];
-	arg = get_T_IND(current_location, 1, info->arena, 1);
+	arg = get_t_ind(current_location, 1, info->arena, 1);
 	add_elem(&(info->processes), arg, num_player);
 	info->processes->carry = (*prs)->carry;
 	(info->processes)->cc_live = (*prs)->cc_live;

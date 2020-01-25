@@ -25,10 +25,10 @@ void				lld_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	if (code_arg == 208 || code_arg == 144)
 	{
 		if (code_arg == 208)
-			shift += get_T_IND(current_location, shift, info->arena, 0);
-		value = get_T_DIR(current_location, shift, info->arena);
+			shift += get_t_ind(current_location, shift, info->arena, 0);
+		value = get_t_dir(current_location, shift, info->arena);
 		shift = (code_arg == 208) ? 2 : 4;
-		set_T_REG(value, shift, info->arena, prs);
+		set_t_reg(value, shift, info->arena, prs);
 	}
 	shift_next_op(code_arg, 12, prs, sdl);
 }
@@ -43,7 +43,7 @@ void				lldi_op(t_info *info, t_processes **prs, t_sdl *sdl)
 
 	shift = 2;
 	current_location = (*prs)->index;
-	code_arg = ((info->arena)[(current_location+ 1) % MEM_SIZE]) & 0xfc;
+	code_arg = ((info->arena)[(current_location + 1) % MEM_SIZE]) & 0xfc;
 	value = get_arg((code_arg >> 6) & 0x3, &shift, info->arena, prs);
 	if ((shift - 2) && (code_arg == 84 || code_arg == 212 || code_arg == 148 ||
 						code_arg == 100 || code_arg == 228 || code_arg == 164))
@@ -70,7 +70,7 @@ void				lfork_op(t_info *info, t_processes **prs, t_sdl *sdl)
 
 	current_location = (*prs)->index;
 	num_player = ((*prs)->reg)[0];
-	arg = get_T_IND(current_location, 1, info->arena, 0);
+	arg = get_t_ind(current_location, 1, info->arena, 0);
 	add_elem(&(info->processes), arg, num_player);
 	info->processes->carry = (*prs)->carry;
 	(info->processes)->cc_live = (*prs)->cc_live;

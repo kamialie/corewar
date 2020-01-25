@@ -27,7 +27,7 @@ void				sub_op(t_info *info, t_processes **prs, t_sdl *sdl)
 		arg_reg2 = *((info->arena) + (current_location + 3) % MEM_SIZE);
 		if (arg_reg2 >= 0 && arg_reg2 < REG_NUMBER &&
 			arg_reg >= 0 && arg_reg < REG_NUMBER)
-			set_T_REG((*prs)->reg[arg_reg] - (*prs)->reg[arg_reg2],
+			set_t_reg((*prs)->reg[arg_reg] - (*prs)->reg[arg_reg2],
 					4, info->arena, prs);
 	}
 	shift_next_op(code_arg, 3, prs, sdl);
@@ -47,7 +47,7 @@ void				and_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	if ((shift - 2))
 		value &= get_arg((code_arg >> 4) & 0x3, &shift, info->arena, prs);
 	if (shift + 3 == get_bytes_to_skip(9, code_arg))
-		set_T_REG(value, shift, info->arena, prs);
+		set_t_reg(value, shift, info->arena, prs);
 	shift_next_op(code_arg, 5, prs, sdl);
 }
 
@@ -65,7 +65,7 @@ void				or_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	if ((shift - 2))
 		value |= get_arg((code_arg >> 4) & 0x3, &shift, info->arena, prs);
 	if (shift + 3 == get_bytes_to_skip(9, code_arg))
-		set_T_REG(value, shift, info->arena, prs);
+		set_t_reg(value, shift, info->arena, prs);
 	shift_next_op(code_arg, 6, prs, sdl);
 }
 
@@ -83,6 +83,6 @@ void				xor_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	if ((shift - 2))
 		value ^= get_arg((code_arg >> 4) & 0x3, &shift, info->arena, prs);
 	if (shift + 3 == get_bytes_to_skip(9, code_arg))
-		set_T_REG(value, shift, info->arena, prs);
+		set_t_reg(value, shift, info->arena, prs);
 	shift_next_op(code_arg, 7, prs, sdl);
 }

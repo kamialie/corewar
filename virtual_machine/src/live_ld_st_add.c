@@ -22,7 +22,7 @@ void				live_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	current_location = (*prs)->index;
 	number_player = (*prs)->reg[0];
 	(*prs)->cc_live = info->count_cycles;
-	arg_player = get_T_DIR(current_location, 1, info->arena);
+	arg_player = get_t_dir(current_location, 1, info->arena);
 	if (number_player == arg_player)
 		info->last_live = number_player;
 	new_location = (current_location + 5) % MEM_SIZE;
@@ -43,14 +43,14 @@ void				ld_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	code_arg = ((info->arena)[((*prs)->index + 1) % MEM_SIZE]) & 0xf0;
 	if (code_arg == 208)
 	{
-		shift = get_T_IND(shift, 0, info->arena, 1);
-		value = get_T_DIR(current_location, shift, info->arena);
-		set_T_REG(value, 4, info->arena, prs);
+		shift = get_t_ind(shift, 0, info->arena, 1);
+		value = get_t_dir(current_location, shift, info->arena);
+		set_t_reg(value, 4, info->arena, prs);
 	}
 	else if (code_arg == 144)
 	{
-		value = get_T_DIR(current_location, shift, info->arena);
-		set_T_REG(value, 6, info->arena, prs);
+		value = get_t_dir(current_location, shift, info->arena);
+		set_t_reg(value, 6, info->arena, prs);
 	}
 	shift_next_op(code_arg, 1, prs, sdl);
 }
@@ -71,10 +71,10 @@ void				st_op(t_info *info, t_processes **prs, t_sdl *sdl)
 		if (arg_reg >= 0 && arg_reg < REG_NUMBER)
 		{
 			if (code_arg == 80)
-				set_T_REG((*prs)->reg[arg_reg], 3, info->arena, prs);
+				set_t_reg((*prs)->reg[arg_reg], 3, info->arena, prs);
 			else
 			{
-				shift = get_T_IND(shift, 0, info->arena, 1);
+				shift = get_t_ind(shift, 0, info->arena, 1);
 				shift = get_address(shift + current_location);
 				ft_memcpy(info->arena + shift, (*prs)->reg + arg_reg, 4);
 				update_bytes(shift, 4, IND((*prs)->reg[0]), sdl);
@@ -99,7 +99,7 @@ void				add_op(t_info *info, t_processes **prs, t_sdl *sdl)
 		arg_reg2 = *((info->arena) + (current_location + 3) % MEM_SIZE);
 		if (arg_reg2 >= 0 && arg_reg2 < REG_NUMBER &&
 		arg_reg >= 0 && arg_reg < REG_NUMBER)
-			set_T_REG((*prs)->reg[arg_reg] + (*prs)->reg[arg_reg2],
+			set_t_reg((*prs)->reg[arg_reg] + (*prs)->reg[arg_reg2],
 					4, info->arena, prs);
 	}
 	shift_next_op(code_arg, 3, prs, sdl);
