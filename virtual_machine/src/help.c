@@ -32,7 +32,7 @@ than 1 or greater than the number of champions\n");
 	else if (err == 7)
 		perror("No champions are found\n");
 	else if (err == 8)
-		perror("No champions are found\n");
+		perror("Memory allocation error\n");
 	exit(1);
 }
 

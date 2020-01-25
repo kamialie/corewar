@@ -56,11 +56,16 @@ int			main(int argc, char *argv[])
 			gladiatorial_fight(NULL, &info, &sdl);
 		print_arena(info.arena);
 	}
-	else
+	else if (info.dump == -666)
 	{
 		initialize_visual_arena(&sdl, &info);
 		event_handler(&info, &sdl);
 		free_resources(&sdl);
+	}
+	else
+	{
+		while (info.count_cycles <= info.dump)
+			gladiatorial_fight(NULL, &info, &sdl);
 	}
 	printf("Contestant %d, %s, has won !\n", info.last_live,
 			(info.players)[info.last_live - 1].prog_name);
