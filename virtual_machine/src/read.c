@@ -26,7 +26,7 @@ static unsigned int	get_prog_size(t_info *info, int fd)
 	prog_size += ((buf & 0xff00) << (8 * 1));
 	prog_size += ((buf & 0xff0000) >> (8 * 1));
 	prog_size += ((buf & 0xff000000) >> (8 * 3));
-	if (prog_size > CHAMP_MAX_SIZE)
+	if (prog_size > CHAMP_MAX_SIZE || prog_size == 0)
 		error(6);
 	return (prog_size);
 }
@@ -44,7 +44,9 @@ static void			read_file(t_info *info, char *file_name,
 					int number, int count)
 {
 	int				fd;
+	int 			num;
 
+	num = 0;
 	if ((fd = open(file_name, O_RDONLY)) == -1)
 		error(0);
 	if (number >= 0 && (info->players)[number].magic == COREWAR_EXEC_MAGIC)
@@ -58,12 +60,12 @@ static void			read_file(t_info *info, char *file_name,
 	(info->players)[number].magic = get_magic(info, fd);
 	if (read(fd, (info->players)[number].prog_name, PROG_NAME_LENGTH) == -1)
 		error(4);
-	if (lseek(fd, 4, SEEK_CUR) == -1)
+	if (read(fd, num, COMMENT_LENGTH) != 0)
 		error(4);
 	(info->players)[number].prog_size = get_prog_size(info, fd);
 	if (read(fd, (info->players)[number].comment, COMMENT_LENGTH) == -1)
 		error(4);
-	if (lseek(fd, 4, SEEK_CUR) == -1)
+	if (read(fd, num, COMMENT_LENGTH) != 0)
 		error(4);
 	read_arena(info, fd, number, count);
 	close(fd);
