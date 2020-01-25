@@ -46,7 +46,7 @@ int					get_t_ind(short int current_location,
 {
 	short int		value;
 
-	current_location = get_address(current_location + shift);
+	current_location = get_address((current_location + shift) % MEM_SIZE);
 	arena += current_location;
 	value = *((short int *)arena);
 	value = reverse_short_int(value);

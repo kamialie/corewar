@@ -83,14 +83,15 @@ void				sti_op(t_info *info, t_processes **prs, t_sdl *sdl)
 
 void				fork_op(t_info *info, t_processes **prs, t_sdl *sdl)
 {
-	short int		current_location;
-	short int		num_player;
-	short int		arg;
-	int				i;
+	short int current_location;
+	short int num_player;
+	short int arg;
+	int i;
 
 	current_location = (*prs)->index;
 	num_player = ((*prs)->reg)[0];
 	arg = get_t_ind(current_location, 1, info->arena, 1);
+	arg = get_address(arg);
 	add_elem(&(info->processes), arg, num_player);
 	info->processes->carry = (*prs)->carry;
 	(info->processes)->cc_live = (*prs)->cc_live;
@@ -100,4 +101,5 @@ void				fork_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	move_cursor((*prs)->index, 3, IND(num_player), sdl);
 	(*prs)->index = get_address((current_location + 3));
 	create_cursor(arg, IND(num_player), sdl);
+	Mix_PlayChannel(-1, sdl->birth_effect, 0);
 }

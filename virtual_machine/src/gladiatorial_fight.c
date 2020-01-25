@@ -11,13 +11,17 @@
 /* ************************************************************************** */
 
 #include "corewar.h"
+#include "visual.h"
 
 void		take_actions(t_info *info, t_processes *prs, t_sdl *sdl)
 {
 	if (prs->cc_op == 0)
 	{
 		if ((info->arena)[prs->index] > 0 && (info->arena)[prs->index] < 17)
+		{
+			prs->code_op = (info->arena)[prs->index];
 			prs->cc_op = g_op_tab[prs->code_op - 1].cycle_for_exec;
+		}
 	}
 	if (prs->cc_op > 0)
 		--prs->cc_op;
@@ -43,6 +47,7 @@ void		kick_noobs(t_info *info, t_sdl *sdl)
 		if (info->count_cycles - ptr->cc_live > info->cycle_to_die)
 		{
 			update_byte(ptr->index, sdl);
+			add_explosion(create_explosion(ptr->index), &sdl->head_explosion);
 			delete_elem(&ptr, info);
 		}
 		else
