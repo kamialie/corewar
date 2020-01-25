@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <mach/mach_types.h>
 #include "corewar.h"
 
 void		delete_elem(t_processes **processes, t_info *info)
@@ -41,12 +40,12 @@ void		add_elem(t_processes **processes, int index, int number_player)
 	t_processes	*new;
 
 	if (!(new = (t_processes *)malloc(sizeof(t_processes))))
-		error(7); //Ошибка маллока
+		error(8);
 	new->next = NULL;
 	new->prev = NULL;
 	new->carry = 0;
 	new->index = index % MEM_SIZE;
-	ft_bzero(new->reg, REG_NUMBER * sizeof(int));
+	ft_bzero(new->reg, sizeof(int) * REG_NUMBER);
 	(new->reg)[0] += number_player;
 	if (*processes == NULL)
 		*processes = new;
@@ -60,8 +59,8 @@ void		add_elem(t_processes **processes, int index, int number_player)
 
 void		create_processes(t_info *info)
 {
-	int 	i;
-	int 	shift;
+	int		i;
+	int		shift;
 
 	i = 0;
 	while (++i <= info->count_process)

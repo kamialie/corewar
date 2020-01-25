@@ -78,6 +78,16 @@ typedef struct	s_op
 	void					(*func)(t_info *, t_processes **, t_sdl *); // указатель на функцию с данной операцией
 }				t_op;
 
+
+void	present_champion(header_t *players);
+unsigned int	get_magic(t_info *info, int fd);
+int 		get_arg(unsigned char code_arg, short int *shift,
+				   unsigned char *arena, t_processes **prs);
+void		shift_next_op(unsigned char code_arg, short int num_fun, t_processes **prs, t_sdl *sdl);
+int 		get_t_dir(short int current_location, int shift, unsigned char *arena);
+int 		get_t_ind(short int current_location, int shift, unsigned char *arena, int mod);
+void 		set_t_reg(int value, int shift, unsigned char *arena, t_processes **prs);
+int 		get_t_reg(int *value, int shift, unsigned char *arena, t_processes **prs);
 unsigned short int reverse_short_int(unsigned short int num);
 void		read_arg(t_info *info, int argc, char *argv[]);
 void		error(int err);

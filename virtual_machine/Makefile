@@ -54,7 +54,9 @@ OBJ_DIR = obj
 
 SRC = main.c \
 	  read.c \
-	  error.c \
+	  help.c \
+	  reverse.c \
+	  get_and_set.c \
 	  print_arena.c \
 	  processes.c \
 	  gladiatorial_fight.c \

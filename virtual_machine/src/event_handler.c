@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 15:50:24 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/25 14:55:25 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/25 14:59:04 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	game_controls(int key, t_controls *controls,
 	else if (key == SDLK_a) //temporary
 		controls->play = -1;
 	else if (key == SDLK_e) //temporary
-		add_explosion(create_explosion(224), &sdl->head_explosion);
+		add_explosion(create_explosion(224), &sdl->head_explosion); // Vilena vzriv
 	else
 		music_controls(key, controls, sdl);
 }
