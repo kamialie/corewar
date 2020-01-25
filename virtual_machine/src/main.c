@@ -66,8 +66,8 @@ int			main(int argc, char *argv[])
 	{
 		while (info.count_cycles <= info.dump)
 			gladiatorial_fight(NULL, &info, &sdl);
+		printf("Contestant %d, %s, has won !\n", info.last_live,
+			   (info.players)[info.last_live - 1].prog_name);
 	}
-	printf("Contestant %d, %s, has won !\n", info.last_live,
-			(info.players)[info.last_live - 1].prog_name);
 	return (0);
 }
