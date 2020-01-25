@@ -102,14 +102,14 @@ static int		count_champion(t_info *info, int argc, char *argv[])
 		if (!ft_strcmp(argv[i], DUMP) && i + 1 < argc)
 			++i;
 		else if (!ft_strcmp(argv[i], N) && i + 2 < argc
-			&& ft_strrchr(argv[i + 2], '.')
-			&& !ft_strcmp(COR, ft_strrchr(argv[i + 2], '.')))
+				 && ft_strrchr(argv[i + 2], '.')
+				 && !ft_strcmp(COR, ft_strrchr(argv[i + 2], '.')))
 		{
 			i += 2;
 			count++;
 		}
 		else if (ft_strrchr(argv[i], '.') &&
-			!ft_strcmp(COR, ft_strrchr(argv[i], '.')))
+				 !ft_strcmp(COR, ft_strrchr(argv[i], '.')))
 			count++;
 		else
 			error(2); //Ошибка, невалидный чемпион(нет расширения .cor)

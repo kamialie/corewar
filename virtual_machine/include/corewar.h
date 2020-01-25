@@ -77,7 +77,13 @@ typedef struct	s_op
 	unsigned char			t_dir_size : 3; //размер типа T_DIR для данной операции
 	void					(*func)(t_info *, t_processes **, t_sdl *); // указатель на функцию с данной операцией
 }				t_op;
-
+int 		get_arg(unsigned char code_arg, short int *shift,
+				   unsigned char *arena, t_processes **prs);
+void		shift_next_op(unsigned char code_arg, short int num_fun, t_processes **prs, t_sdl *sdl);
+int 		get_T_DIR(short int current_location, int shift, unsigned char *arena);
+int 		get_T_IND(short int current_location, int shift, unsigned char *arena, int mod);
+int 		set_T_REG(int value, int shift, unsigned char *arena, t_processes **prs);
+int 		get_T_REG(int *value, int shift, unsigned char *arena, t_processes **prs);
 unsigned short int reverse_short_int(unsigned short int num);
 void		read_arg(t_info *info, int argc, char *argv[]);
 void		error(int err);

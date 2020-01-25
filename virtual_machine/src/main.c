@@ -13,7 +13,99 @@
 #include "visual.h"
 #include "corewar.h"
 
+int 		get_arg(unsigned char code_arg, short int *shift,
+			unsigned char *arena, t_processes **prs)
+{
+	short int		current_location;
+	int				value;
 
+	current_location = (*prs)->index;
+	if (code_arg == 1)
+		*shift += get_T_REG(&value, *shift, arena, prs);
+	else if (code_arg == 2)
+	{
+		if (g_op_tab[(*prs)->code_op - 1].t_dir_size == 2)
+		{
+			value += get_T_IND(current_location, *shift, arena, 0);
+			*shift += 2;
+		}
+		else
+		{
+			value += get_T_DIR(current_location, *shift, arena);
+			*shift += 4;
+		}
+	}
+	else if (code_arg == 3)
+	{
+		*shift = get_T_IND(current_location, *shift, arena, 1);
+		value += get_T_DIR(current_location, *shift, arena);
+		*shift += 2;
+	}
+	return (value);
+}
+
+void		shift_next_op(unsigned char code_arg, short int num_fun, t_processes **prs, t_sdl *sdl)
+{
+	int				skiped_bytes;
+	short int		current_location;
+
+	current_location = (*prs)->index;
+	skiped_bytes = get_bytes_to_skip(num_fun, code_arg);
+	move_cursor(current_location, skiped_bytes, IND((*prs)->reg[0]), sdl);
+	(*prs)->index = (current_location + skiped_bytes) % MEM_SIZE;
+}
+
+int 		get_T_IND(short int current_location, int shift, unsigned char *arena, int mod)
+{
+	short int		value;
+
+	current_location = get_address(current_location + shift);
+	arena += current_location;
+	value = *((short int *)arena);
+	value = reverse_short_int(value);
+	if (mod)
+		value %= IDX_MOD;
+	return (value);
+}
+
+int 		get_T_DIR(short int current_location, int shift, unsigned char *arena)
+{
+	int		value;
+
+	current_location = get_address(current_location + shift);
+	arena += current_location;
+	value = *((int *)arena);
+	value = reverse_int(value);
+	return (value);
+}
+
+//void
+int 		set_T_REG(int value, int shift, unsigned char *arena, t_processes **prs)
+{
+	unsigned char	arg_reg;
+
+	arg_reg = *(arena + ((*prs)->index + shift) % MEM_SIZE);
+	if (arg_reg >= 0 && arg_reg < REG_NUMBER)
+	{
+		(*prs)->reg[arg_reg] = value; //может можно без приведения
+		(*prs)->carry = (value == 0) ? 1 : 0;
+		return (1);
+	}
+	return (0);
+}
+
+int 		get_T_REG(int *value, int shift, unsigned char *arena, t_processes **prs)
+{
+	unsigned char	arg_reg;
+
+	arg_reg = *(arena + ((*prs)->index + shift) % MEM_SIZE);
+	if (arg_reg >= 0 && arg_reg < REG_NUMBER)
+	{
+		*value = (*prs)->reg[arg_reg];
+		return (1);
+	}
+	return (0);
+}
 //shift
 short int   get_address(short int shift)
 {

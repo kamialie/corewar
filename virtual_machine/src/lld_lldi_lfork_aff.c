@@ -12,146 +12,89 @@
 
 #include "corewar.h"
 
-void		lld_op(t_info *info, t_processes **prs, t_sdl *sdl)
+void				lld_op(t_info *info, t_processes **prs, t_sdl *sdl)
 {
-    unsigned char code_arg;
-    unsigned char   arg_reg;
-    int           skiped_bytes;
-    int           arg_dir;
-    short int     arg_ind;
+	unsigned char	code_arg;
+	short int		current_location;
+	short int		shift;
+	int				value;
 
-    printf("ld \n");
-    code_arg = ((info->arena)[((*prs)->index + 1) % MEM_SIZE]) & 0xf0;
-    if (code_arg == 208) //ind
-    {
-        printf("ind \n");
-        arg_ind = reverse_short_int(*((short int *)((info->arena) + ((*prs)->index + 2) % MEM_SIZE)));
-        arg_ind = get_address(arg_ind + (*prs)->index);
-        arg_dir = reverse_int(*((int *)((info->arena) + arg_ind % MEM_SIZE)));
-        arg_reg = *((info->arena) + ((*prs)->index + 4) % MEM_SIZE);
-        if (arg_reg >= 0 && arg_reg < REG_NUMBER)
-        {
-            (*prs)->reg[arg_reg] = arg_dir; //может можно без приведения
-            (*prs)->carry = (arg_dir == 0) ? 1 : 0;
-        }
-    }
-    else if (code_arg == 144) //dir
-    {
-        printf("dir \n");
-        arg_dir = reverse_int(*((int *)((info->arena) + ((*prs)->index + 2) % MEM_SIZE))); //код операции + код аргументов
-        arg_reg = *((info->arena) + ((*prs)->index + 6) % MEM_SIZE);
-        if (arg_reg >= 0 && arg_reg < REG_NUMBER)
-        {
-            (*prs)->reg[arg_reg] = arg_dir; //может можно без приведения
-            (*prs)->carry = (arg_dir == 0) ? 1 : 0;
-        }
-    }
-    skiped_bytes = get_bytes_to_skip(1, code_arg);
-    move_cursor((*prs)->index, skiped_bytes, (*prs)->reg[0] - 1, sdl);
-    (*prs)->index = ((*prs)->index + skiped_bytes) % MEM_SIZE;
+	shift = 2;
+	current_location = (*prs)->index;
+	code_arg = ((info->arena)[(current_location + 1) % MEM_SIZE]) & 0xf0;
+	if (code_arg == 208 || code_arg == 144)
+	{
+		if (code_arg == 208)
+			shift += get_T_IND(current_location, shift, info->arena, 0);
+		value = get_T_DIR(current_location, shift, info->arena);
+		shift = (code_arg == 208) ? 2 : 4;
+		set_T_REG(value, shift, info->arena, prs);
+	}
+	shift_next_op(code_arg, 12, prs, sdl);
 }
 
-void		lldi_op(t_info *info, t_processes **prs, t_sdl *sdl)
+void				lldi_op(t_info *info, t_processes **prs, t_sdl *sdl)
 {
-	unsigned char code_arg;
-	int           skiped_bytes;
-	int				flag;
-	short int		arg_ind;
-	unsigned char   arg_reg;
-	int   arg;
+	unsigned char	code_arg;
+	unsigned char	arg_reg;
+	short int		current_location;
+	short int		shift;
+	int				value;
 
-	printf("ldi\n");
-	flag = 0;
-	code_arg = ((info->arena)[((*prs)->index + 1) % MEM_SIZE]) & 0xfc;
-	if (code_arg == 84 || code_arg == 100)
+	shift = 2;
+	current_location = (*prs)->index;
+	code_arg = ((info->arena)[(current_location+ 1) % MEM_SIZE]) & 0xfc;
+	value = get_arg((code_arg >> 6) & 0x3, &shift, info->arena, prs);
+	if ((shift - 2) && (code_arg == 84 || code_arg == 212 || code_arg == 148 ||
+						code_arg == 100 || code_arg == 228 || code_arg == 164))
+		value += get_arg((code_arg >> 4) & 0x3, &shift, info->arena, prs);
+	if (shift + 3 == get_bytes_to_skip(9, code_arg))
 	{
-		arg_reg = *((info->arena) + ((*prs)->index + 2) % MEM_SIZE);
-		if (arg_reg < 0 && arg_reg >= REG_NUMBER)
-			flag = 0;
-		else
-		{
-			arg = (*prs)->reg[arg_reg];
-			flag = 1;
-		}
-	}
-	else if (code_arg == 148 || code_arg == 164)
-	{
-		arg = reverse_short_int(*((short int *)((info->arena) + ((*prs)->index + 2) % MEM_SIZE)));
-		flag = 2;
-	}
-	else if (code_arg == 212 || code_arg == 228)
-	{
-		arg_ind = reverse_short_int(*((short int *)((info->arena) + ((*prs)->index + 2) % MEM_SIZE))) % IDX_MOD;
-		arg_ind = get_address(arg_ind % IDX_MOD + (*prs)->index);
-	    arg = reverse_int(*((int *)(info->arena + arg_ind)));
-		flag = 2;
-	}
-	if (flag && (code_arg == 84 || code_arg == 212 || code_arg == 148))
-	{
-		arg_reg = *((info->arena) + ((*prs)->index + 2 + flag) % MEM_SIZE);
-		if (arg_reg < 0 && arg_reg >= REG_NUMBER)
-			flag = 0;
-		else
-		{
-			arg += (*prs)->reg[arg_reg];
-			flag++;
-		}
-	}
-	else if (flag && (code_arg == 100 || code_arg == 228 || code_arg == 164))
-	{
-		arg += reverse_short_int(*((short int *)((info->arena) + ((*prs)->index + 2 + flag) % MEM_SIZE)));
-		flag += 2;
-	}
-	if (flag)
-	{
-		arg_reg = *((info->arena) + ((*prs)->index + 2 + flag) % MEM_SIZE);
+		arg_reg = *((info->arena) + (current_location + shift) % MEM_SIZE);
 		if (arg_reg >= 0 && arg_reg < REG_NUMBER)
 		{
-			arg = get_address((*prs)->index + arg);
-			ft_memcpy((*prs)->reg + arg_reg, info->arena + arg, 4);
+			value = get_address(current_location + value);
+			ft_memcpy((*prs)->reg + arg_reg, info->arena + value, 4);
 			(*prs)->reg[arg_reg] = reverse_int((*prs)->reg[arg_reg]);
 		}
 	}
-	skiped_bytes = get_bytes_to_skip(13, code_arg);
-	move_cursor((*prs)->index, skiped_bytes, (*prs)->reg[0] - 1, sdl);
-	(*prs)->index = get_address((*prs)->index + skiped_bytes);
+	shift_next_op(code_arg, 13, prs, sdl);
 }
 
-void		lfork_op(t_info *info, t_processes **prs, t_sdl *sdl)
+void				lfork_op(t_info *info, t_processes **prs, t_sdl *sdl)
 {
-    short	int 	*ptr;
-    unsigned short   int     arg;
-    short   int     current_location;
-    int             i;
+	short int		current_location;
+	short int		num_player;
+	short int		arg;
+	int				i;
 
-
-    current_location = (*prs)->index;
-    arg = reverse_short_int(current_location + *((short int *)(info->arena + (current_location + 1) % MEM_SIZE)));
-    arg %= MEM_SIZE;
-    add_elem(&(info->processes), arg, ((*prs)->reg)[0]);
-    info->processes->carry = (*prs)->carry;
-    (info->processes)->cc_live = (*prs)->cc_live;
-    i = -1;
-    while (++i < REG_NUMBER)
-        (info->processes)->reg[i] = (*prs)->reg[i];
-    move_cursor((*prs)->index, 3, (*prs)->reg[0] - 1, sdl);
-    (*prs)->index = get_address(((*prs)->index) + 3); //1 байт занимает код операции и 2 байта занимает аргумент
-    create_cursor(arg, (*prs)->reg[0] - 1, sdl);
+	current_location = (*prs)->index;
+	num_player = ((*prs)->reg)[0];
+	arg = get_T_IND(current_location, 1, info->arena, 0);
+	add_elem(&(info->processes), arg, num_player);
+	info->processes->carry = (*prs)->carry;
+	(info->processes)->cc_live = (*prs)->cc_live;
+	i = -1;
+	while (++i < REG_NUMBER)
+		(info->processes)->reg[i] = (*prs)->reg[i];
+	move_cursor((*prs)->index, 3, IND(num_player), sdl);
+	(*prs)->index = get_address((current_location + 3));
+	create_cursor(arg, IND(num_player), sdl);
 }
 
-void		aff_op(t_info *info, t_processes **prs, t_sdl *sdl)
+void				aff_op(t_info *info, t_processes **prs, t_sdl *sdl)
 {
-    unsigned char code_arg;
+	unsigned char code_arg;
 
-
-    code_arg = ((info->arena)[((*prs)->index + 1) % MEM_SIZE]) & 0xc0;
-    if (code_arg == 64)
-    {
-        code_arg = *((info->arena) + ((*prs)->index + 2) % MEM_SIZE);
-        if (code_arg >= 0 && code_arg < REG_NUMBER) {
-            printf("Aff : %c\n", (*prs)->reg[code_arg]);
-        }
-        move_cursor((*prs)->index, 3, (*prs)->reg[0] - 1, sdl);
-        (*prs)->index = (((*prs)->index) + 3) % MEM_SIZE;
-    }
+	code_arg = ((info->arena)[((*prs)->index + 1) % MEM_SIZE]) & 0xc0;
+	if (code_arg == 64)
+	{
+		code_arg = *((info->arena) + ((*prs)->index + 2) % MEM_SIZE);
+		if (code_arg >= 0 && code_arg < REG_NUMBER)
+		{
+			printf("Aff : %c\n", (*prs)->reg[code_arg]);
+		}
+		move_cursor((*prs)->index, 3, IND((*prs)->reg[0]), sdl);
+		(*prs)->index = (((*prs)->index) + 3) % MEM_SIZE;
+	}
 }

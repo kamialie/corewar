@@ -33,7 +33,7 @@ static void	music_controls(int key, t_controls *controls, t_sdl *sdl)
 	else if (key == SDLK_s)
 		Mix_FadeOutMusic(3000);
 	else if (key == SDLK_l)
-		Mix_PlayChannel(-1, sdl->live_effect, 0);
+		Mix_PlayChannel(-1, sdl->live_effect, 0); //Vilena live
 }
 
 static void	game_controls(int key, t_controls *controls,
@@ -64,7 +64,7 @@ static void	game_controls(int key, t_controls *controls,
 	else if (key == SDLK_a) //temporary
 		controls->play = -1;
 	else if (key == SDLK_e) //temporary
-		add_explosion(create_explosion(224), &sdl->head_explosion);
+		add_explosion(create_explosion(224), &sdl->head_explosion); // Vilena vzriv
 	else
 		music_controls(key, controls, sdl);
 }
@@ -115,7 +115,7 @@ void		event_handler(t_info *info, t_sdl *sdl)
 				key = event.key.keysym.sym;
 				if (key == SDLK_ESCAPE)
 					return ;
-				if (controls.play > 0)
+				if (controls.play >= 0)
 					game_controls(key, &controls, info, sdl);
 			}
 		}
