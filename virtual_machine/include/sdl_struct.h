@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   project_sdl.h                                      :+:      :+:    :+:   */
+/*   sdl_struct.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/14 16:17:50 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/19 15:47:34 by rgyles           ###   ########.fr       */
+/*   Created: 2020/01/25 12:26:43 by rgyles            #+#    #+#             */
+/*   Updated: 2020/01/25 12:26:56 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PROJECT_SDL_H
-# define PROJECT_SDL_H
+#ifndef SDL_STRUCT_H
+# define SDL_STRUCT_H
 
 # include "SDL.h"
 # include "SDL_ttf.h"

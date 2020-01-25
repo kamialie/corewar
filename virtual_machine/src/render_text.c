@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/28 20:02:31 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/12 15:30:56 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/25 12:22:03 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,6 @@ void	render_text(char *text, t_render *render_info, SDL_Surface *surface)
 	SDL_FreeSurface(text_surface);
 }
 
-/*
-** TODO for winner announcement?
-*/
-
 void	render_text_outline(char *text,
 			t_render *render_info, t_sdl *sdl)
 {
@@ -34,8 +30,10 @@ void	render_text_outline(char *text,
 	SDL_Rect	rect;
 
 	rect = (SDL_Rect) {OUTLINE, OUTLINE, 0, 0};
-	bg = TTF_RenderText_Blended(sdl->outline_font, text, render_info->back_color);
-	fg = TTF_RenderText_Blended(render_info->font, text, render_info->font_color);
+	bg = TTF_RenderText_Blended(sdl->outline_font, text,
+									render_info->back_color);
+	fg = TTF_RenderText_Blended(render_info->font, text,
+									render_info->font_color);
 	SDL_BlitSurface(fg, NULL, bg, &rect);
 	SDL_FreeSurface(fg);
 	SDL_BlitSurface(bg, NULL, sdl->surface, &render_info->rect);

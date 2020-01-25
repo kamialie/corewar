@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:46:42 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/12 15:47:48 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/01/25 12:24:22 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 /*
 ** закрепить байт под индексом за определенным игроком
 */
+
 void	set_byte(int location, int player, t_sdl *sdl)
 {
 	sdl->replica[location] = player + 1;
@@ -27,22 +28,22 @@ void	update_byte(int location, t_sdl *sdl)
 	draw_byte(sdl->arena[location], sdl->render_info, sdl->surface);
 }
 
-void    update_bytes(int location, int length, int player, t_sdl *sdl)
+void	update_bytes(int location, int length, int player, t_sdl *sdl)
 {
-    int i;
+	int i;
 
-    i = 0;
-    while (i < length)
-    {
-        set_byte(location + i, player, sdl);
-        i++;
-    }
-    i = 0;
-    while (i < length)
-    {
+	i = 0;
+	while (i < length)
+	{
+		set_byte(location + i, player, sdl);
+		i++;
+	}
+	i = 0;
+	while (i < length)
+	{
 		update_byte(location + i, sdl);
-        i++;
-    }
+		i++;
+	}
 }
 
 /*
@@ -60,6 +61,7 @@ void	create_cursor(int location, int player, t_sdl *sdl)
 ** location - индекс где курсор сейчас
 ** shift - сдвиг
 */
+
 void	move_cursor(int location, int shift, int player, t_sdl *sdl)
 {
 	create_cursor((location + shift) % MEM_SIZE, player, sdl);
