@@ -41,32 +41,34 @@ int			main(int argc, char *argv[])
 {
 	t_info	info;
 	t_sdl	sdl;
+	int 	*play;
 
 	if (argc < 2)
 		error(7);
 	init_info(&info);
 	read_arg(&info, argc, argv);
-	if (init_sdl(info.arena, &sdl))
-		return (1);
 	present_champion(info.players);
 	create_processes(&info);
 	if (info.dump >= 0)
 	{
 		while (info.count_cycles <= info.dump)
-			gladiatorial_fight(NULL, &info, &sdl);
+			gladiatorial_fight(NULL, &info, NULL);
 		print_arena(info.arena);
 	}
 	else if (info.dump == -666)
 	{
+		if (init_sdl(info.arena, &sdl))
+			error(8);
 		initialize_visual_arena(&sdl, &info);
 		event_handler(&info, &sdl);
 		free_resources(&sdl);
 	}
 	else
 	{
-		while (info.count_cycles <= info.dump)
-			gladiatorial_fight(NULL, &info, &sdl);
-		printf("Contestant %d, %s, has won !\n", info.last_live,
+		*play = 0;
+		while (*play != -1)
+			gladiatorial_fight(play, &info, NULL);
+		printf("Contestant %d, \"%s\", has won !\n", info.last_live,
 			   (info.players)[info.last_live - 1].prog_name);
 	}
 	return (0);

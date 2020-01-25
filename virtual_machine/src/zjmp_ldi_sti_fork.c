@@ -22,7 +22,8 @@ void				zjmp_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	if ((*prs)->carry)
 		shift = get_t_ind(current_location, 1, info->arena, 1);
 	(*prs)->index = get_address(shift + current_location);
-	move_cursor(current_location, shift, IND((*prs)->reg[0]), sdl);
+	if (sdl != NULL)
+		move_cursor(current_location, shift, IND((*prs)->reg[0]), sdl);
 }
 
 void				ldi_op(t_info *info, t_processes **prs, t_sdl *sdl)
@@ -75,7 +76,8 @@ void				sti_op(t_info *info, t_processes **prs, t_sdl *sdl)
 		{
 			value = get_address((current_location + value) % IDX_MOD);
 			ft_memcpy(info->arena + value, (*prs)->reg + arg_reg, 4);
-			update_bytes(value, 4, IND((*prs)->reg[0]), sdl);
+			if (sdl != NULL)
+				update_bytes(value, 4, IND((*prs)->reg[0]), sdl);
 		}
 	}
 	shift_next_op(code_arg, 10, prs, sdl);
@@ -98,8 +100,11 @@ void				fork_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	i = -1;
 	while (++i < REG_NUMBER)
 		(info->processes)->reg[i] = (*prs)->reg[i];
-	move_cursor((*prs)->index, 3, IND(num_player), sdl);
+	if (sdl != NULL)
+	{
+		move_cursor((*prs)->index, 3, IND(num_player), sdl);
+		create_cursor(arg, IND(num_player), sdl);
+		Mix_PlayChannel(-1, sdl->birth_effect, 0);
+	}
 	(*prs)->index = get_address((current_location + 3));
-	create_cursor(arg, IND(num_player), sdl);
-	Mix_PlayChannel(-1, sdl->birth_effect, 0);
 }

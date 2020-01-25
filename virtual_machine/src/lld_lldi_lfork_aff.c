@@ -78,10 +78,13 @@ void				lfork_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	i = -1;
 	while (++i < REG_NUMBER)
 		(info->processes)->reg[i] = (*prs)->reg[i];
-	move_cursor((*prs)->index, 3, IND(num_player), sdl);
+	if (sdl != NULL)
+	{
+		move_cursor((*prs)->index, 3, IND(num_player), sdl);
+		create_cursor(arg, IND(num_player), sdl);
+		Mix_PlayChannel(-1, sdl->birth_effect, 0);
+	}
 	(*prs)->index = get_address((current_location + 3));
-	create_cursor(arg, IND(num_player), sdl);
-	Mix_PlayChannel(-1, sdl->birth_effect, 0);
 }
 
 void				aff_op(t_info *info, t_processes **prs, t_sdl *sdl)
@@ -96,7 +99,8 @@ void				aff_op(t_info *info, t_processes **prs, t_sdl *sdl)
 		{
 			printf("Aff : %c\n", (*prs)->reg[code_arg]);
 		}
-		move_cursor((*prs)->index, 3, IND((*prs)->reg[0]), sdl);
+		if (sdl != NULL)
+			move_cursor((*prs)->index, 3, IND((*prs)->reg[0]), sdl);
 		(*prs)->index = (((*prs)->index) + 3) % MEM_SIZE;
 	}
 }

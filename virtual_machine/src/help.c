@@ -33,6 +33,10 @@ than 1 or greater than the number of champions\n");
 		perror("No champions are found\n");
 	else if (err == 8)
 		perror("Memory allocation error\n");
+	else if (err == 9)
+		perror("Found extra data\n");
+	else if (err == 10)
+		perror("Actual program size does not equal to declared size\n");
 	exit(1);
 }
 
@@ -62,7 +66,8 @@ void				shift_next_op(unsigned char code_arg,
 
 	current_location = (*prs)->index;
 	skiped_bytes = get_bytes_to_skip(num_fun, code_arg);
-	move_cursor(current_location, skiped_bytes, IND((*prs)->reg[0]), sdl);
+	if (sdl != NULL)
+		move_cursor(current_location, skiped_bytes, IND((*prs)->reg[0]), sdl);
 	(*prs)->index = (current_location + skiped_bytes) % MEM_SIZE;
 }
 
@@ -74,7 +79,7 @@ void				present_champion(header_t *players)
 	printf("Introducing contestants...\n");
 	while (++i < MAX_PLAYERS && players[i].magic == COREWAR_EXEC_MAGIC)
 	{
-		printf("* Player %d, weighing %d bytes, %s (%s) !\n", i + 1,
+		printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n", i + 1,
 				players[i].prog_size, players[i].prog_name, players[i].comment);
 	}
 }
