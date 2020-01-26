@@ -67,7 +67,7 @@ void				shift_next_op(unsigned char code_arg,
 	current_location = (*prs)->index;
 	skiped_bytes = get_bytes_to_skip(num_fun, code_arg);
 	if (sdl != NULL)
-		move_cursor(current_location, skiped_bytes, IND((*prs)->reg[0]), sdl);
+		move_cursor(current_location, skiped_bytes, IND(-(*prs)->reg[0]), sdl);
 	(*prs)->index = (current_location + skiped_bytes) % MEM_SIZE;
 }
 

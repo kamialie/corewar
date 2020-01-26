@@ -32,7 +32,7 @@ void		take_actions(t_info *info, t_processes *prs, t_sdl *sdl)
 		else
 		{
 			if (sdl != NULL)
-				move_cursor(prs->index, 1, prs->reg[0] - 1, sdl);
+				move_cursor(prs->index, 1, -prs->reg[0] - 1, sdl);
 			prs->index = (++(prs->index)) % MEM_SIZE;
 		}
 	}

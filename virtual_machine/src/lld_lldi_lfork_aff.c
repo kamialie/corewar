@@ -50,7 +50,7 @@ void				lldi_op(t_info *info, t_processes **prs, t_sdl *sdl)
 		value += get_arg((code_arg >> 4) & 0x3, &shift, info->arena, prs);
 	if (shift + 3 == get_bytes_to_skip(9, code_arg))
 	{
-		arg_reg = *((info->arena) + (current_location + shift) % MEM_SIZE);
+		arg_reg = *((info->arena) + (current_location + shift) % MEM_SIZE) - 1;
 		if (arg_reg >= 0 && arg_reg < REG_NUMBER)
 		{
 			value = get_address(current_location + value);
@@ -80,8 +80,8 @@ void				lfork_op(t_info *info, t_processes **prs, t_sdl *sdl)
 		(info->processes)->reg[i] = (*prs)->reg[i];
 	if (sdl != NULL)
 	{
-		move_cursor((*prs)->index, 3, IND(num_player), sdl);
-		create_cursor(arg, IND(num_player), sdl);
+		move_cursor((*prs)->index, 3, IND(-num_player), sdl);
+		create_cursor(arg, IND(-num_player), sdl);
 		Mix_PlayChannel(-1, sdl->birth_effect, 0);
 	}
 	(*prs)->index = get_address((current_location + 3));
@@ -97,10 +97,10 @@ void				aff_op(t_info *info, t_processes **prs, t_sdl *sdl)
 		code_arg = *((info->arena) + ((*prs)->index + 2) % MEM_SIZE);
 		if (code_arg >= 0 && code_arg < REG_NUMBER)
 		{
-			printf("Aff : %c\n", (*prs)->reg[code_arg]);
+			printf("Aff: %c\n", (*prs)->reg[code_arg]);
 		}
 		if (sdl != NULL)
-			move_cursor((*prs)->index, 3, IND((*prs)->reg[0]), sdl);
+			move_cursor((*prs)->index, 3, IND(-(*prs)->reg[0]), sdl);
 		(*prs)->index = (((*prs)->index) + 3) % MEM_SIZE;
 	}
 }

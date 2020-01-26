@@ -72,7 +72,7 @@ void				set_t_reg(int value, int shift,
 {
 	unsigned char	arg_reg;
 
-	arg_reg = *(arena + ((*prs)->index + shift) % MEM_SIZE);
+	arg_reg = *(arena + ((*prs)->index + shift) % MEM_SIZE) - 1;
 	if (arg_reg >= 0 && arg_reg < REG_NUMBER)
 	{
 		(*prs)->reg[arg_reg] = value;
@@ -85,7 +85,7 @@ int					get_t_reg(int *value, int shift,
 {
 	unsigned char	arg_reg;
 
-	arg_reg = *(arena + ((*prs)->index + shift) % MEM_SIZE);
+	arg_reg = *(arena + ((*prs)->index + shift) % MEM_SIZE) - 1;
 	if (arg_reg >= 0 && arg_reg < REG_NUMBER)
 	{
 		*value = (*prs)->reg[arg_reg];

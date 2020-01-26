@@ -102,7 +102,7 @@ static int			count_champion(t_info *info, int argc, char *argv[])
 		else
 			error(2);
 	}
-	info->last_live = count;
+	info->last_live = 4;
 	info->count_process = count;
 	return (count);
 }

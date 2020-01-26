@@ -15,15 +15,20 @@
 void				zjmp_op(t_info *info, t_processes **prs, t_sdl *sdl)
 {
 	short int		current_location;
+	short int		new_location;
 	short int		shift;
 
 	current_location = (*prs)->index;
 	shift = 3;
 	if ((*prs)->carry)
 		shift = get_t_ind(current_location, 1, info->arena, 1);
-	(*prs)->index = get_address(shift + current_location);
+	new_location = get_address(shift + current_location);
+	(*prs)->index = shift;
 	if (sdl != NULL)
-		move_cursor(current_location, shift, IND((*prs)->reg[0]), sdl);
+	{
+		update_byte(current_location, sdl);
+		create_cursor(new_location, IND(-(*prs)->reg[0]), sdl);
+	}
 }
 
 void				ldi_op(t_info *info, t_processes **prs, t_sdl *sdl)
@@ -43,7 +48,7 @@ void				ldi_op(t_info *info, t_processes **prs, t_sdl *sdl)
 		value += get_arg((code_arg >> 4) & 0x3, &shift, info->arena, prs);
 	if (shift + 3 == get_bytes_to_skip(9, code_arg))
 	{
-		arg_reg = *((info->arena) + (current_location + shift) % MEM_SIZE);
+		arg_reg = *((info->arena) + (current_location + shift) % MEM_SIZE) - 1;
 		if (arg_reg >= 0 && arg_reg < REG_NUMBER)
 		{
 			value = get_address((current_location + value) % IDX_MOD);
@@ -71,13 +76,14 @@ void				sti_op(t_info *info, t_processes **prs, t_sdl *sdl)
 		value += get_arg((code_arg >> 4) & 0x3, &shift, info->arena, prs);
 	if (shift + 3 == get_bytes_to_skip(10, code_arg))
 	{
-		arg_reg = *((info->arena) + (current_location + shift) % MEM_SIZE);
+		arg_reg = *((info->arena) + (current_location + shift) % MEM_SIZE) - 1;
 		if (arg_reg >= 0 && arg_reg < REG_NUMBER)
 		{
 			value = get_address((current_location + value) % IDX_MOD);
-			ft_memcpy(info->arena + value, (*prs)->reg + arg_reg, 4);
+			arg_reg = reverse_int((*prs)->reg[arg_reg]);
+			ft_memcpy(info->arena + value, &arg_reg, 4);
 			if (sdl != NULL)
-				update_bytes(value, 4, IND((*prs)->reg[0]), sdl);
+				update_bytes(value, 4, IND(-(*prs)->reg[0]), sdl);
 		}
 	}
 	shift_next_op(code_arg, 10, prs, sdl);
@@ -102,8 +108,8 @@ void				fork_op(t_info *info, t_processes **prs, t_sdl *sdl)
 		(info->processes)->reg[i] = (*prs)->reg[i];
 	if (sdl != NULL)
 	{
-		move_cursor((*prs)->index, 3, IND(num_player), sdl);
-		create_cursor(arg, IND(num_player), sdl);
+		move_cursor((*prs)->index, 3, IND(-num_player), sdl);
+		create_cursor(arg, IND(-num_player), sdl);
 		Mix_PlayChannel(-1, sdl->birth_effect, 0);
 	}
 	(*prs)->index = get_address((current_location + 3));
