@@ -18,9 +18,13 @@ int					get_arg(unsigned char code_arg, short int *shift,
 	short int		current_location;
 	int				value;
 
+	value = 0;
 	current_location = (*prs)->index;
 	if (code_arg == 1)
+	{
 		*shift += get_t_reg(&value, *shift, arena, prs);
+		*shift += 1;
+	}
 	else if (code_arg == 2)
 	{
 		if (g_op_tab[(*prs)->code_op - 1].t_dir_size == 2)
