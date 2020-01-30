@@ -41,6 +41,12 @@ typedef struct      s_state
     int             init;
 }                   t_state;
 
+typedef struct      s_nc
+{
+    char            *name;
+    char            *comment;
+}                   t_nc;
+
 
 
 #endif

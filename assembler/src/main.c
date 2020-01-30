@@ -6,7 +6,7 @@
 /*   By: wclayton <wclayton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:33:27 by wclayton          #+#    #+#             */
-/*   Updated: 2020/01/30 04:49:39 by wclayton         ###   ########.fr       */
+/*   Updated: 2020/01/30 05:03:56 by wclayton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,11 @@ int f_lex(int fd)
 {
     char *line;
     int res;
+    t_nc nc;
+    //read comment and name
 
-    //read
+    get_next_line(fd, &line);
+    
 
     while((res = get_next_line(fd, &line)) > -1)
     {
