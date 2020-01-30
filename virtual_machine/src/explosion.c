@@ -16,21 +16,22 @@
 #include "corewar.h"
 
 /*
-** free space where the explosion takes place
+** sdl rect has properties of inner arena
 */
-
-void		redraw_range(int start, SDL_Rect *r, t_sdl *sdl)
+void		refresh_arena(t_info *info, t_sdl *sdl)
 {
-	int i;
-	int j;
+	int location;
+	t_processes	*processes;
 
-	j = -1;
-	SDL_FillRect(sdl->surface, r, 0);
-	while (++j < 5)
+	SDL_FillRect(sdl->surface, &(SDL_Rect) {2, 2, 1350, 1155}, 0);
+	location = 0;
+	while (location < 4096)
+		update_byte(location++, sdl);
+	processes = info->processes;
+	while (processes != NULL)
 	{
-		i = -1;
-		while (++i < 5)
-			update_byte(start + i + j * 64, sdl);
+		create_cursor(processes->index, processes->reg[0] - 1, sdl);
+		processes = processes->next;
 	}
 }
 
@@ -98,7 +99,7 @@ void		draw_explosion(t_explosion *e, t_sdl *sdl)
 		i = 256 * !(e->n);
 		while (i)
 			e->q[--i] = rand() % 65536 * 9.5874e-5;
-		redraw_range(e->start, &(e->rect), sdl);
+		//redraw_range(e->start, &(e->rect), sdl);
 		if (++e->n == 43)
 			remove_explosion(e, &sdl->head_explosion);
 		else

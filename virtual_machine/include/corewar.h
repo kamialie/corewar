@@ -108,6 +108,7 @@ void        update_bytes(int location, int length, int player, t_sdl *sdl);
 void		set_byte(int location, int player, t_sdl *sdl);
 void		move_cursor(int location, int shift, int player, t_sdl *sdl);
 
+void		refresh_arena(t_info *info, t_sdl *sdl);
 void		render_text(char *text, t_render *render_info, SDL_Surface *surface);
 void		show_data(t_info *info, t_sdl *sdl);
 void		announce_winner(int player, t_info *info, t_sdl *sdl);

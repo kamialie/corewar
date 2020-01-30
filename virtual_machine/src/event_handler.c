@@ -86,7 +86,11 @@ static void	take_game_action(t_controls *controls, t_info *info, t_sdl *sdl)
 	}
 	if (controls->play != GAME_PAUSED || sdl->head_explosion)
 	{
-		draw_explosion(sdl->head_explosion, sdl);
+		if (sdl->head_explosion)
+		{
+			refresh_arena(info, sdl);
+			draw_explosion(sdl->head_explosion, sdl);
+		}
 		SDL_UpdateWindowSurface(sdl->window);
 		SDL_Delay(controls->speed);
 	}
