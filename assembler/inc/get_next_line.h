@@ -1,39 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wclayton <wclayton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/10/04 11:33:27 by wclayton          #+#    #+#             */
-/*   Updated: 2020/01/30 01:02:13 by wclayton         ###   ########.fr       */
+/*   Created: 2016/02/16 19:11:56 by wclayton          #+#    #+#             */
+/*   Updated: 2019/11/02 07:46:01 by wclayton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lc.h"
-#include <stdio.h>
-#include <errno.h>
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
+# define BUFF_SIZE 4096
 
-int f_lex(int fd)
+typedef struct	s_gnl
 {
-    char *line;
+	char		*buf;
+	int			count;
+	int			i;
+	int			nl;
+	int			fd;
+}				t_gnl;
+int				get_next_line(int const fd, char **line);
+char			*ft_strmerge(char *a, char *b);
 
-    get_next_line(fd, &line);
-
-}
-
-int main(void)
-{
-    int fd;
-
-    errno = 0;
-    if (!(fd = open("src", O_RDONLY)))
-    {
-        perror("lol");
-        return (EXIT_FAILURE);
-    }
-    return (EXIT_SUCCESS);
-    f_lex(fd);
-}
-
-//lex and compile asm to bytecode
+#endif
