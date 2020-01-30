@@ -75,6 +75,7 @@ static void	draw_arena(t_processes *processes, t_info *info, t_sdl *sdl)
 	{
 		start = processes->index;
 		end = start + ((info->players)[player - 1]).prog_size;
+		create_cursor(start, sdl->replica[start] - 1, sdl);
 		++start;
 		set_nibble_for_render(start, CODE, player, sdl);
 		draw_range(start, end, info->arena, sdl);
@@ -84,19 +85,6 @@ static void	draw_arena(t_processes *processes, t_info *info, t_sdl *sdl)
 		else
 			draw_range(end, (processes->prev)->index, info->arena, sdl);
 		++player;
-		processes = processes->prev;
-	}
-}
-
-static void	draw_cursors(t_processes *processes, t_info *info, t_sdl *sdl)
-{
-	int	index;
-
-	while (processes != NULL)
-	{
-		index = processes->index;
-		set_nibble_for_render(index, CURSOR, sdl->replica[index], sdl);
-		draw_byte(info->arena[index], sdl->render_info, sdl->surface);
 		processes = processes->prev;
 	}
 }
@@ -114,7 +102,7 @@ void		initialize_visual_arena(t_sdl *sdl, t_info *info)
 	while (processes->next != NULL)
 		processes = processes->next;
 	set_replica(processes, info, sdl);
-	draw_cursors(processes, info, sdl);
+	//draw_cursors(processes, info, sdl);
 	draw_arena(processes, info, sdl);
 	draw_annotations(info, sdl);
 	draw_game_controls(sdl);
