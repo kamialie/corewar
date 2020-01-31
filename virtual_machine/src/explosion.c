@@ -16,8 +16,9 @@
 #include "corewar.h"
 
 /*
-** sdl rect has properties of inner arena
+** clean only arena
 */
+
 void		refresh_arena(t_info *info, t_sdl *sdl)
 {
 	int location;
@@ -87,6 +88,7 @@ void		remove_explosion(t_explosion *e, t_explosion **head)
 ** rect height and width are for each particle
 ** rect x and y division controls the size of explosion
 ** addition controls position
+** inner if check if particals stay within arena
 */
 
 void		draw_explosion(t_explosion *e, t_sdl *sdl)
@@ -94,12 +96,12 @@ void		draw_explosion(t_explosion *e, t_sdl *sdl)
 	int			i;
 	SDL_Rect	rect;
 
+	rect = (SDL_Rect) {0, 0, 2, 1};
 	while (e)
 	{
 		i = 256 * !(e->n);
 		while (i)
 			e->q[--i] = rand() % 65536 * 9.5874e-5;
-		//redraw_range(e->start, &(e->rect), sdl);
 		if (++e->n == 43)
 			remove_explosion(e, &sdl->head_explosion);
 		else
@@ -109,9 +111,9 @@ void		draw_explosion(t_explosion *e, t_sdl *sdl)
 			{
 				rect.x = e->x + cos(e->q[i]) * e->q[i - 1] * e->n / 10;
 				rect.y = e->y + sin(e->q[i]) * e->q[i - 1] * e->n / 10;
-				rect.w = 2;
-				rect.h = 1;
-				SDL_FillRect(sdl->surface, &rect, 0xFFFFFF << e->r++);
+				if (rect.x > 2 && rect.x < 1351 && rect.y > 2 && rect.y < 1157)
+					SDL_FillRect(sdl->surface, &rect, 0xFFFFFF << e->r);
+				e->r++;
 			}
 		}
 		e = e->next;
