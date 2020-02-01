@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/28 20:00:09 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/25 13:18:49 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/02/01 17:06:09 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	prepare_announcement(int player, t_sdl *sdl)
 	render_info = sdl->render_info;
 	set_new_font_size(render_info);
 	render_info->back_color = sdl->colors[player + FONT_COLOR];
-	render_info->font_color = (SDL_Color) {0, 0, 0x4d};
+	render_info->font_color = (SDL_Color) {0, 0, 0x4d, 0};
 }
 
 /*

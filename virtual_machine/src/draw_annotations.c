@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:35:59 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/12 17:03:41 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/02/01 17:05:25 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ void	show_players(t_info *info, t_sdl *sdl)
 
 void	draw_annotations(t_info *info, t_sdl *sdl)
 {
-	t_render render_info;
-
 	sdl->render_info->font_color = sdl->colors[WHITE];
 	sdl->render_info->back_color = sdl->colors[BLACK];
 	sdl->render_info->rect.x = INFO_X_LOCATION;

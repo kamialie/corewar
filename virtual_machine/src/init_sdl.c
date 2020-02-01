@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 14:45:48 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/25 13:36:21 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/02/01 17:04:30 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@
 
 static void	init_colors(SDL_Color *colors)
 {
-	colors[BLACK] = (SDL_Color) {0, 0, 0};
-	colors[WHITE] = (SDL_Color) {255, 255, 255};
-	colors[YELLOW] = (SDL_Color) {255, 255, 0};
-	colors[BLUE] = (SDL_Color) {0, 150, 255};
-	colors[GREEN] = (SDL_Color) {0, 255, 0};
-	colors[RED] = (SDL_Color) {255, 0, 0};
-	colors[YELLOW_BACK] = (SDL_Color) {255, 150, 0};
-	colors[BLUE_BACK] = (SDL_Color) {0, 150, 255};
-	colors[GREEN_BACK] = (SDL_Color) {0, 150, 0};
-	colors[RED_BACK] = (SDL_Color) {150, 0, 0};
+	colors[BLACK] = (SDL_Color) {0, 0, 0, 0};
+	colors[WHITE] = (SDL_Color) {255, 255, 255, 0};
+	colors[YELLOW] = (SDL_Color) {255, 255, 0, 0};
+	colors[BLUE] = (SDL_Color) {0, 150, 255, 0};
+	colors[GREEN] = (SDL_Color) {0, 255, 0, 0};
+	colors[RED] = (SDL_Color) {255, 0, 0, 0};
+	colors[YELLOW_BACK] = (SDL_Color) {255, 150, 0, 0};
+	colors[BLUE_BACK] = (SDL_Color) {0, 150, 255, 0};
+	colors[GREEN_BACK] = (SDL_Color) {0, 150, 0, 0};
+	colors[RED_BACK] = (SDL_Color) {150, 0, 0, 0};
 }
 
 static void	init_font(TTF_Font **outline_font, t_render *render_info)

@@ -6,14 +6,14 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 15:50:24 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/25 14:59:04 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/02/01 17:06:33 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "visual.h"
 #include "corewar.h"
 
-static void	music_controls(int key, t_controls *controls, t_sdl *sdl)
+static void	music_controls(int key, t_sdl *sdl)
 {
 	if (key == SDLK_p)
 	{
@@ -61,7 +61,7 @@ static void	game_controls(int key, t_controls *controls,
 	else if (key == SDLK_e) //temporary
 		add_explosion(create_explosion(63), &sdl->head_explosion);
 	else
-		music_controls(key, controls, sdl);
+		music_controls(key, sdl);
 }
 
 static void	take_game_action(t_controls *controls, t_info *info, t_sdl *sdl)

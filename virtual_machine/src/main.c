@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 13:34:54 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/12 17:15:32 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/02/01 16:56:08 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int			main(int argc, char *argv[])
 {
 	t_info	info;
 	t_sdl	sdl;
-	int 	*play;
+	int 	play;
 
 	if (argc < 2)
 		error(7);
@@ -81,9 +81,9 @@ int			main(int argc, char *argv[])
 	}
 	else if (info.dump >= 0)
 	{
-		*play = 0;
-		while (info.count_cycles < info.dump && *play != -1)
-			gladiatorial_fight(NULL, &info, NULL);
+		play = 0;
+		while (info.count_cycles < info.dump && play != -1)
+			gladiatorial_fight(&play, &info, NULL);
 		if (info.count_cycles == info.dump)
 			print_arena(info.arena);
 		else
@@ -92,9 +92,9 @@ int			main(int argc, char *argv[])
 	}
 	else
 	{
-		*play = 0;
-		while (*play != -1)
-			gladiatorial_fight(play, &info, NULL);
+		play = 0;
+		while (play != -1)
+			gladiatorial_fight(&play, &info, NULL);
 		printf("Contestant %d, \"%s\", has won !\n", info.last_live,
 			   (info.players)[info.last_live - 1].prog_name);
 	}

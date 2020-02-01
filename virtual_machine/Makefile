@@ -6,7 +6,7 @@
 #    By: rgyles <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/16 14:20:48 by rgyles            #+#    #+#              #
-#    Updated: 2020/01/19 15:46:01 by rgyles           ###   ########.fr        #
+#    Updated: 2020/02/01 16:49:57 by rgyles           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ INCLUDE = -I ../libft -I include -I $(SDL_INCLUDE)/SDL2
 
 LIB = -L $(SDL_LIB) -l SDL2 -l SDL2_ttf -l SDL2_mixer
 
-#FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror
 
 SRC_DIR = src
 

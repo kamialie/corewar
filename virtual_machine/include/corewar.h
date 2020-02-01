@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 15:10:22 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/19 20:48:46 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/02/01 17:00:01 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ typedef struct	s_op
 void		read_card(void *dst, void *src, short int value);
 void		write_card(void *dst, void *src, short int value);
 void	present_champion(header_t *players);
-unsigned int	get_magic(t_info *info, int fd);
+unsigned int	get_magic(int fd);
 int 		get_arg(unsigned char code_arg, short int *shift,
 				   unsigned char *arena, t_processes **prs);
 void		shift_next_op(unsigned char code_arg, short int num_fun, t_processes **prs, t_sdl *sdl);

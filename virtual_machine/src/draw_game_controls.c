@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 18:18:09 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/25 12:30:50 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/02/01 17:05:49 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	draw_game_controls(t_sdl *sdl)
 {
-	t_render render_info;
-
 	sdl->render_info->font_color = sdl->colors[WHITE];
 	sdl->render_info->back_color = sdl->colors[BLACK];
 	sdl->render_info->rect.x = INFO_X_LOCATION;

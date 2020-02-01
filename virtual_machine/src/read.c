@@ -6,14 +6,14 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 16:27:43 by bdudley           #+#    #+#             */
-/*   Updated: 2019/11/12 18:05:11 by bdudley          ###   ########.fr       */
+/*   Updated: 2020/02/01 17:00:18 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include "corewar.h"
 
-static unsigned int	get_prog_size(t_info *info, int fd)
+static unsigned int	get_prog_size(int fd)
 {
 	unsigned int	prog_size;
 	unsigned int	buf;
@@ -40,7 +40,7 @@ static void			read_arena(t_info *info, int fd, int number, int count)
 	len = read(fd, info->arena + shift, (info->players)[number].prog_size);
 	if (len == -1)
 		error(4);
-	else if (len < (info->players)[number].prog_size)
+	else if (len < (int)(info->players)[number].prog_size)
 		error(10);
 	len = read(fd, NULL, 1);
 	if (len != 0)
@@ -64,12 +64,12 @@ static void			read_file(t_info *info, char *file_name,
 		while ((info->players)[number].magic == COREWAR_EXEC_MAGIC)
 			++number;
 	}
-	(info->players)[number].magic = get_magic(info, fd);
+	(info->players)[number].magic = get_magic(fd);
 	if (read(fd, (info->players)[number].prog_name, PROG_NAME_LENGTH) == -1)
 		error(4);
 	if ((read(fd, &num, 4) == -1) || (num != 0))
 		error(4);
-	(info->players)[number].prog_size = get_prog_size(info, fd);
+	(info->players)[number].prog_size = get_prog_size(fd);
 	if (read(fd, (info->players)[number].comment, COMMENT_LENGTH) == -1)
 		error(4);
 	if (read(fd, &num, 4) == -1 || num != 0)

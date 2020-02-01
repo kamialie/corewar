@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 17:51:50 by bdudley           #+#    #+#             */
-/*   Updated: 2019/11/08 19:15:48 by bdudley          ###   ########.fr       */
+/*   Updated: 2020/02/01 17:00:05 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ than 1 or greater than the number of champions\n");
 	exit(1);
 }
 
-unsigned int		get_magic(t_info *info, int fd)
+unsigned int		get_magic(int fd)
 {
 	unsigned int	magic;
 	unsigned int	buf;
