@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 17:20:29 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/19 15:44:41 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/02/01 17:37:43 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,9 @@ void		initialize_visual_arena(t_sdl *sdl, t_info *info)
 	while (processes->next != NULL)
 		processes = processes->next;
 	set_replica(processes, info, sdl);
-	//draw_cursors(processes, info, sdl);
 	draw_arena(processes, info, sdl);
 	draw_annotations(info, sdl);
 	draw_game_controls(sdl);
+	//create_cursor(2111, 0, sdl);
 	SDL_UpdateWindowSurface(sdl->window);
 }

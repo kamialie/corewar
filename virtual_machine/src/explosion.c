@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 17:22:02 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/25 14:54:11 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/02/01 17:12:12 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 void		refresh_arena(t_info *info, t_sdl *sdl)
 {
-	int location;
+	int			location;
 	t_processes	*processes;
 
 	SDL_FillRect(sdl->surface, &(SDL_Rect) {2, 2, 1350, 1155}, 0);

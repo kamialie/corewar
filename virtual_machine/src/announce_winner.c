@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/28 20:00:09 by rgyles            #+#    #+#             */
-/*   Updated: 2020/02/01 17:06:09 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/02/01 17:27:23 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	prepare_announcement(int player, t_sdl *sdl)
 ** print player's comment or not?
 */
 
-void		announce_winner(int player, t_info *info, t_sdl *sdl)
+void		announce_winner(int player, int *play, t_info *info, t_sdl *sdl)
 {
 	size_t		len;
 	char		*winner_name;
@@ -71,4 +71,5 @@ void		announce_winner(int player, t_info *info, t_sdl *sdl)
 	render_info->rect.x -= (len - 10) * 20;
 	render_info->rect.y += 300;
 	render_text_outline(winner_name, render_info, sdl);
+	*play = GAME_OVER;
 }
