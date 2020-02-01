@@ -81,9 +81,9 @@ void				st_op(t_info *info, t_processes **prs, t_sdl *sdl)
 				shift = get_t_ind(shift, 0, info->arena, 1);
 				shift = get_address(shift + current_location);
 				value = reverse_int((*prs)->reg[arg_reg]);
-				ft_memcpy(info->arena + shift, &value, 4);
+				write_card(info->arena, &value, shift);
 				if (sdl != NULL)
-					update_bytes(shift, 4, IND(-(*prs)->reg[0]), sdl);
+					update_bytes(shift, REG_SIZE, -(*prs)->reg[0] - 1, sdl);
 			}
 		}
 	}

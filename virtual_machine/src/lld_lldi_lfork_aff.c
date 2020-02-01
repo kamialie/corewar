@@ -54,7 +54,7 @@ void				lldi_op(t_info *info, t_processes **prs, t_sdl *sdl)
 		if (arg_reg >= 0 && arg_reg < REG_NUMBER)
 		{
 			value = get_address(current_location + value);
-			ft_memcpy((*prs)->reg + arg_reg, info->arena + value, 4);
+			read_card((*prs)->reg + arg_reg, info->arena, value);
 			(*prs)->reg[arg_reg] = reverse_int((*prs)->reg[arg_reg]);
 		}
 	}

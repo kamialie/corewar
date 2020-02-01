@@ -13,6 +13,28 @@
 #include "visual.h"
 #include "corewar.h"
 
+void		read_card(void *dst, void *src, short int value)
+{
+	short int	size;
+
+	size = (MEM_SIZE - value) > 4 ? 4 : MEM_SIZE - value;
+	if (size > 0)
+		ft_memcpy(dst, src + value, size);
+	if (size < REG_SIZE)
+		ft_memcpy(dst + size, src, REG_SIZE - size);
+}
+
+void		write_card(void *dst, void *src, short int value)
+{
+	short int	size;
+
+	size = (MEM_SIZE - value) > 4 ? 4 : MEM_SIZE - value;
+	if (size > 0)
+		ft_memcpy(dst + value, src, size);
+	if (size < REG_SIZE)
+		ft_memcpy(dst, src + size, REG_SIZE - size);
+}
+
 void		init_info(t_info *info)
 {
 	int		i;
@@ -49,19 +71,24 @@ int			main(int argc, char *argv[])
 	read_arg(&info, argc, argv);
 	present_champion(info.players);
 	create_processes(&info);
-	if (info.dump >= 0)
-	{
-		while (info.count_cycles <= info.dump)
-			gladiatorial_fight(NULL, &info, NULL);
-		print_arena(info.arena);
-	}
-	else if (info.dump == -666)
+	if (info.dump == -666)
 	{
 		if (init_sdl(info.arena, &sdl))
 			error(8);
 		initialize_visual_arena(&sdl, &info);
 		event_handler(&info, &sdl);
 		free_resources(&sdl);
+	}
+	else if (info.dump >= 0)
+	{
+		*play = 0;
+		while (info.count_cycles < info.dump && *play != -1)
+			gladiatorial_fight(NULL, &info, NULL);
+		if (info.count_cycles == info.dump)
+			print_arena(info.arena);
+		else
+			printf("Contestant %d, \"%s\", has won !\n", info.last_live,
+				   (info.players)[info.last_live - 1].prog_name);
 	}
 	else
 	{

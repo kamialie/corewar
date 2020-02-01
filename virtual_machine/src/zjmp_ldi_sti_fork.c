@@ -39,20 +39,20 @@ void				ldi_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	short int		shift;
 	int				value;
 
-	shift = 2;
+	shift = 3;
 	current_location = (*prs)->index;
 	code_arg = ((info->arena)[(current_location + 1) % MEM_SIZE]) & 0xfc;
 	value = get_arg((code_arg >> 6) & 0x3, &shift, info->arena, prs);
-	if ((shift - 2) && (code_arg == 84 || code_arg == 212 || code_arg == 148 ||
+	if ((shift - 3) && (code_arg == 84 || code_arg == 212 || code_arg == 148 ||
 				code_arg == 100 || code_arg == 228 || code_arg == 164))
 		value += get_arg((code_arg >> 4) & 0x3, &shift, info->arena, prs);
-	if (shift + 3 == get_bytes_to_skip(9, code_arg))
+	if (shift == get_bytes_to_skip(9, code_arg))
 	{
-		arg_reg = *((info->arena) + (current_location + shift) % MEM_SIZE) - 1;
+		arg_reg = *((info->arena) + (current_location + 2) % MEM_SIZE) - 1;
 		if (arg_reg >= 0 && arg_reg < REG_NUMBER)
 		{
-			value = get_address((current_location + value) % IDX_MOD);
-			ft_memcpy((*prs)->reg + arg_reg, info->arena + value, 4);
+			value = get_address(current_location + value % IDX_MOD);
+			read_card((*prs)->reg + arg_reg, info->arena, value);
 			(*prs)->reg[arg_reg] = reverse_int((*prs)->reg[arg_reg]);
 		}
 	}
@@ -81,9 +81,9 @@ void				sti_op(t_info *info, t_processes **prs, t_sdl *sdl)
 		{
 			shift = get_address(current_location + value % IDX_MOD);
 			value = reverse_int((*prs)->reg[arg_reg]);
-			ft_memcpy(info->arena + shift, &value, 4);
+			write_card(info->arena, &value, shift);
 			if (sdl != NULL)
-				update_bytes(shift, 8, IND(-(*prs)->reg[0]), sdl);
+				update_bytes(shift, 8, -(*prs)->reg[0] - 1, sdl);
 		}
 	}
 	shift_next_op(code_arg, 10, prs, sdl);

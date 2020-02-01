@@ -26,7 +26,7 @@ static unsigned int	get_prog_size(t_info *info, int fd)
 	prog_size += ((buf & 0xff00) << (8 * 1));
 	prog_size += ((buf & 0xff0000) >> (8 * 1));
 	prog_size += ((buf & 0xff000000) >> (8 * 3));
-	if (prog_size > CHAMP_MAX_SIZE || prog_size == 0)
+	if (prog_size > CHAMP_MAX_SIZE)
 		error(6);
 	return (prog_size);
 }
