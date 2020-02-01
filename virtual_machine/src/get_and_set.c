@@ -51,8 +51,7 @@ int					get_t_ind(short int current_location,
 	short int		value;
 
 	current_location = get_address((current_location + shift) % MEM_SIZE);
-	arena += current_location;
-	value = *((short int *)arena);
+	read_card(&value, arena, current_location, IND_SIZE);
 	value = reverse_short_int(value);
 	if (mod)
 		value %= IDX_MOD;
@@ -65,8 +64,7 @@ int					get_t_dir(short int current_location, int shift,
 	int				value;
 
 	current_location = get_address(current_location + shift);
-	arena += current_location;
-	value = *((int *)arena);
+	read_card(&value, arena, current_location, REG_SIZE);
 	value = reverse_int(value);
 	return (value);
 }

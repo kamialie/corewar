@@ -28,7 +28,7 @@ void				live_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	new_location = (current_location + 5) % MEM_SIZE;
 	if (sdl != NULL)
 	{
-		move_cursor(current_location, 5, IND(-number_player), sdl);
+		move_cursor(current_location, 5, -number_player - 1, sdl);
 		Mix_PlayChannel(-1, sdl->live_effect, 0);
 	}
 	(*prs)->index = new_location;
@@ -81,7 +81,7 @@ void				st_op(t_info *info, t_processes **prs, t_sdl *sdl)
 				shift = get_t_ind(shift, 0, info->arena, 1);
 				shift = get_address(shift + current_location);
 				value = reverse_int((*prs)->reg[arg_reg]);
-				write_card(info->arena, &value, shift);
+				write_card(info->arena, &value, shift, REG_SIZE);
 				if (sdl != NULL)
 					update_bytes(shift, REG_SIZE, -(*prs)->reg[0] - 1, sdl);
 			}

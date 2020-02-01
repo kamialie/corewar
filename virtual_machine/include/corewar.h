@@ -78,8 +78,8 @@ typedef struct	s_op
 	void					(*func)(t_info *, t_processes **, t_sdl *); // указатель на функцию с данной операцией
 }				t_op;
 
-void		read_card(void *dst, void *src, short int value);
-void		write_card(void *dst, void *src, short int value);
+void		read_card(void *dst, void *src, short int value, int length);
+void		write_card(void *dst, void *src, short int value, int length);
 void	present_champion(header_t *players);
 unsigned int	get_magic(int fd);
 int 		get_arg(unsigned char code_arg, short int *shift,

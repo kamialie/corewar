@@ -25,10 +25,13 @@ void				lld_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	if (code_arg == 208 || code_arg == 144)
 	{
 		if (code_arg == 208)
-			shift += get_t_ind(current_location, shift, info->arena, 0);
+			shift = get_t_ind(current_location, shift, info->arena, 0);
+		//printf("shift - %d\n", shift);
 		value = get_t_dir(current_location, shift, info->arena);
-		shift = (code_arg == 208) ? 2 : 4;
+		printf("value %u\n", value);
+		shift = (code_arg == 208) ? 4 : 6;
 		set_t_reg(value, shift, info->arena, prs);
+		printf("reg %u\n", (*prs)->reg[15]);
 	}
 	shift_next_op(code_arg, 12, prs, sdl);
 }
@@ -54,7 +57,7 @@ void				lldi_op(t_info *info, t_processes **prs, t_sdl *sdl)
 		if (arg_reg >= 0 && arg_reg < REG_NUMBER)
 		{
 			value = get_address(current_location + value);
-			read_card((*prs)->reg + arg_reg, info->arena, value);
+			read_card((*prs)->reg + arg_reg, info->arena, value, REG_SIZE);
 			(*prs)->reg[arg_reg] = reverse_int((*prs)->reg[arg_reg]);
 		}
 	}
