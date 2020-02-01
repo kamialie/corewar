@@ -39,16 +39,16 @@ void				ldi_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	short int		shift;
 	int				value;
 
-	shift = 3;
+	shift = 2;
 	current_location = (*prs)->index;
 	code_arg = ((info->arena)[(current_location + 1) % MEM_SIZE]) & 0xfc;
 	value = get_arg((code_arg >> 6) & 0x3, &shift, info->arena, prs);
-	if ((shift - 3) && (code_arg == 84 || code_arg == 212 || code_arg == 148 ||
+	if ((shift - 2) && (code_arg == 84 || code_arg == 212 || code_arg == 148 ||
 				code_arg == 100 || code_arg == 228 || code_arg == 164))
 		value += get_arg((code_arg >> 4) & 0x3, &shift, info->arena, prs);
-	if (shift == get_bytes_to_skip(9, code_arg))
+	if (shift + 1 == get_bytes_to_skip(9, code_arg))
 	{
-		arg_reg = *((info->arena) + (current_location + 2) % MEM_SIZE) - 1;
+		arg_reg = *((info->arena) + (current_location + shift) % MEM_SIZE) - 1;
 		if (arg_reg >= 0 && arg_reg < REG_NUMBER)
 		{
 			value = get_address(current_location + value % IDX_MOD);
@@ -71,7 +71,7 @@ void				sti_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	current_location = (*prs)->index;
 	code_arg = ((info->arena)[(current_location + 1) % MEM_SIZE]) & 0xfc;
 	value = get_arg((code_arg >> 2) & 0x3, &shift, info->arena, prs);
-	if ((shift - 3) && (code_arg == 84 || code_arg == 88 || code_arg == 120 ||
+	if ((shift - 3) && (code_arg == 84 || code_arg == 8 || code_arg == 120 ||
 						code_arg == 100 || code_arg == 104 || code_arg == 116))
 		value += get_arg((code_arg >> 4) & 0x3, &shift, info->arena, prs);
 	if (shift == get_bytes_to_skip(10, code_arg))
