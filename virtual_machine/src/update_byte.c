@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:46:42 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/25 12:24:22 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/02/01 16:45:11 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,23 @@ void	update_byte(int location, t_sdl *sdl)
 void	update_bytes(int location, int length, int player, t_sdl *sdl)
 {
 	int i;
+	int	index;
 
 	i = 0;
 	while (i < length)
 	{
-		set_byte(location + i, player, sdl);
-		i++;
+		index = location + i++;
+		if (index >= MEM_SIZE)
+			index = index % MEM_SIZE;
+		set_byte(index, player, sdl);
 	}
 	i = 0;
 	while (i < length)
 	{
-		update_byte(location + i, sdl);
-		i++;
+		index = location + i++;
+		if (index >= MEM_SIZE)
+			index = index % MEM_SIZE;
+		update_byte(index, sdl);
 	}
 }
 
