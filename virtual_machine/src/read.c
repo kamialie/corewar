@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 16:27:43 by bdudley           #+#    #+#             */
-/*   Updated: 2020/02/01 19:10:10 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/02/01 21:31:18 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static unsigned int	get_prog_size(int fd)
 static void			read_arena(t_info *info, int fd, int number, int count)
 {
 	unsigned int	shift;
-	int 			len;
+	int				len;
 	char			c;
 
 	shift = (MEM_SIZE / count) * number;
@@ -51,8 +51,8 @@ static void			read_arena(t_info *info, int fd, int number, int count)
 static void			read_file(t_info *info, char *file_name,
 					int number, int count)
 {
-	int				fd;
-	int 			num;
+	int	fd;
+	int	num;
 
 	num = 0;
 	if ((fd = open(file_name, O_RDONLY)) == -1)
@@ -71,9 +71,8 @@ static void			read_file(t_info *info, char *file_name,
 	if ((read(fd, &num, 4) == -1) || (num != 0))
 		error(4);
 	(info->players)[number].prog_size = get_prog_size(fd);
-	if (read(fd, (info->players)[number].comment, COMMENT_LENGTH) == -1)
-		error(4);
-	if (read(fd, &num, 4) == -1 || num != 0)
+	if (read(fd, (info->players)[number].comment, COMMENT_LENGTH) == -1
+									|| read(fd, &num, 4) == -1 || num != 0)
 		error(4);
 	read_arena(info, fd, number, count);
 	close(fd);

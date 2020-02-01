@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 17:20:05 by bdudley           #+#    #+#             */
-/*   Updated: 2020/01/12 17:22:14 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/02/01 21:25:16 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,18 @@ void		kick_noobs(t_info *info, t_sdl *sdl)
 
 	ptr = info->processes;
 	while (ptr)
-	{
 		if (info->count_cycles - ptr->cc_live > info->cycle_to_die)
 		{
 			if (sdl != NULL)
 			{
 				update_byte(ptr->index, sdl);
-				add_explosion(create_explosion(ptr->index), &sdl->head_explosion);
+				add_explosion(create_explosion(ptr->index),
+										&sdl->head_explosion);
 			}
 			delete_elem(&ptr, info);
 		}
 		else
 			ptr = ptr->next;
-	}
 	if (info->count_live >= NBR_LIVE || info->count_check < MAX_CHECKS)
 	{
 		info->count_check = -1;

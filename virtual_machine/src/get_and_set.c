@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 17:51:50 by bdudley           #+#    #+#             */
-/*   Updated: 2019/11/08 19:15:48 by bdudley          ###   ########.fr       */
+/*   Updated: 2020/02/01 21:23:36 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,12 @@ int					get_arg(unsigned char code_arg, short int *shift,
 		unsigned char *arena, t_processes **prs)
 {
 	short int		current_location;
-	short int       shift_ind;
 	int				value;
 
 	value = 0;
 	current_location = (*prs)->index;
 	if (code_arg == 1)
-	{
 		*shift += get_t_reg(&value, *shift, arena, prs);
-	}
 	else if (code_arg == 2)
 	{
 		if (g_op_tab[(*prs)->code_op - 1].t_dir_size == 2)
@@ -38,8 +35,8 @@ int					get_arg(unsigned char code_arg, short int *shift,
 	}
 	else if (code_arg == 3)
 	{
-		shift_ind = get_t_ind(current_location, *shift, arena, 1);
-		value = get_t_dir(current_location, shift_ind, arena);
+		value = get_t_ind(current_location, *shift, arena, 1);
+		value = get_t_dir(current_location, value, arena);
 		*shift += 2;
 	}
 	return (value);

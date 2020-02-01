@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 18:05:20 by bdudley           #+#    #+#             */
-/*   Updated: 2019/12/14 17:00:40 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/02/01 21:34:09 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void				st_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	int				value;
 
 	current_location = (*prs)->index;
-	shift = current_location + 3;
 	code_arg = ((info->arena)[(current_location + 1) % MEM_SIZE]) & 0xf0;
 	if (code_arg == 112 || code_arg == 80)
 	{
@@ -78,7 +77,7 @@ void				st_op(t_info *info, t_processes **prs, t_sdl *sdl)
 				set_t_reg((*prs)->reg[arg_reg], 3, info->arena, prs);
 			else
 			{
-				shift = get_t_ind(shift, 0, info->arena, 1);
+				shift = get_t_ind(current_location + 3, 0, info->arena, 1);
 				shift = get_address(shift + current_location);
 				value = reverse_int((*prs)->reg[arg_reg]);
 				write_card(info->arena, &value, shift, REG_SIZE);

@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 18:10:13 by bdudley           #+#    #+#             */
-/*   Updated: 2019/12/28 18:04:44 by bdudley          ###   ########.fr       */
+/*   Updated: 2020/02/01 21:26:13 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void				lld_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	{
 		if (code_arg == 208)
 			shift = get_t_ind(current_location, shift, info->arena, 0);
-		//printf("shift - %d\n", shift);
 		value = get_t_dir(current_location, shift, info->arena);
 		printf("value %u\n", value);
 		shift = (code_arg == 208) ? 4 : 6;

@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 17:51:50 by bdudley           #+#    #+#             */
-/*   Updated: 2020/02/01 19:29:07 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/02/01 21:33:07 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,5 @@ void				present_champion(header_t *players)
 		ft_strcat(announcement, players[i].comment);
 		ft_strcat(announcement, "\") !\n");
 		ft_putstr(announcement);
-		//printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n", i + 1,
-				//players[i].prog_size, players[i].prog_name, players[i].comment);
 	}
 }
