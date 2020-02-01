@@ -13,26 +13,26 @@
 #include "visual.h"
 #include "corewar.h"
 
-void		read_card(void *dst, void *src, short int value)
+void		read_card(void *dst, void *src, short int value, int length)
 {
 	short int	size;
 
-	size = (MEM_SIZE - value) > 4 ? 4 : MEM_SIZE - value;
+	size = (MEM_SIZE - value) > length ? length : MEM_SIZE - value;
 	if (size > 0)
 		ft_memcpy(dst, src + value, size);
-	if (size < REG_SIZE)
-		ft_memcpy(dst + size, src, REG_SIZE - size);
+	if (size < length)
+		ft_memcpy(dst + size, src, length - size);
 }
 
-void		write_card(void *dst, void *src, short int value)
+void		write_card(void *dst, void *src, short int value, int length)
 {
 	short int	size;
 
-	size = (MEM_SIZE - value) > 4 ? 4 : MEM_SIZE - value;
+	size = (MEM_SIZE - value) > length ? length : MEM_SIZE - value;
 	if (size > 0)
 		ft_memcpy(dst + value, src, size);
-	if (size < REG_SIZE)
-		ft_memcpy(dst, src + size, REG_SIZE - size);
+	if (size < length)
+		ft_memcpy(dst, src + size, length - size);
 }
 
 void		init_info(t_info *info)

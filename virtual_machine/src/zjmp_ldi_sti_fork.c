@@ -19,7 +19,7 @@ void				zjmp_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	short int		shift;
 
 	current_location = (*prs)->index;
-	shift = 1;
+	shift = 3;
 	if ((*prs)->carry)
 		shift = get_t_ind(current_location, 1, info->arena, 1);
 	new_location = get_address(shift + current_location);
@@ -27,7 +27,7 @@ void				zjmp_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	if (sdl != NULL)
 	{
 		update_byte(current_location, sdl);
-		create_cursor(new_location, IND(-(*prs)->reg[0]), sdl);
+		create_cursor(new_location, -(*prs)->reg[0] - 1, sdl);
 	}
 }
 
@@ -52,7 +52,7 @@ void				ldi_op(t_info *info, t_processes **prs, t_sdl *sdl)
 		if (arg_reg >= 0 && arg_reg < REG_NUMBER)
 		{
 			value = get_address(current_location + value % IDX_MOD);
-			read_card((*prs)->reg + arg_reg, info->arena, value);
+			read_card((*prs)->reg + arg_reg, info->arena, value, REG_SIZE);
 			(*prs)->reg[arg_reg] = reverse_int((*prs)->reg[arg_reg]);
 		}
 	}
@@ -70,10 +70,10 @@ void				sti_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	shift = 3;
 	current_location = (*prs)->index;
 	code_arg = ((info->arena)[(current_location + 1) % MEM_SIZE]) & 0xfc;
-	value = get_arg((code_arg >> 2) & 0x3, &shift, info->arena, prs);
-	if ((shift - 3) && (code_arg == 84 || code_arg == 8 || code_arg == 120 ||
+	value = get_arg((code_arg >> 4) & 0x3, &shift, info->arena, prs);
+	if ((shift - 3) && (code_arg == 84 || code_arg == 88 || code_arg == 120 ||
 						code_arg == 100 || code_arg == 104 || code_arg == 116))
-		value += get_arg((code_arg >> 4) & 0x3, &shift, info->arena, prs);
+		value += get_arg((code_arg >> 2) & 0x3, &shift, info->arena, prs);
 	if (shift == get_bytes_to_skip(10, code_arg))
 	{
 		arg_reg = *((info->arena) + (current_location + 2) % MEM_SIZE) - 1;
@@ -81,7 +81,7 @@ void				sti_op(t_info *info, t_processes **prs, t_sdl *sdl)
 		{
 			shift = get_address(current_location + value % IDX_MOD);
 			value = reverse_int((*prs)->reg[arg_reg]);
-			write_card(info->arena, &value, shift);
+			write_card(info->arena, &value, shift, REG_SIZE);
 			if (sdl != NULL)
 				update_bytes(shift, 8, -(*prs)->reg[0] - 1, sdl);
 		}
