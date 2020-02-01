@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 16:27:43 by bdudley           #+#    #+#             */
-/*   Updated: 2020/02/01 17:00:18 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/02/01 19:10:10 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static void			read_arena(t_info *info, int fd, int number, int count)
 {
 	unsigned int	shift;
 	int 			len;
+	char			c;
 
 	shift = (MEM_SIZE / count) * number;
 	len = read(fd, info->arena + shift, (info->players)[number].prog_size);
@@ -42,7 +43,7 @@ static void			read_arena(t_info *info, int fd, int number, int count)
 		error(4);
 	else if (len < (int)(info->players)[number].prog_size)
 		error(10);
-	len = read(fd, NULL, 1);
+	len = read(fd, &c, 1);
 	if (len != 0)
 		error(9);
 }

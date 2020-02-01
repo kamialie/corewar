@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 17:51:50 by bdudley           #+#    #+#             */
-/*   Updated: 2020/02/01 17:00:05 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/02/01 19:29:07 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,25 @@ void				shift_next_op(unsigned char code_arg,
 
 void				present_champion(header_t *players)
 {
-	int				i;
+	int		i;
+	char	announcement[100];
 
 	i = -1;
-	printf("Introducing contestants...\n");
+	ft_putstr("Introducing contestants...\n");
 	while (++i < MAX_PLAYERS && players[i].magic == COREWAR_EXEC_MAGIC)
 	{
-		printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n", i + 1,
-				players[i].prog_size, players[i].prog_name, players[i].comment);
+		ft_strcpy(announcement, "* Player ");
+		ft_strcat(announcement, ft_itoa(i + 1));
+		ft_strcat(announcement, ", weighting ");
+		ft_strcat(announcement, ft_itoa(players[i].prog_size));
+		ft_strcat(announcement, " bytes, ");
+		ft_strcat(announcement, "\"");
+		ft_strcat(announcement, players[i].prog_name);
+		ft_strcat(announcement, "\" (\"");
+		ft_strcat(announcement, players[i].comment);
+		ft_strcat(announcement, "\") !\n");
+		ft_putstr(announcement);
+		//printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n", i + 1,
+				//players[i].prog_size, players[i].prog_name, players[i].comment);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 13:34:54 by rgyles            #+#    #+#             */
-/*   Updated: 2020/02/01 16:56:08 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/02/01 19:38:39 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,18 @@ void		init_info(t_info *info)
 	}
 }
 
+static void	print_winner(t_info *info)
+{
+	char	announcement[100];
+
+	ft_strcpy(announcement, "Contestant ");
+	ft_strcat(announcement, ft_itoa(info->last_live));
+	ft_strcat(announcement, ", \"");
+	ft_strcat(announcement, info->players[info->last_live - 1].prog_name);
+	ft_strcat(announcement, "\", has won !\n");
+	ft_putstr(announcement);
+}
+
 int			main(int argc, char *argv[])
 {
 	t_info	info;
@@ -87,16 +99,14 @@ int			main(int argc, char *argv[])
 		if (info.count_cycles == info.dump)
 			print_arena(info.arena);
 		else
-			printf("Contestant %d, \"%s\", has won !\n", info.last_live,
-				   (info.players)[info.last_live - 1].prog_name);
+			print_winner(&info);
 	}
 	else
 	{
 		play = 0;
 		while (play != -1)
 			gladiatorial_fight(&play, &info, NULL);
-		printf("Contestant %d, \"%s\", has won !\n", info.last_live,
-			   (info.players)[info.last_live - 1].prog_name);
+		print_winner(&info);
 	}
 	return (0);
 }
