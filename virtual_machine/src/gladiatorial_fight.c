@@ -31,7 +31,8 @@ void		take_actions(t_info *info, t_processes *prs, t_sdl *sdl)
 			g_op_tab[IND((info->arena)[prs->index])].func(info, &prs, sdl);
 		else
 		{
-			move_cursor(prs->index, 1, prs->reg[0] - 1, sdl);
+			if (sdl != NULL)
+				move_cursor(prs->index, 1, -prs->reg[0] - 1, sdl);
 			prs->index = (++(prs->index)) % MEM_SIZE;
 		}
 	}
@@ -46,8 +47,11 @@ void		kick_noobs(t_info *info, t_sdl *sdl)
 	{
 		if (info->count_cycles - ptr->cc_live > info->cycle_to_die)
 		{
-			update_byte(ptr->index, sdl);
-			add_explosion(create_explosion(ptr->index), &sdl->head_explosion);
+			if (sdl != NULL)
+			{
+				update_byte(ptr->index, sdl);
+				add_explosion(create_explosion(ptr->index), &sdl->head_explosion);
+			}
 			delete_elem(&ptr, info);
 		}
 		else

@@ -16,26 +16,30 @@ int					get_arg(unsigned char code_arg, short int *shift,
 		unsigned char *arena, t_processes **prs)
 {
 	short int		current_location;
+	short int       shift_ind;
 	int				value;
 
+	value = 0;
 	current_location = (*prs)->index;
 	if (code_arg == 1)
+	{
 		*shift += get_t_reg(&value, *shift, arena, prs);
+	}
 	else if (code_arg == 2)
 	{
 		if (g_op_tab[(*prs)->code_op - 1].t_dir_size == 2)
-			value += get_t_ind(current_location, *shift, arena, 0);
+			value = get_t_ind(current_location, *shift, arena, 0);
 		else
 		{
-			value += get_t_dir(current_location, *shift, arena);
+			value = get_t_dir(current_location, *shift, arena);
 			*shift += 2;
 		}
 		*shift += 2;
 	}
 	else if (code_arg == 3)
 	{
-		*shift = get_t_ind(current_location, *shift, arena, 1);
-		value += get_t_dir(current_location, *shift, arena);
+		shift_ind = get_t_ind(current_location, *shift, arena, 1);
+		value = get_t_dir(current_location, shift_ind, arena);
 		*shift += 2;
 	}
 	return (value);
@@ -72,7 +76,7 @@ void				set_t_reg(int value, int shift,
 {
 	unsigned char	arg_reg;
 
-	arg_reg = *(arena + ((*prs)->index + shift) % MEM_SIZE);
+	arg_reg = *(arena + ((*prs)->index + shift) % MEM_SIZE) - 1;
 	if (arg_reg >= 0 && arg_reg < REG_NUMBER)
 	{
 		(*prs)->reg[arg_reg] = value;
@@ -85,7 +89,7 @@ int					get_t_reg(int *value, int shift,
 {
 	unsigned char	arg_reg;
 
-	arg_reg = *(arena + ((*prs)->index + shift) % MEM_SIZE);
+	arg_reg = *(arena + ((*prs)->index + shift) % MEM_SIZE) - 1;
 	if (arg_reg >= 0 && arg_reg < REG_NUMBER)
 	{
 		*value = (*prs)->reg[arg_reg];

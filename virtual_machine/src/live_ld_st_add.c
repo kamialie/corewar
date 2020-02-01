@@ -24,10 +24,13 @@ void				live_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	(*prs)->cc_live = info->count_cycles;
 	arg_player = get_t_dir(current_location, 1, info->arena);
 	if (number_player == arg_player)
-		info->last_live = number_player;
+		info->last_live = -number_player;
 	new_location = (current_location + 5) % MEM_SIZE;
-	move_cursor(current_location, 5, IND(number_player), sdl);
-	Mix_PlayChannel(-1, sdl->live_effect, 0);
+	if (sdl != NULL)
+	{
+		move_cursor(current_location, 5, IND(-number_player), sdl);
+		Mix_PlayChannel(-1, sdl->live_effect, 0);
+	}
 	(*prs)->index = new_location;
 }
 
@@ -39,11 +42,11 @@ void				ld_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	int				value;
 
 	current_location = (*prs)->index;
-	shift = current_location + 2;
+	shift = 2;
 	code_arg = ((info->arena)[((*prs)->index + 1) % MEM_SIZE]) & 0xf0;
 	if (code_arg == 208)
 	{
-		shift = get_t_ind(shift, 0, info->arena, 1);
+		shift = get_t_ind(current_location, shift, info->arena, 1);
 		value = get_t_dir(current_location, shift, info->arena);
 		set_t_reg(value, 4, info->arena, prs);
 	}
@@ -61,13 +64,14 @@ void				st_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	unsigned char	arg_reg;
 	short int		shift;
 	short int		current_location;
+	int				value;
 
 	current_location = (*prs)->index;
 	shift = current_location + 3;
 	code_arg = ((info->arena)[(current_location + 1) % MEM_SIZE]) & 0xf0;
 	if (code_arg == 112 || code_arg == 80)
 	{
-		arg_reg = *((info->arena) + (current_location + 2) % MEM_SIZE);
+		arg_reg = *((info->arena) + (current_location + 2) % MEM_SIZE) - 1;
 		if (arg_reg >= 0 && arg_reg < REG_NUMBER)
 		{
 			if (code_arg == 80)
@@ -76,8 +80,10 @@ void				st_op(t_info *info, t_processes **prs, t_sdl *sdl)
 			{
 				shift = get_t_ind(shift, 0, info->arena, 1);
 				shift = get_address(shift + current_location);
-				ft_memcpy(info->arena + shift, (*prs)->reg + arg_reg, 4);
-				update_bytes(shift, 4, IND((*prs)->reg[0]), sdl);
+				value = reverse_int((*prs)->reg[arg_reg]);
+				write_card(info->arena, &value, shift);
+				if (sdl != NULL)
+					update_bytes(shift, REG_SIZE, -(*prs)->reg[0] - 1, sdl);
 			}
 		}
 	}
@@ -95,8 +101,8 @@ void				add_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	code_arg = ((info->arena)[(current_location + 1) % MEM_SIZE]) & 0xfc;
 	if (code_arg == 84)
 	{
-		arg_reg = *((info->arena) + (current_location + 2) % MEM_SIZE);
-		arg_reg2 = *((info->arena) + (current_location + 3) % MEM_SIZE);
+		arg_reg = *((info->arena) + (current_location + 2) % MEM_SIZE) - 1;
+		arg_reg2 = *((info->arena) + (current_location + 3) % MEM_SIZE) - 1;
 		if (arg_reg2 >= 0 && arg_reg2 < REG_NUMBER &&
 		arg_reg >= 0 && arg_reg < REG_NUMBER)
 			set_t_reg((*prs)->reg[arg_reg] + (*prs)->reg[arg_reg2],

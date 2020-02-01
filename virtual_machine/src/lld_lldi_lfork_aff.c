@@ -50,11 +50,11 @@ void				lldi_op(t_info *info, t_processes **prs, t_sdl *sdl)
 		value += get_arg((code_arg >> 4) & 0x3, &shift, info->arena, prs);
 	if (shift + 3 == get_bytes_to_skip(9, code_arg))
 	{
-		arg_reg = *((info->arena) + (current_location + shift) % MEM_SIZE);
+		arg_reg = *((info->arena) + (current_location + shift) % MEM_SIZE) - 1;
 		if (arg_reg >= 0 && arg_reg < REG_NUMBER)
 		{
 			value = get_address(current_location + value);
-			ft_memcpy((*prs)->reg + arg_reg, info->arena + value, 4);
+			read_card((*prs)->reg + arg_reg, info->arena, value);
 			(*prs)->reg[arg_reg] = reverse_int((*prs)->reg[arg_reg]);
 		}
 	}
@@ -64,6 +64,7 @@ void				lldi_op(t_info *info, t_processes **prs, t_sdl *sdl)
 void				lfork_op(t_info *info, t_processes **prs, t_sdl *sdl)
 {
 	short int		current_location;
+	short int		new_location;
 	short int		num_player;
 	short int		arg;
 	int				i;
@@ -75,13 +76,18 @@ void				lfork_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	add_elem(&(info->processes), arg, num_player);
 	info->processes->carry = (*prs)->carry;
 	(info->processes)->cc_live = (*prs)->cc_live;
+	new_location = get_address(current_location + arg);
 	i = -1;
 	while (++i < REG_NUMBER)
 		(info->processes)->reg[i] = (*prs)->reg[i];
-	move_cursor((*prs)->index, 3, IND(num_player), sdl);
+	if (sdl != NULL)
+	{
+		move_cursor(current_location, 3, IND(-num_player), sdl);
+		create_cursor(current_location + arg, IND(-num_player), sdl);
+		Mix_PlayChannel(-1, sdl->birth_effect, 0);
+	}
 	(*prs)->index = get_address((current_location + 3));
-	create_cursor(arg, IND(num_player), sdl);
-	Mix_PlayChannel(-1, sdl->birth_effect, 0);
+	info->processes->index = new_location;
 }
 
 void				aff_op(t_info *info, t_processes **prs, t_sdl *sdl)
@@ -91,12 +97,13 @@ void				aff_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	code_arg = ((info->arena)[((*prs)->index + 1) % MEM_SIZE]) & 0xc0;
 	if (code_arg == 64)
 	{
-		code_arg = *((info->arena) + ((*prs)->index + 2) % MEM_SIZE);
+		code_arg = *((info->arena) + ((*prs)->index + 2) % MEM_SIZE) - 1;
 		if (code_arg >= 0 && code_arg < REG_NUMBER)
 		{
-			printf("Aff : %c\n", (*prs)->reg[code_arg]);
+			printf("Aff: %c\n", (*prs)->reg[code_arg]);
 		}
-		move_cursor((*prs)->index, 3, IND((*prs)->reg[0]), sdl);
+		if (sdl != NULL)
+			move_cursor((*prs)->index, 3, IND(-(*prs)->reg[0]), sdl);
 		(*prs)->index = (((*prs)->index) + 3) % MEM_SIZE;
 	}
 }
