@@ -61,7 +61,7 @@ void		init_info(t_info *info)
 
 static void	print_winner(t_info *info)
 {
-	char	announcement[100];
+	char	announcement[200];
 
 	ft_strcpy(announcement, "Contestant ");
 	ft_strcat(announcement, ft_itoa(info->last_live));
@@ -70,6 +70,8 @@ static void	print_winner(t_info *info)
 	ft_strcat(announcement, "\", has won !\n");
 	ft_putstr(announcement);
 }
+
+#include <stdio.h>
 
 int			main(int argc, char *argv[])
 {

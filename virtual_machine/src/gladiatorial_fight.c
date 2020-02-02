@@ -12,6 +12,7 @@
 
 #include "corewar.h"
 #include "visual.h"
+#include <stdio.h>
 
 void		take_actions(t_info *info, t_processes *prs, t_sdl *sdl)
 {

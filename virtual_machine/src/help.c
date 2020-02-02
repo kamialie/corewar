@@ -37,6 +37,8 @@ than 1 or greater than the number of champions\n");
 		perror("Found extra data\n");
 	else if (err == 10)
 		perror("Actual program size does not equal to declared size\n");
+	else if (err == 11)
+		perror("File exceeds minimum size for champion\n");
 	exit(1);
 }
 
@@ -67,14 +69,14 @@ void				shift_next_op(unsigned char code_arg,
 	current_location = (*prs)->index;
 	skiped_bytes = get_bytes_to_skip(num_fun, code_arg);
 	if (sdl != NULL)
-		move_cursor(current_location, skiped_bytes, IND(-(*prs)->reg[0]), sdl);
+		move_cursor(current_location, skiped_bytes, -(*prs)->reg[0] - 1, sdl);
 	(*prs)->index = (current_location + skiped_bytes) % MEM_SIZE;
 }
 
 void				present_champion(header_t *players)
 {
 	int		i;
-	char	announcement[100];
+	char	announcement[3000];
 
 	i = -1;
 	ft_putstr("Introducing contestants...\n");
@@ -82,7 +84,7 @@ void				present_champion(header_t *players)
 	{
 		ft_strcpy(announcement, "* Player ");
 		ft_strcat(announcement, ft_itoa(i + 1));
-		ft_strcat(announcement, ", weighting ");
+		ft_strcat(announcement, ", weighing ");
 		ft_strcat(announcement, ft_itoa(players[i].prog_size));
 		ft_strcat(announcement, " bytes, ");
 		ft_strcat(announcement, "\"");

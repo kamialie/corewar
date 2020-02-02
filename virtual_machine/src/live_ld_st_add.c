@@ -23,8 +23,8 @@ void				live_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	number_player = (*prs)->reg[0];
 	(*prs)->cc_live = info->count_cycles;
 	arg_player = get_t_dir(current_location, 1, info->arena);
-	if (number_player == arg_player)
-		info->last_live = -number_player;
+	if (-arg_player - 1 >= 0 && -arg_player - 1 < 4 && info->players[-arg_player - 1].magic == COREWAR_EXEC_MAGIC)
+		info->last_live = -arg_player;
 	new_location = (current_location + 5) % MEM_SIZE;
 	if (sdl != NULL)
 	{

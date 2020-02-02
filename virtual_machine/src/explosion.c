@@ -31,7 +31,7 @@ void		refresh_arena(t_info *info, t_sdl *sdl)
 	processes = info->processes;
 	while (processes != NULL)
 	{
-		create_cursor(processes->index, processes->reg[0] - 1, sdl);
+		create_cursor(processes->index, -processes->reg[0] - 1, sdl);
 		processes = processes->next;
 	}
 }
