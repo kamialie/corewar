@@ -82,7 +82,7 @@ void				lfork_op(t_info *info, t_processes **prs, t_sdl *sdl)
 		(info->processes)->reg[i] = (*prs)->reg[i];
 	if (sdl != NULL)
 	{
-		move_cursor(current_location, 3, -num_player- 1, sdl);
+		move_cursor(current_location, 3, -num_player - 1, sdl);
 		create_cursor(current_location + arg, -num_player - 1, sdl);
 		Mix_PlayChannel(-1, sdl->birth_effect, 0);
 	}
@@ -92,9 +92,9 @@ void				lfork_op(t_info *info, t_processes **prs, t_sdl *sdl)
 
 void				aff_op(t_info *info, t_processes **prs, t_sdl *sdl)
 {
-	unsigned char code_arg;
-	char	announcement[9];
-	char 	sumbol;
+	unsigned char	code_arg;
+	char			announcement[9];
+	char			sumbol;
 
 	ft_bzero(announcement, 9);
 	code_arg = ((info->arena)[((*prs)->index + 1) % MEM_SIZE]) & 0xc0;

@@ -39,7 +39,6 @@ typedef struct		s_processes
 	int					carry : 2;
 	int					code_op : 6;
 	int					index : 14;
-	int					c_byte_op : 4;
 	int					reg[REG_NUMBER];
 	struct s_processes	*next;
 	struct s_processes	*prev;
@@ -48,7 +47,7 @@ typedef struct		s_processes
 typedef struct		s_info
 {
 	int				dump;
-	header_t		players[MAX_PLAYERS];
+	t_header		players[MAX_PLAYERS];
 	unsigned char	*arena;
 	t_processes		*processes;
 	int				count_process;
@@ -78,7 +77,7 @@ void				read_card(void *dst, void *src,
 							short int value, int length);
 void				write_card(void *dst, void *src,
 							short int value, int length);
-void				present_champion(header_t *players);
+void				present_champion(t_header *players);
 unsigned int		get_magic(int fd);
 int					get_arg(unsigned char code_arg, short int *shift,
 						unsigned char *arena, t_processes **prs);

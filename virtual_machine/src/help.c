@@ -12,6 +12,22 @@
 
 #include "corewar.h"
 
+static void			error_1(int err)
+{
+	if (err == 6)
+		perror("File exceeds maximum size for champion\n");
+	else if (err == 7)
+		perror("No champions are found\n");
+	else if (err == 8)
+		perror("Memory allocation error\n");
+	else if (err == 9)
+		perror("Found extra data\n");
+	else if (err == 10)
+		perror("Actual program size does not equal to declared size\n");
+	else if (err == 11)
+		perror("File exceeds minimum size for champion\n");
+}
+
 void				error(int err)
 {
 	if (err == 0)
@@ -27,18 +43,8 @@ than 1 or greater than the number of champions\n");
 		perror("Reading error - not enough data\n");
 	else if (err == 5)
 		perror("Not a binary file\n");
-	else if (err == 6)
-		perror("File exceeds maximum size for champion\n");
-	else if (err == 7)
-		perror("No champions are found\n");
-	else if (err == 8)
-		perror("Memory allocation error\n");
-	else if (err == 9)
-		perror("Found extra data\n");
-	else if (err == 10)
-		perror("Actual program size does not equal to declared size\n");
-	else if (err == 11)
-		perror("File exceeds minimum size for champion\n");
+	else
+		error_1(err);
 	exit(1);
 }
 
@@ -73,7 +79,7 @@ void				shift_next_op(unsigned char code_arg,
 	(*prs)->index = (current_location + skiped_bytes) % MEM_SIZE;
 }
 
-void				present_champion(header_t *players)
+void				present_champion(t_header *players)
 {
 	int		i;
 	char	announcement[3000];

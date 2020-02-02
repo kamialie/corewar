@@ -75,9 +75,8 @@ void				sti_op(t_info *info, t_processes **prs, t_sdl *sdl)
 						code_arg == 100 || code_arg == 104 || code_arg == 116))
 		value += get_arg((code_arg >> 2) & 0x3, &shift, info->arena, prs);
 	if (shift == get_bytes_to_skip(10, code_arg))
-	{
-		arg_reg = *((info->arena) + (current_location + 2) % MEM_SIZE) - 1;
-		if (arg_reg >= 0 && arg_reg < REG_NUMBER)
+		if ((arg_reg = *((info->arena) + (current_location + 2)
+				% MEM_SIZE) - 1) >= 0 && arg_reg < REG_NUMBER)
 		{
 			shift = get_address(current_location + value % IDX_MOD);
 			value = reverse_int((*prs)->reg[arg_reg]);
@@ -85,7 +84,6 @@ void				sti_op(t_info *info, t_processes **prs, t_sdl *sdl)
 			if (sdl != NULL)
 				update_bytes(shift, 8, -(*prs)->reg[0] - 1, sdl);
 		}
-	}
 	shift_next_op(code_arg, 10, prs, sdl);
 }
 

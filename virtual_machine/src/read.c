@@ -29,7 +29,7 @@ static unsigned int	get_prog_size(int fd)
 	if (prog_size > CHAMP_MAX_SIZE)
 		error(6);
 	if (prog_size == 0)
-		error (11);
+		error(11);
 	return (prog_size);
 }
 
