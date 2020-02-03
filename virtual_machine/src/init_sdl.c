@@ -27,6 +27,7 @@ static void	init_colors(SDL_Color *colors)
 	colors[BLUE_BACK] = (SDL_Color) {0, 150, 255, 0};
 	colors[GREEN_BACK] = (SDL_Color) {0, 150, 0, 0};
 	colors[RED_BACK] = (SDL_Color) {150, 0, 0, 0};
+	colors[GREY] = (SDL_Color) {64, 64, 64, 0};
 }
 
 static void	init_font(TTF_Font **outline_font, t_render *render_info)

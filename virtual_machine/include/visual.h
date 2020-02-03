@@ -39,6 +39,7 @@
 # define BLUE_BACK 7
 # define GREEN_BACK 8
 # define RED_BACK 9
+# define GREY 10
 
 # define FONT_COLOR 1
 # define BACK_COLOR 5

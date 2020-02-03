@@ -45,7 +45,7 @@ typedef struct	s_sdl
 	unsigned char	*replica;
 	SDL_Window		*window;
 	SDL_Surface		*surface;
-	SDL_Color		colors[9];
+	SDL_Color		colors[11];
 	Mix_Music		*main_theme;
 	Mix_Chunk		*live_effect;
 	Mix_Chunk		*birth_effect;

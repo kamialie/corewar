@@ -48,7 +48,10 @@ void	set_nibble_for_render(int location, int type, int player, t_sdl *sdl)
 	else if (type == CURSOR)
 	{
 		sdl->render_info->font_color = sdl->colors[WHITE];
-		sdl->render_info->back_color = sdl->colors[player + BACK_COLOR];
+		if (player < 1 || player > 4)
+			sdl->render_info->back_color = sdl->colors[GREY];
+		else
+			sdl->render_info->back_color = sdl->colors[player + BACK_COLOR];
 	}
 	else
 	{
