@@ -79,7 +79,7 @@ void	show_data(t_info *info, t_sdl *sdl)
 	sdl->render_info->rect.y += TEXT_Y_SHIFT;
 	update_value(info->cycle_to_die, render_info, sdl->surface);
 	sdl->render_info->rect.y += TEXT_Y_SHIFT;
-	update_value(info->count_live, render_info, sdl->surface);
+	update_value(info->count_process, render_info, sdl->surface);
 	sdl->render_info->rect.y += TEXT_Y_SHIFT;
 	update_value(info->count_check, render_info, sdl->surface);
 }

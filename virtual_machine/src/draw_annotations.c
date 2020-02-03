@@ -70,7 +70,7 @@ void	draw_annotations(t_info *info, t_sdl *sdl)
 	sdl->render_info->rect.y += TEXT_Y_SHIFT;
 	render_text("cycle to die - ", sdl->render_info, sdl->surface);
 	sdl->render_info->rect.y += TEXT_Y_SHIFT;
-	render_text("count_live - ", sdl->render_info, sdl->surface);
+	render_text("# of cursors - ", sdl->render_info, sdl->surface);
 	sdl->render_info->rect.y += TEXT_Y_SHIFT;
 	render_text("count_check - ", sdl->render_info, sdl->surface);
 	sdl->render_info->rect.y += TEXT_Y_SHIFT;
