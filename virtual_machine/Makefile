@@ -46,7 +46,7 @@ INCLUDE = -I ../libft -I include -I $(SDL_INCLUDE)/SDL2
 
 LIB = -L $(SDL_LIB) -l SDL2 -l SDL2_ttf -l SDL2_mixer
 
-FLAGS = -g -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror
 
 SRC_DIR = src
 

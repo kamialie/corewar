@@ -13,11 +13,30 @@
 #include "visual.h"
 #include "corewar.h"
 
+static void	render_player(int i, char *text, t_info *info, t_sdl *sdl)
+{
+	char name[40];
+
+	ft_bzero(name, 40);
+	if (ft_strlen(info->players[i].prog_name) > 38)
+		ft_strncpy(name, info->players[i].prog_name, 38);
+	else
+		ft_strcpy(name, info->players[i].prog_name);
+	sdl->render_info->rect.x = PLAYER_X_LOCATION;
+	sdl->render_info->font_color = sdl->colors[WHITE];
+	render_text(text, sdl->render_info, sdl->surface);
+	sdl->render_info->rect.y += 20;
+	sdl->render_info->rect.x = PLAYER_NAME_X_LOCATION;
+	sdl->render_info->font_color = sdl->colors[i + 2];
+	render_text(name, sdl->render_info, sdl->surface);
+	sdl->render_info->rect.y += PLAYER_SECTION_HEIGHT;
+}
+
 /*
 ** i = -1 - to save some space
 */
 
-void	show_players(t_info *info, t_sdl *sdl)
+static void	show_players(t_info *info, t_sdl *sdl)
 {
 	int		i;
 	char	*text;
@@ -35,14 +54,7 @@ void	show_players(t_info *info, t_sdl *sdl)
 			text = PLAYER_THREE;
 		else
 			text = PLAYER_FOUR;
-		sdl->render_info->rect.x = PLAYER_X_LOCATION;
-		sdl->render_info->font_color = sdl->colors[WHITE];
-		render_text(text, sdl->render_info, sdl->surface);
-		sdl->render_info->rect.y += 20;
-		sdl->render_info->rect.x = PLAYER_NAME_X_LOCATION;
-		sdl->render_info->font_color = sdl->colors[i + 2];
-		render_text(info->players[i].prog_name, sdl->render_info, sdl->surface);
-		sdl->render_info->rect.y += PLAYER_SECTION_HEIGHT;
+		render_player(i, text, info, sdl);
 	}
 }
 
