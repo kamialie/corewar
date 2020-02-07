@@ -64,6 +64,22 @@ void	udpate_delay(int delay, t_sdl *sdl)
 		update_value(delay, render_info, sdl->surface);
 }
 
+void	update_live(int player, int value, t_sdl *sdl)
+{
+	t_render render_info;
+
+	(void)value;
+	render_info.font_color = sdl->colors[WHITE];
+	render_info.back_color = sdl->colors[BLACK];
+	render_info.font = sdl->render_info->font;
+	render_info.rect.x = LIVE_X_LOCATION;
+	render_info.rect.y = PLAYER_Y_LOCATION + PLAYER_SECTION_HEIGHT * player + 40;
+	render_info.rect.w = SDL_DATA_WIDTH;
+	render_info.rect.h = NIBBLE_HEIGHT;
+	SDL_FillRect(sdl->surface, &(render_info.rect), 0);
+	update_value(value, &render_info, sdl->surface);
+}
+
 void	show_data(t_info *info, t_sdl *sdl)
 {
 	t_render *render_info;

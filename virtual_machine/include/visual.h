@@ -61,7 +61,7 @@
 # define PLAYER_Y_LOCATION 200
 # define PLAYER_NAME_X_LOCATION 1400
 # define PLAYER_NAME_Y_LOCATION 140
-# define PLAYER_SECTION_HEIGHT 102
+# define PLAYER_SECTION_HEIGHT 100
 
 # define INFO_X_LOCATION 1420
 # define INFO_Y_LOCATION 50
@@ -70,6 +70,8 @@
 
 # define DATA_X_LOCATION 1570
 # define DATA_Y_LOCATION 50
+
+# define LIVE_X_LOCATION 1500
 
 # define CONTROLS_Y_LOCATION 700
 
@@ -124,6 +126,7 @@ void			udpate_delay(int delay, t_sdl *sdl);
 void			draw_game_controls(t_sdl *sdl);
 void			draw_square(t_square *sq_info, int *img_data);
 void			update_game_status(int status, t_sdl *sdl);
+void			update_live(int player, int value, t_sdl *sdl);
 void			epilepsy(int seed, t_render *render_info,
 								SDL_Surface *surface, t_sdl *sdl);
 void			render_text(char *text, t_render *render_info,

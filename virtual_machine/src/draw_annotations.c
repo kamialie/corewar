@@ -29,7 +29,11 @@ static void	render_player(int i, char *text, t_info *info, t_sdl *sdl)
 	sdl->render_info->rect.x = PLAYER_NAME_X_LOCATION;
 	sdl->render_info->font_color = sdl->colors[i + 2];
 	render_text(name, sdl->render_info, sdl->surface);
-	sdl->render_info->rect.y += PLAYER_SECTION_HEIGHT;
+	sdl->render_info->rect.y += 20;
+	sdl->render_info->font_color = sdl->colors[WHITE];
+	render_text("last live: -", sdl->render_info, sdl->surface);
+	sdl->render_info->rect.y = PLAYER_Y_LOCATION + PLAYER_SECTION_HEIGHT * (i + 1);
+	update_live(i, 0, sdl);
 }
 
 /*
