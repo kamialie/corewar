@@ -6,7 +6,7 @@
 /*   By: wclayton <wclayton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:33:27 by zaz               #+#    #+#             */
-/*   Updated: 2020/01/29 22:34:11 by wclayton         ###   ########.fr       */
+/*   Updated: 2020/02/08 11:37:43 by wclayton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,18 @@ typedef char	t_arg_type;
 # define PROG_NAME_LENGTH		(128)
 # define COMMENT_LENGTH			(2048)
 # define COREWAR_EXEC_MAGIC		0xea83f3
+
+typedef struct		s_op
+{
+	char					*name;
+	unsigned int			count_args : 2;
+	unsigned char			args_types[3];
+	unsigned int			code : 6;
+	unsigned int			cycle_for_exec : 11;
+	char					*comment;
+	unsigned int			change_carry : 1;
+	unsigned int			args_types_code : 1;
+}                 t_op;
 
 typedef struct		header_s
 {

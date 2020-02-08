@@ -28,13 +28,7 @@ typedef struct      s_oper
     t_arg           args[3];
     size_t          size;
     size_t          rel_size;
-    t_oper          *next;
 }                   t_oper;
-typedef struct      s_chain
-{
-    t_oper          *oper;
-    struct s_chain  *next;
-}                   t_chain;
 
 typedef struct      s_state
 {
