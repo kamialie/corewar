@@ -23,15 +23,18 @@ void				live_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	number_player = (*prs)->reg[0];
 	(*prs)->cc_live = info->count_cycles;
 	arg_player = get_t_dir(current_location, 1, info->arena);
-	if (number_player == arg_player)
-		info->last_live = -number_player;
-	new_location = (current_location + 5) % MEM_SIZE;
+	if (-arg_player - 1 >= 0 && -arg_player - 1 < MAX_PLAYERS
+	&& info->players[-arg_player - 1].magic == COREWAR_EXEC_MAGIC)
+		info->last_live = -arg_player;
+	new_location = (current_location + 1 + DIR_SIZE) % MEM_SIZE;
 	if (sdl != NULL)
 	{
-		move_cursor(current_location, 5, -number_player - 1, sdl);
+		move_cursor(current_location, 1 + DIR_SIZE,
+				-number_player - 1, sdl);
 		Mix_PlayChannel(-1, sdl->live_effect, 0);
 	}
 	(*prs)->index = new_location;
+	++info->count_live;
 }
 
 void				ld_op(t_info *info, t_processes **prs, t_sdl *sdl)
@@ -48,12 +51,12 @@ void				ld_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	{
 		shift = get_t_ind(current_location, shift, info->arena, 1);
 		value = get_t_dir(current_location, shift, info->arena);
-		set_t_reg(value, 4, info->arena, prs);
+		set_t_reg(value, 2 + IND_SIZE, info->arena, prs);
 	}
 	else if (code_arg == 144)
 	{
 		value = get_t_dir(current_location, shift, info->arena);
-		set_t_reg(value, 6, info->arena, prs);
+		set_t_reg(value, 2 + DIR_SIZE, info->arena, prs);
 	}
 	shift_next_op(code_arg, 1, prs, sdl);
 }
@@ -69,9 +72,8 @@ void				st_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	current_location = (*prs)->index;
 	code_arg = ((info->arena)[(current_location + 1) % MEM_SIZE]) & 0xf0;
 	if (code_arg == 112 || code_arg == 80)
-	{
-		arg_reg = *((info->arena) + (current_location + 2) % MEM_SIZE) - 1;
-		if (arg_reg >= 0 && arg_reg < REG_NUMBER)
+		if ((arg_reg = *((info->arena) + (current_location + 2)
+				% MEM_SIZE) - 1) >= 0 && arg_reg < REG_NUMBER)
 		{
 			if (code_arg == 80)
 				set_t_reg((*prs)->reg[arg_reg], 3, info->arena, prs);
@@ -85,7 +87,6 @@ void				st_op(t_info *info, t_processes **prs, t_sdl *sdl)
 					update_bytes(shift, REG_SIZE, -(*prs)->reg[0] - 1, sdl);
 			}
 		}
-	}
 	shift_next_op(code_arg, 2, prs, sdl);
 }
 

@@ -117,8 +117,6 @@ void			draw_byte(unsigned char byte, t_render *render_info,
 												SDL_Surface *surface);
 void			set_nibble_for_render(int location, int type, int player,
 																t_sdl *sdl);
-void			set_render_color(int type, int player, t_render *render_info,
-															SDL_Color *colors);
 void			draw_byte(unsigned char byte, t_render *render_info,
 												SDL_Surface *surface);
 void			int_to_char(int number, char *str);

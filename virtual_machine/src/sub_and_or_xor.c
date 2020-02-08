@@ -30,7 +30,7 @@ void				sub_op(t_info *info, t_processes **prs, t_sdl *sdl)
 			set_t_reg((*prs)->reg[arg_reg] - (*prs)->reg[arg_reg2],
 					4, info->arena, prs);
 	}
-	shift_next_op(code_arg, 3, prs, sdl);
+	shift_next_op(code_arg, 4, prs, sdl);
 }
 
 void				and_op(t_info *info, t_processes **prs, t_sdl *sdl)

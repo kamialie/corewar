@@ -27,10 +27,8 @@ void				lld_op(t_info *info, t_processes **prs, t_sdl *sdl)
 		if (code_arg == 208)
 			shift = get_t_ind(current_location, shift, info->arena, 0);
 		value = get_t_dir(current_location, shift, info->arena);
-		printf("value %u\n", value);
 		shift = (code_arg == 208) ? 4 : 6;
 		set_t_reg(value, shift, info->arena, prs);
-		printf("reg %u\n", (*prs)->reg[15]);
 	}
 	shift_next_op(code_arg, 12, prs, sdl);
 }
@@ -84,28 +82,36 @@ void				lfork_op(t_info *info, t_processes **prs, t_sdl *sdl)
 		(info->processes)->reg[i] = (*prs)->reg[i];
 	if (sdl != NULL)
 	{
-		move_cursor(current_location, 3, IND(-num_player), sdl);
-		create_cursor(current_location + arg, IND(-num_player), sdl);
+		move_cursor(current_location, 3, -num_player - 1, sdl);
+		create_cursor(current_location + arg, -num_player - 1, sdl);
 		Mix_PlayChannel(-1, sdl->birth_effect, 0);
 	}
 	(*prs)->index = get_address((current_location + 3));
 	info->processes->index = new_location;
+	++info->count_process;
 }
 
 void				aff_op(t_info *info, t_processes **prs, t_sdl *sdl)
 {
-	unsigned char code_arg;
+	unsigned char	code_arg;
+	char			announcement[9];
+	char			sumbol;
 
+	ft_bzero(announcement, 9);
 	code_arg = ((info->arena)[((*prs)->index + 1) % MEM_SIZE]) & 0xc0;
 	if (code_arg == 64)
 	{
 		code_arg = *((info->arena) + ((*prs)->index + 2) % MEM_SIZE) - 1;
 		if (code_arg >= 0 && code_arg < REG_NUMBER)
 		{
-			printf("Aff: %c\n", (*prs)->reg[code_arg]);
+			sumbol = (*prs)->reg[code_arg];
+			ft_strcpy(announcement, "Aff: ");
+			announcement[5] = sumbol;
+			ft_strcat(announcement, "\n");
+			ft_putstr(announcement);
 		}
 		if (sdl != NULL)
-			move_cursor((*prs)->index, 3, IND(-(*prs)->reg[0]), sdl);
+			move_cursor((*prs)->index, 3, -(*prs)->reg[0] - 1, sdl);
 		(*prs)->index = (((*prs)->index) + 3) % MEM_SIZE;
 	}
 }

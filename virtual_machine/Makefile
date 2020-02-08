@@ -64,6 +64,7 @@ SRC = main.c \
 	  live_ld_st_add.c \
 	  zjmp_ldi_sti_fork.c \
 	  sub_and_or_xor.c \
+	  write_read_card.c \
 	  free_resources.c
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
