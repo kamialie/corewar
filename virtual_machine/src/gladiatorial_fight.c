@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 17:20:05 by bdudley           #+#    #+#             */
-/*   Updated: 2020/02/01 21:25:16 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/02/08 13:48:18 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void		kick_noobs(t_info *info, t_sdl *sdl)
 		info->count_check = -1;
 		info->cycle_to_die -= CYCLE_DELTA;
 	}
-	++info->count_check;
+	++(info->count_check);
 	info->i = -1;
 	info->count_live = 0;
 }

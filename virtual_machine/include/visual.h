@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 16:09:49 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/25 13:54:06 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/02/08 13:32:01 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,6 @@ void			udpate_delay(int delay, t_sdl *sdl);
 void			draw_game_controls(t_sdl *sdl);
 void			draw_square(t_square *sq_info, int *img_data);
 void			update_game_status(int status, t_sdl *sdl);
-void			update_live(int player, int value, t_sdl *sdl);
 void			epilepsy(int seed, t_render *render_info,
 								SDL_Surface *surface, t_sdl *sdl);
 void			render_text(char *text, t_render *render_info,

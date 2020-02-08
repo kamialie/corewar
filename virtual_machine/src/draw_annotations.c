@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:35:59 by rgyles            #+#    #+#             */
-/*   Updated: 2020/02/01 17:05:25 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/02/08 13:53:45 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ static void	render_player(int i, char *text, t_info *info, t_sdl *sdl)
 	sdl->render_info->rect.y += 20;
 	sdl->render_info->font_color = sdl->colors[WHITE];
 	render_text("last live: -", sdl->render_info, sdl->surface);
-	sdl->render_info->rect.y = PLAYER_Y_LOCATION + PLAYER_SECTION_HEIGHT * (i + 1);
+	sdl->render_info->rect.y = PLAYER_Y_LOCATION +
+						PLAYER_SECTION_HEIGHT * (i + 1);
 	update_live(i, 0, sdl);
 }
 
@@ -62,7 +63,7 @@ static void	show_players(t_info *info, t_sdl *sdl)
 	}
 }
 
-void	draw_annotations(t_info *info, t_sdl *sdl)
+void		draw_annotations(t_info *info, t_sdl *sdl)
 {
 	sdl->render_info->font_color = sdl->colors[WHITE];
 	sdl->render_info->back_color = sdl->colors[BLACK];

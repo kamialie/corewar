@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 17:49:29 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/12 17:04:27 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/02/08 13:54:17 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ void	update_live(int player, int value, t_sdl *sdl)
 	render_info.back_color = sdl->colors[BLACK];
 	render_info.font = sdl->render_info->font;
 	render_info.rect.x = LIVE_X_LOCATION;
-	render_info.rect.y = PLAYER_Y_LOCATION + PLAYER_SECTION_HEIGHT * player + 40;
+	render_info.rect.y = PLAYER_Y_LOCATION +
+			PLAYER_SECTION_HEIGHT * player + 40;
 	render_info.rect.w = SDL_DATA_WIDTH;
 	render_info.rect.h = NIBBLE_HEIGHT;
 	SDL_FillRect(sdl->surface, &(render_info.rect), 0);

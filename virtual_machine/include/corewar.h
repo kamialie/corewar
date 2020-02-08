@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 15:10:22 by rgyles            #+#    #+#             */
-/*   Updated: 2020/02/01 21:21:43 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/02/08 13:32:17 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ void				set_replica(t_processes *processes,
 void				draw_annotations(t_info *info, t_sdl *sdl);
 void				event_handler(t_info *info, t_sdl *sdl);
 
+void				update_live(int player, int value, t_sdl *sdl);
 void				update_byte(int location, t_sdl *sdl);
 void				create_cursor(int location, int player, t_sdl *sdl);
 void				update_bytes(int location, int length,

@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 18:05:20 by bdudley           #+#    #+#             */
-/*   Updated: 2020/02/01 21:34:09 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/02/08 13:44:17 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,11 @@ void				live_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	arg_player = get_t_dir(current_location, 1, info->arena);
 	if (-arg_player - 1 >= 0 && -arg_player - 1 < MAX_PLAYERS
 	&& info->players[-arg_player - 1].magic == COREWAR_EXEC_MAGIC)
+	{
 		info->last_live = -arg_player;
+		if (sdl != NULL)
+			update_live(-arg_player - 1, info->count_cycles, sdl);
+	}
 	new_location = (current_location + 1 + DIR_SIZE) % MEM_SIZE;
 	if (sdl != NULL)
 	{

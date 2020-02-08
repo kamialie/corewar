@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 18:10:13 by bdudley           #+#    #+#             */
-/*   Updated: 2020/02/01 21:26:13 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/02/08 13:57:47 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,7 @@ void				lfork_op(t_info *info, t_processes **prs, t_sdl *sdl)
 
 	current_location = (*prs)->index;
 	num_player = ((*prs)->reg)[0];
-	arg = get_t_ind(current_location, 1, info->arena, 0);
-	arg = get_address(arg);
+	arg = get_address(get_t_ind(current_location, 1, info->arena, 0));
 	add_elem(&(info->processes), arg, num_player);
 	info->processes->carry = (*prs)->carry;
 	(info->processes)->cc_live = (*prs)->cc_live;
