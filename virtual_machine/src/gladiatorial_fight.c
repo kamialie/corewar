@@ -54,6 +54,7 @@ void		kick_noobs(t_info *info, t_sdl *sdl)
 										&sdl->head_explosion);
 			}
 			delete_elem(&ptr, info);
+			--info->count_process;
 		}
 		else
 			ptr = ptr->next;
@@ -62,7 +63,7 @@ void		kick_noobs(t_info *info, t_sdl *sdl)
 		info->count_check = -1;
 		info->cycle_to_die -= CYCLE_DELTA;
 	}
-	++(info->count_check);
+	++info->count_check;
 	info->i = -1;
 	info->count_live = 0;
 }

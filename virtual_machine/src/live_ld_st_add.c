@@ -23,16 +23,18 @@ void				live_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	number_player = (*prs)->reg[0];
 	(*prs)->cc_live = info->count_cycles;
 	arg_player = get_t_dir(current_location, 1, info->arena);
-	if (-arg_player - 1 >= 0 && -arg_player - 1 < 4
+	if (-arg_player - 1 >= 0 && -arg_player - 1 < MAX_PLAYERS
 	&& info->players[-arg_player - 1].magic == COREWAR_EXEC_MAGIC)
 		info->last_live = -arg_player;
-	new_location = (current_location + 5) % MEM_SIZE;
+	new_location = (current_location + 1 + DIR_SIZE) % MEM_SIZE;
 	if (sdl != NULL)
 	{
-		move_cursor(current_location, 5, -number_player - 1, sdl);
+		move_cursor(current_location, 1 + DIR_SIZE,
+				-number_player - 1, sdl);
 		Mix_PlayChannel(-1, sdl->live_effect, 0);
 	}
 	(*prs)->index = new_location;
+	++info->count_live;
 }
 
 void				ld_op(t_info *info, t_processes **prs, t_sdl *sdl)
@@ -49,12 +51,12 @@ void				ld_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	{
 		shift = get_t_ind(current_location, shift, info->arena, 1);
 		value = get_t_dir(current_location, shift, info->arena);
-		set_t_reg(value, 4, info->arena, prs);
+		set_t_reg(value, 2 + IND_SIZE, info->arena, prs);
 	}
 	else if (code_arg == 144)
 	{
 		value = get_t_dir(current_location, shift, info->arena);
-		set_t_reg(value, 6, info->arena, prs);
+		set_t_reg(value, 2 + DIR_SIZE, info->arena, prs);
 	}
 	shift_next_op(code_arg, 1, prs, sdl);
 }

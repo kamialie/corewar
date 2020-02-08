@@ -113,4 +113,5 @@ void				fork_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	}
 	(*prs)->index = get_address((current_location + 3));
 	info->processes->index = new_location;
+	++info->count_process;
 }
