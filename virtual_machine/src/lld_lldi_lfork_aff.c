@@ -52,15 +52,17 @@ void				lldi_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	if ((shift - 2) && (code_arg == 84 || code_arg == 212 || code_arg == 148 ||
 						code_arg == 100 || code_arg == 228 || code_arg == 164))
 		value += get_arg((code_arg >> 4) & 0x3, &shift, info->arena, prs);
-	if (shift + 1 == get_bytes_to_skip(9, code_arg))
 	{
-		arg_reg = *((info->arena) + (current_location + shift) % MEM_SIZE) - 1;
-		if (arg_reg >= 0 && arg_reg < REG_NUMBER)
+		if (shift + 1 == get_bytes_to_skip(9, code_arg))
 		{
-			value = get_address(current_location + value);
-			read_card((*prs)->reg + arg_reg, info->arena, value, REG_SIZE);
-			(*prs)->reg[arg_reg] = reverse_int((*prs)->reg[arg_reg]);
-			(*prs)->carry = ((*prs)->reg[arg_reg] == 0) ? 1 : 0;
+			arg_reg = *((info->arena) + (current_location + shift) % MEM_SIZE) - 1;
+			if (arg_reg >= 0 && arg_reg < REG_NUMBER)
+			{
+				value = get_address(current_location + value);
+				read_card((*prs)->reg + arg_reg, info->arena, value, REG_SIZE);
+				(*prs)->reg[arg_reg] = reverse_int((*prs)->reg[arg_reg]);
+				(*prs)->carry = ((*prs)->reg[arg_reg] == 0) ? 1 : 0;
+			}
 		}
 	}
 	shift_next_op(code_arg, 13, prs, sdl);
