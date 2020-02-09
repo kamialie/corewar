@@ -66,6 +66,7 @@ void		kick_noobs(t_info *info, t_sdl *sdl)
 	{
 		info->count_check = 0;
 		info->cycle_to_die -= CYCLE_DELTA;
+		//info->cycle_to_die = (info->cycle_to_die > 50) ? info->cycle_to_die - CYCLE_DELTA : 1;
 	}
 	info->i = 0;
 	info->count_live = 0;
@@ -75,10 +76,8 @@ void		gladiatorial_fight(int *play, t_info *info, t_sdl *sdl)
 {
 	t_processes	*prs;
 
-	while (info->processes)
+	if (info->processes)
 	{
-		while (info->i < info->cycle_to_die)
-		{
 			++info->i;
 			prs = info->processes;
 			while (prs)
@@ -87,10 +86,10 @@ void		gladiatorial_fight(int *play, t_info *info, t_sdl *sdl)
 				prs = prs->next;
 			}
 			++info->count_cycles;
+			if (info->i >= info->cycle_to_die)
+				kick_noobs(info, sdl);
 			return ;
-		}
-		kick_noobs(info, sdl);
 	}
-	if (play != NULL)
+	else
 		*play = -1;
 }
