@@ -57,6 +57,7 @@ void	udpate_delay(int delay, t_sdl *sdl)
 	render_info->rect.w = SDL_DATA_WIDTH;
 	render_info->font_color = sdl->colors[WHITE];
 	render_info->back_color = sdl->colors[BLACK];
+	SDL_FillRect(sdl->surface, &sdl->render_info->rect, 0);
 	if (delay == 0)
 		render_text("no delay", render_info, sdl->surface);
 	else
@@ -88,7 +89,7 @@ void	show_data(t_info *info, t_sdl *sdl)
 	render_info->rect.x = DATA_X_LOCATION;
 	render_info->rect.y = DATA_Y_LOCATION;
 	render_info->rect.w = 150;
-	render_info->rect.h = 120;
+	render_info->rect.h = 95;
 	render_info->font_color = sdl->colors[WHITE];
 	render_info->back_color = sdl->colors[BLACK];
 	SDL_FillRect(sdl->surface, &sdl->render_info->rect, 0);
