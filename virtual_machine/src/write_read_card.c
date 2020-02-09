@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 19:09:46 by bdudley           #+#    #+#             */
-/*   Updated: 2020/02/02 19:09:48 by bdudley          ###   ########.fr       */
+/*   Updated: 2020/02/09 14:39:37 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,10 @@ void		write_card(void *dst, void *src, short int value, int length)
 
 void		usage(void)
 {
-	/*
-	 * Виртуальная машина:
-	 * Для того, чтобы заупстить игру используй: ./corewar [путь до чемпиона] ...
-	 * Количество возможных чемпионов ограничевается константой MAX_PLAYERS.
-	 * Для того, чтобы оставновить игру на каком-то определенном цикле и вывести текущую арену на экран используй флаг -dump [цикл]
-	 * Для того, чтобы увидеть эпичную игру в действии используй флаг -dump -666, который запустит визуализацию игры и отладочный мод
-	 * Используй чемпионов сгенирированный программой ./asm
-	 * Для того, чтобы вручную задать порядок игроков используй флаг ./corewar -n [номер] [путь до чемпиона].
-	 * Все чемпионы, которым не задали номер получать один из оставшихся.
-	 */
+	ft_putstr("usage: ./corewar [-dump [<cycle> | -666]] [[-n] champion.cor ...]\n");
+	ft_putstr("\t[-dump -666] runs epic war in visual mode\n");
+	ft_putstr("\tmaximum number of players is defined by MAX_PLAYERS macro\n");
+	ft_putstr("\tuse champions created by ./asm\n");
+	ft_putstr("\tto assign number to a champion use [-n] before dedicated champion, otherwise number left will be used\n");
 	exit(1);
 }

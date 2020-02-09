@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 13:34:54 by rgyles            #+#    #+#             */
-/*   Updated: 2020/02/01 19:38:39 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/02/09 14:36:30 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int			main(int argc, char *argv[])
 	t_sdl	sdl;
 	int		play;
 
-	if (argc == 0)
+	if (argc == 1)
 		usage();
 	if (argc < 2)
 		error(7);

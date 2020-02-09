@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:05:41 by rgyles            #+#    #+#             */
-/*   Updated: 2020/01/12 15:07:40 by rgyles           ###   ########.fr       */
+/*   Updated: 2020/02/09 14:24:47 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,10 @@ void	set_nibble_for_render(int location, int type, int player, t_sdl *sdl)
 	}
 	else
 	{
-		sdl->render_info->font_color = sdl->colors[player + FONT_COLOR];
+		if (player < 1 || player > 4)
+			sdl->render_info->font_color = sdl->colors[WHITE];
+		else
+			sdl->render_info->font_color = sdl->colors[player + FONT_COLOR];
 		sdl->render_info->back_color = sdl->colors[BLACK];
 	}
 	sdl->render_info->rect.x = NIBBLE_X_SHIFT + NIBBLE_WIDTH * (location % 64);
