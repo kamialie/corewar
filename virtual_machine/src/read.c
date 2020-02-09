@@ -28,8 +28,8 @@ static unsigned int	get_prog_size(int fd)
 	prog_size += ((buf & 0xff000000) >> (8 * 3));
 	if (prog_size > CHAMP_MAX_SIZE)
 		error(6);
-	if (prog_size == 0)
-		error(11);
+//	if (prog_size == 0)
+//		error(11);
 	return (prog_size);
 }
 

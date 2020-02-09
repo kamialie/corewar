@@ -18,18 +18,21 @@ void		take_actions(t_info *info, t_processes *prs, t_sdl *sdl)
 {
 	if (prs->cc_op == 0)
 	{
-		if ((info->arena)[prs->index] > 0 && (info->arena)[prs->index] < 17)
+		if ((info->arena)[prs->index] > 0 &&
+		(info->arena)[prs->index] <= COUNT_OP)
 		{
-			prs->code_op = (info->arena)[prs->index];
+			prs->code_op = info->arena[prs->index];
 			prs->cc_op = g_op_tab[prs->code_op - 1].cycle_for_exec;
 		}
+		else
+			prs->code_op = info->arena[prs->index];
 	}
 	if (prs->cc_op > 0)
 		--prs->cc_op;
 	if (prs->cc_op == 0)
 	{
-		if ((info->arena)[prs->index] > 0 && (info->arena)[prs->index] < 17)
-			g_op_tab[IND((info->arena)[prs->index])].func(info, &prs, sdl);
+		if (prs->code_op > 0 && prs->code_op <= COUNT_OP)
+			g_op_tab[prs->code_op - 1].func(info, &prs, sdl);
 		else
 		{
 			if (sdl != NULL)
@@ -45,7 +48,7 @@ void		kick_noobs(t_info *info, t_sdl *sdl)
 
 	ptr = info->processes;
 	while (ptr)
-		if (info->count_cycles - ptr->cc_live > info->cycle_to_die)
+		if (info->count_cycles - ptr->cc_live >= info->cycle_to_die)
 		{
 			if (sdl != NULL)
 			{
@@ -58,13 +61,13 @@ void		kick_noobs(t_info *info, t_sdl *sdl)
 		}
 		else
 			ptr = ptr->next;
-	if (info->count_live >= NBR_LIVE || info->count_check < MAX_CHECKS)
+	++(info->count_check);
+	if (info->count_live >= NBR_LIVE || info->count_check == MAX_CHECKS)
 	{
-		info->count_check = -1;
+		info->count_check = 0;
 		info->cycle_to_die -= CYCLE_DELTA;
 	}
-	++(info->count_check);
-	info->i = -1;
+	info->i = 0;
 	info->count_live = 0;
 }
 
@@ -74,8 +77,9 @@ void		gladiatorial_fight(int *play, t_info *info, t_sdl *sdl)
 
 	while (info->processes)
 	{
-		while (++(info->i) <= info->cycle_to_die)
+		while (info->i < info->cycle_to_die)
 		{
+			++info->i;
 			prs = info->processes;
 			while (prs)
 			{

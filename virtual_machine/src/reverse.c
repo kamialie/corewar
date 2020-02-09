@@ -55,7 +55,7 @@ int					get_bytes_to_skip(int num, unsigned char code_arg)
 	{
 		copy = (code_arg >> (6 - i * 2)) & 0x3;
 		if (copy == 3)
-			summ += 2;
+			summ += IND_SIZE;
 		else if (copy == 1)
 			summ += 1;
 		else if (copy == 2)

@@ -24,7 +24,7 @@
 # define N "-n"
 # define COR ".cor"
 # define LINE_SIZE 97
-# define IND(x) (x - 1)
+# define COUNT_OP 16
 
 /*
 ** cc_live - cycle in which the live operation was last performed
@@ -37,7 +37,7 @@ typedef struct		s_processes
 	int					cc_live;
 	int					cc_op : 11;
 	int					carry : 2;
-	int					code_op : 6;
+	int					code_op;
 	int					index : 14;
 	int					reg[REG_NUMBER];
 	struct s_processes	*next;
@@ -75,6 +75,7 @@ typedef struct		s_op
 
 void				read_card(void *dst, void *src,
 							short int value, int length);
+void				usage();
 void				write_card(void *dst, void *src,
 							short int value, int length);
 void				present_champion(t_header *players);

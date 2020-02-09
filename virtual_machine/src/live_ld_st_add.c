@@ -74,17 +74,21 @@ void				st_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	int				value;
 
 	current_location = (*prs)->index;
-	code_arg = ((info->arena)[(current_location + 1) % MEM_SIZE]) & 0xf0;
-	if (code_arg == 112 || code_arg == 80)
+	if ((code_arg = ((info->arena)[(current_location + 1)
+				% MEM_SIZE]) & 0xf0) == 112 || code_arg == 80)
 		if ((arg_reg = *((info->arena) + (current_location + 2)
 				% MEM_SIZE) - 1) >= 0 && arg_reg < REG_NUMBER)
 		{
 			if (code_arg == 80)
+			{
+				shift = (*prs)->carry;
 				set_t_reg((*prs)->reg[arg_reg], 3, info->arena, prs);
+				(*prs)->carry = shift;
+			}
 			else
 			{
-				shift = get_t_ind(current_location + 3, 0, info->arena, 1);
-				shift = get_address(shift + current_location);
+				shift = get_address(get_t_ind(current_location + 3,
+						0, info->arena, 1) + current_location);
 				value = reverse_int((*prs)->reg[arg_reg]);
 				write_card(info->arena, &value, shift, REG_SIZE);
 				if (sdl != NULL)
@@ -106,7 +110,8 @@ void				add_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	if (code_arg == 84)
 	{
 		arg_reg = *((info->arena) + (current_location + 2) % MEM_SIZE) - 1;
-		arg_reg2 = *((info->arena) + (current_location + 3) % MEM_SIZE) - 1;
+		arg_reg2 = *((info->arena) + (current_location + 3)
+				% MEM_SIZE) - 1;
 		if (arg_reg2 >= 0 && arg_reg2 < REG_NUMBER &&
 		arg_reg >= 0 && arg_reg < REG_NUMBER)
 			set_t_reg((*prs)->reg[arg_reg] + (*prs)->reg[arg_reg2],

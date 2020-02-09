@@ -24,7 +24,8 @@ void				sub_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	if (code_arg == 84)
 	{
 		arg_reg = *((info->arena) + (current_location + 2) % MEM_SIZE) - 1;
-		arg_reg2 = *((info->arena) + (current_location + 3) % MEM_SIZE) - 1;
+		arg_reg2 = *((info->arena) + (current_location + 3)
+				% MEM_SIZE) - 1;
 		if (arg_reg2 >= 0 && arg_reg2 < REG_NUMBER &&
 			arg_reg >= 0 && arg_reg < REG_NUMBER)
 			set_t_reg((*prs)->reg[arg_reg] - (*prs)->reg[arg_reg2],

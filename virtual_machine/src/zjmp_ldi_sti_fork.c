@@ -20,6 +20,7 @@ void				zjmp_op(t_info *info, t_processes **prs, t_sdl *sdl)
 
 	current_location = (*prs)->index;
 	shift = 3;
+	//printf("zjmp %d\n", (*prs)->carry);
 	if ((*prs)->carry)
 		shift = get_t_ind(current_location, 1, info->arena, 1);
 	new_location = get_address(shift + current_location);
@@ -107,11 +108,11 @@ void				fork_op(t_info *info, t_processes **prs, t_sdl *sdl)
 		(info->processes)->reg[i] = (*prs)->reg[i];
 	if (sdl != NULL)
 	{
-		move_cursor(current_location, 3, -num_player - 1, sdl);
+		move_cursor(current_location, 1 + IND_SIZE, -num_player - 1, sdl);
 		create_cursor(new_location, -num_player - 1, sdl);
 		Mix_PlayChannel(-1, sdl->birth_effect, 0);
 	}
-	(*prs)->index = get_address((current_location + 3));
+	(*prs)->index = get_address((current_location + 1 + IND_SIZE));
 	info->processes->index = new_location;
 	++info->count_process;
 }

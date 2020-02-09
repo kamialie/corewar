@@ -25,9 +25,13 @@ void				lld_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	if (code_arg == 208 || code_arg == 144)
 	{
 		if (code_arg == 208)
+		{
 			shift = get_t_ind(current_location, shift, info->arena, 0);
-		value = get_t_dir(current_location, shift, info->arena);
-		shift = (code_arg == 208) ? 4 : 6;
+			value = get_t_ind(current_location, shift, info->arena, 0);
+		}
+		else
+			value = get_t_dir(current_location, shift, info->arena);
+		shift = (code_arg == 208) ? 2 + IND_SIZE : 2 + DIR_SIZE;
 		set_t_reg(value, shift, info->arena, prs);
 	}
 	shift_next_op(code_arg, 12, prs, sdl);
@@ -48,7 +52,7 @@ void				lldi_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	if ((shift - 2) && (code_arg == 84 || code_arg == 212 || code_arg == 148 ||
 						code_arg == 100 || code_arg == 228 || code_arg == 164))
 		value += get_arg((code_arg >> 4) & 0x3, &shift, info->arena, prs);
-	if (shift + 3 == get_bytes_to_skip(9, code_arg))
+	if (shift + 1 == get_bytes_to_skip(9, code_arg))
 	{
 		arg_reg = *((info->arena) + (current_location + shift) % MEM_SIZE) - 1;
 		if (arg_reg >= 0 && arg_reg < REG_NUMBER)
@@ -56,6 +60,7 @@ void				lldi_op(t_info *info, t_processes **prs, t_sdl *sdl)
 			value = get_address(current_location + value);
 			read_card((*prs)->reg + arg_reg, info->arena, value, REG_SIZE);
 			(*prs)->reg[arg_reg] = reverse_int((*prs)->reg[arg_reg]);
+			(*prs)->carry = ((*prs)->reg[arg_reg] == 0) ? 1 : 0;
 		}
 	}
 	shift_next_op(code_arg, 13, prs, sdl);
@@ -81,11 +86,11 @@ void				lfork_op(t_info *info, t_processes **prs, t_sdl *sdl)
 		(info->processes)->reg[i] = (*prs)->reg[i];
 	if (sdl != NULL)
 	{
-		move_cursor(current_location, 3, -num_player - 1, sdl);
+		move_cursor(current_location, 1 + IND_SIZE, -num_player - 1, sdl);
 		create_cursor(current_location + arg, -num_player - 1, sdl);
 		Mix_PlayChannel(-1, sdl->birth_effect, 0);
 	}
-	(*prs)->index = get_address((current_location + 3));
+	(*prs)->index = get_address((current_location + 1 + IND_SIZE));
 	info->processes->index = new_location;
 	++info->count_process;
 }
@@ -93,6 +98,7 @@ void				lfork_op(t_info *info, t_processes **prs, t_sdl *sdl)
 void				aff_op(t_info *info, t_processes **prs, t_sdl *sdl)
 {
 	unsigned char	code_arg;
+	short int		arg_reg;
 	char			announcement[9];
 	char			sumbol;
 
@@ -100,17 +106,15 @@ void				aff_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	code_arg = ((info->arena)[((*prs)->index + 1) % MEM_SIZE]) & 0xc0;
 	if (code_arg == 64)
 	{
-		code_arg = *((info->arena) + ((*prs)->index + 2) % MEM_SIZE) - 1;
-		if (code_arg >= 0 && code_arg < REG_NUMBER)
+		arg_reg = *((info->arena) + ((*prs)->index + 2) % MEM_SIZE) - 1;
+		if (arg_reg >= 0 && arg_reg < REG_NUMBER)
 		{
-			sumbol = (*prs)->reg[code_arg];
+			sumbol = (*prs)->reg[arg_reg];
 			ft_strcpy(announcement, "Aff: ");
 			announcement[5] = sumbol;
 			ft_strcat(announcement, "\n");
 			ft_putstr(announcement);
 		}
-		if (sdl != NULL)
-			move_cursor((*prs)->index, 3, -(*prs)->reg[0] - 1, sdl);
-		(*prs)->index = (((*prs)->index) + 3) % MEM_SIZE;
 	}
+	shift_next_op(code_arg, 15, prs, sdl);
 }

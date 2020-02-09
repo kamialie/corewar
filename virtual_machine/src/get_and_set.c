@@ -20,9 +20,9 @@ int					get_arg(unsigned char code_arg, short int *shift,
 
 	value = 0;
 	current_location = (*prs)->index;
-	if (code_arg == 1)
+	if (code_arg == REG_CODE)
 		*shift += get_t_reg(&value, *shift, arena, prs);
-	else if (code_arg == 2)
+	else if (code_arg == DIR_CODE)
 	{
 		if (g_op_tab[(*prs)->code_op - 1].t_dir_size == 2)
 			value = get_t_ind(current_location, *shift, arena, 0);
@@ -33,11 +33,11 @@ int					get_arg(unsigned char code_arg, short int *shift,
 		}
 		*shift += 2;
 	}
-	else if (code_arg == 3)
+	else if (code_arg == IND_CODE)
 	{
 		value = get_t_ind(current_location, *shift, arena, 1);
 		value = get_t_dir(current_location, value, arena);
-		*shift += 2;
+		*shift += IND_SIZE;
 	}
 	return (value);
 }

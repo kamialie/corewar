@@ -25,7 +25,7 @@ void		init_info(t_info *info)
 	info->count_cycles = 0;
 	info->count_live = 0;
 	info->count_check = 0;
-	info->i = -1;
+	info->i = 0;
 	info->processes = NULL;
 	i = -1;
 	while (++i < MAX_PLAYERS)
@@ -77,6 +77,8 @@ int			main(int argc, char *argv[])
 	t_sdl	sdl;
 	int		play;
 
+	if (argc == 0)
+		usage();
 	if (argc < 2)
 		error(7);
 	init_info(&info);
