@@ -63,9 +63,10 @@ static void	dumping(t_info *info)
 	int		play;
 
 	play = 0;
+	present_champion(info->players);
 	while (info->count_cycles < info->dump && play != -1)
 		gladiatorial_fight(&play, info, NULL);
-	if (info->count_cycles == info->dump)
+	if (play != -1)
 		print_arena(info->arena);
 	else
 		print_winner(info);
@@ -83,7 +84,6 @@ int			main(int argc, char *argv[])
 		error(7);
 	init_info(&info);
 	read_arg(&info, argc, argv);
-	present_champion(info.players);
 	create_processes(&info);
 	if (info.dump == -666)
 		visualization(&info, &sdl);
@@ -92,6 +92,7 @@ int			main(int argc, char *argv[])
 	else
 	{
 		play = 0;
+		present_champion(info.players);
 		while (play != -1)
 			gladiatorial_fight(&play, &info, NULL);
 		print_winner(&info);
