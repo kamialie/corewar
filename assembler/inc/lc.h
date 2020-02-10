@@ -19,15 +19,18 @@ typedef struct      s_arg
     int             arg_val;
     int             arg_type;
 }                   t_arg;
-
-
+typedef struct      s_com
+{
+    t_arg           args[3];
+    int             code;
+    size_t          size;
+}                   t_com;
 typedef struct      s_oper
 {
-    t_label         *label;
-    int             op_num;
-    t_arg           args[3];
-    size_t          size;
-    size_t          rel_size;
+    //label
+    t_com           com;
+    struct s_oper   *next; 
+    struct s_oper   *last
 }                   t_oper;
 
 typedef struct      s_state

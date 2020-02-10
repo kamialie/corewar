@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wclayton <wclayton@student.42.fr>          +#+  +:+       +#+        */
+/*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:33:27 by wclayton          #+#    #+#             */
-/*   Updated: 2020/02/08 20:40:06 by wclayton         ###   ########.fr       */
+/*   Updated: 2020/02/10 07:27:32 by max              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ char *strip_arg(char *str)
     int lout;
     int len;
     char *out;
+    char *tempstr;
 
+    if (!str)
+        return (0);
     i = 0;
     lout = 0;
     len = ft_strlen(str);
@@ -90,6 +93,33 @@ int is_label(char c)
         
     }
 }
+
+t_oper *pushback_oplist(t_oper *oper, t_com com)
+{
+    t_oper *out;
+    
+    if(!(out = (t_oper*)malloc(sizeof(t_oper))))
+        return (0);
+    out->com = com;
+    out->next = 0;
+    if (oper)
+    {
+        oper->last->next = out;
+        oper->last = oper->last->next;
+    }
+    else
+    {
+        out->last = out;
+        oper = out;
+    }
+    return (oper);
+}
+
+int arg2int(char *arg)
+{
+
+}
+
 int f_lex(int fd)
 {
     char *line;
@@ -99,6 +129,7 @@ int f_lex(int fd)
     int i,j,k, err;
     unsigned int op;
     char c;
+    char *tmpstr;
     //read comment and name
     //add cycling and switch for labels comment and name processing
     get_next_line(fd, &line);
@@ -130,10 +161,14 @@ int f_lex(int fd)
 
     //strip args
     k = -1;
-    while (++k < 3)
-        tmpd[k] = strip_arg(tmpd[k]); //to fix leak and probable seg
+    while (++k < 3 && tmpd[k])
+    {
+        tmpstr = tmpd[k];
+        tmpd[k] = strip_arg(tmpd[k]);
+        free(tmpstr);
+    }
     //stripped
-    //store in a list of commands
+    //array and opcode > digits > t_com
     
     return (1);
 }
