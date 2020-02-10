@@ -6,7 +6,7 @@
 /*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:33:27 by wclayton          #+#    #+#             */
-/*   Updated: 2020/02/10 07:27:32 by max              ###   ########.fr       */
+/*   Updated: 2020/02/10 10:00:43 by max              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,9 +130,24 @@ int f_lex(int fd)
     unsigned int op;
     char c;
     char *tmpstr;
+    int lc;
     //read comment and name
     //add cycling and switch for labels comment and name processing
+
     get_next_line(fd, &line);
+    if (ft_strchr((const char*)line, LABEL_CHAR))
+    {
+        i = 0;
+        //get label
+        lc = 0;
+        while (line[i] && line[i] != LABEL_CHAR)
+        {
+            if (!is_label(line[i]))
+                err = 1;
+        }
+        if (line[i] != lc)
+            err = 1;
+    }
     i = 0;
     op = 0;
     if (!(ft_isalnum(line[i])))
@@ -140,14 +155,19 @@ int f_lex(int fd)
     j = 0;
     while (j < 16)
     {
-        if (!ft_strncmp((const char*)(op_tab[j].name), (const char*)(line + i), ft_strlen((const char*)(op_tab[j].name))))
+        if (!ft_strncmp((const char*)(op_tab[j].name),
+            (const char*)(line + i),
+            ft_strlen((const char*)(op_tab[j].name))))
             op = op_tab[j].code;
         ++j;
     }
     if (op != 0)
         i += ft_strlen(op_tab[op - 1].name);
     else
-        err = 1;
+    {
+        
+
+    }
     tmpd = ft_strsplit(line + i, SEPARATOR_CHAR);
     k = 0;
 
