@@ -6,7 +6,7 @@
 /*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:33:27 by wclayton          #+#    #+#             */
-/*   Updated: 2020/02/10 10:00:43 by max              ###   ########.fr       */
+/*   Updated: 2020/02/11 14:48:00 by max              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,6 @@ int f_lex(int fd)
         i += ft_strlen(op_tab[op - 1].name);
     else
     {
-        
 
     }
     tmpd = ft_strsplit(line + i, SEPARATOR_CHAR);
@@ -189,7 +188,9 @@ int f_lex(int fd)
     }
     //stripped
     //array and opcode > digits > t_com
-    
+
+    //PAMAGITE PLS
+    //AAAAAAAAAAAAAAAAA
     return (1);
 }
 
