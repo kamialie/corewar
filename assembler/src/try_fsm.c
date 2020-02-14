@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   try_fsm.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: wclayton <wclayton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:33:27 by wclayton          #+#    #+#             */
-/*   Updated: 2020/02/13 17:08:06 by max              ###   ########.fr       */
+/*   Updated: 2020/02/14 21:37:04 by wclayton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,21 +59,62 @@ typedef enum states {
     ZER
 };
 
-enum states morphTable[43][13] = 
+//wrapper
+char *readf(int fd)
 {
-    
+    char *buf;
+    char *out;
+    char *tmp;
+
+    while (read(fd, buf, 1000))
+    {
+        tmp = out;
+        if (!(out = ft_strjoin(out, buf)))
+            return (0);
+        if (tmp)
+            free(tmp);
+    }  
+    return (out);
 }
 
-void iterate()
+t_oper  *FSM(char *buf)
+{
+    if (*buf == LABEL_CHAR)
+        ;
+    if (*buf == COMMENT_CHAR)
+        ;
+    if (*buf == DIRECT_CHAR)
+        ;
+    if (*buf == LABEL_CHAR)
+        ;
+    if (*buf == SEPARATOR_CHAR)
+        ;
+    if (*buf == '.')
+        ;
+    if (*buf == ' ')
+        ;
+    if (ft_isalnum(*buf))
+        ;
+    if (*buf == '\0')
+        ;
+    if (*buf == COMMENT_CHAR)
+        ;
+    if (*buf == COMMENT_CHAR)
+        ;
+    if (*buf == COMMENT_CHAR)
+        ;
+    if (*buf == COMMENT_CHAR)
+        ;
+}
 
 int parse_inp(int fd)
 {
     char *buf;
-    while (read(fd, buf, 1))
-    {
+    t_oper *opchain;
         
-    }
-    
+    if (!(buf = readf(fd)) || !(opchain = (t_oper*)malloc(sizeof(opchain))))
+        return (0);
+    opchain = FSM(buf);
 }
 
 int main(void)

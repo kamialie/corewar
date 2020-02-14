@@ -21,6 +21,7 @@ typedef struct      s_arg
 }                   t_arg;
 typedef struct      s_com
 {
+    t_label         label;
     t_arg           args[3];
     int             code;
     size_t          size;
