@@ -27,6 +27,12 @@ void	draw_game_controls(t_sdl *sdl)
 	render_text("increase / decrease speed - I / D",
 						sdl->render_info, sdl->surface);
 	sdl->render_info->rect.y += TEXT_Y_SHIFT;
+	render_text("pause / play music - P",
+						sdl->render_info, sdl->surface);
+	sdl->render_info->rect.y += TEXT_Y_SHIFT;
+	render_text("stop music - S",
+						sdl->render_info, sdl->surface);
+	sdl->render_info->rect.y += TEXT_Y_SHIFT;
 	render_text("exit game - ESC",
 						sdl->render_info, sdl->surface);
 	sdl->render_info->rect.y += TEXT_Y_SHIFT;
