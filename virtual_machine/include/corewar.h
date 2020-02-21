@@ -34,6 +34,7 @@
 
 typedef struct		s_processes
 {
+
 	int					cc_live;
 	int					cc_op : 11;
 	int					carry : 2;
@@ -73,6 +74,8 @@ typedef struct		s_op
 	void					(*func)(t_info *, t_processes **, t_sdl *);
 }					t_op;
 
+void				save_carry(t_processes **prs, unsigned char *arena,
+					unsigned char arg_reg);
 void				read_card(void *dst, void *src,
 							short int value, int length);
 void				usage();
@@ -86,7 +89,7 @@ void				shift_next_op(unsigned char code_arg,
 						short int num_fun, t_processes **prs, t_sdl *sdl);
 int					get_t_dir(short int current_location,
 							int shift, unsigned char *arena);
-int					get_t_ind(short int current_location,
+short int			get_t_ind(short int current_location,
 						int shift, unsigned char *arena, int mod);
 void				set_t_reg(int value, int shift,
 						unsigned char *arena, t_processes **prs);

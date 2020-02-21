@@ -21,7 +21,9 @@ void				zjmp_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	current_location = (*prs)->index;
 	shift = 3;
 	if ((*prs)->carry)
+	{
 		shift = get_t_ind(current_location, 1, info->arena, 1);
+	}
 	new_location = get_address(shift + current_location);
 	(*prs)->index = new_location;
 	if (sdl != NULL)
@@ -48,15 +50,13 @@ void				ldi_op(t_info *info, t_processes **prs, t_sdl *sdl)
 	{
 		value += get_arg((code_arg >> 4) & 0x3, &shift, info->arena, prs);
 		if (shift + 1 == get_bytes_to_skip(9, code_arg))
-		{
-			arg_reg = *((info->arena) + (current_location + shift) % MEM_SIZE) - 1;
-			if (arg_reg >= 0 && arg_reg < REG_NUMBER)
+			if ((arg_reg = *((info->arena) + (current_location + shift) %
+					MEM_SIZE) - 1) >= 0 && arg_reg < REG_NUMBER)
 			{
 				value = get_address(current_location + value % IDX_MOD);
 				read_card((*prs)->reg + arg_reg, info->arena, value, REG_SIZE);
 				(*prs)->reg[arg_reg] = reverse_int((*prs)->reg[arg_reg]);
 			}
-		}
 	}
 	shift_next_op(code_arg, 9, prs, sdl);
 }
@@ -65,28 +65,26 @@ void				sti_op(t_info *info, t_processes **prs, t_sdl *sdl)
 {
 	unsigned char	code_arg;
 	unsigned char	arg_reg;
-	short int		current_location;
 	short int		shift;
 	int				value;
 
 	shift = 3;
-	current_location = (*prs)->index;
-	code_arg = ((info->arena)[(current_location + 1) % MEM_SIZE]) & 0xfc;
+	code_arg = ((info->arena)[((*prs)->index + 1) % MEM_SIZE]) & 0xfc;
 	value = get_arg((code_arg >> 4) & 0x3, &shift, info->arena, prs);
 	if ((shift - 3) && (code_arg == 84 || code_arg == 88 || code_arg == 120 ||
 						code_arg == 100 || code_arg == 104 || code_arg == 116))
 	{
 		value += get_arg((code_arg >> 2) & 0x3, &shift, info->arena, prs);
-		if (shift == get_bytes_to_skip(10, code_arg))
-			if ((arg_reg = *((info->arena) + (current_location + 2)
-											 % MEM_SIZE) - 1) >= 0 && arg_reg < REG_NUMBER)
-			{
-				shift = get_address(current_location + value % IDX_MOD);
-				value = reverse_int((*prs)->reg[arg_reg]);
-				write_card(info->arena, &value, shift, REG_SIZE);
-				if (sdl != NULL)
-					update_bytes(shift, 8, -(*prs)->reg[0] - 1, sdl);
-			}
+		if (shift == get_bytes_to_skip(10, code_arg) && (arg_reg =
+		*((info->arena) + ((*prs)->index + 2) % MEM_SIZE) - 1)
+		>= 0 && arg_reg < REG_NUMBER)
+		{
+			shift = get_address((*prs)->index + value % IDX_MOD);
+			value = reverse_int((*prs)->reg[arg_reg]);
+			write_card(info->arena, &value, shift, REG_SIZE);
+			if (sdl != NULL)
+				update_bytes(shift, 8, -(*prs)->reg[0] - 1, sdl);
+		}
 	}
 	shift_next_op(code_arg, 10, prs, sdl);
 }

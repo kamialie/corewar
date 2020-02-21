@@ -14,6 +14,7 @@
 
 short int			get_address(short int shift)
 {
+	shift %= MEM_SIZE;
 	if (shift < 0)
 		shift += MEM_SIZE;
 	else if (shift > 4095)
