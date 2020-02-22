@@ -42,7 +42,7 @@ int					get_arg(unsigned char code_arg, short int *shift,
 	return (value);
 }
 
-int					get_t_ind(short int current_location,
+short int			get_t_ind(short int current_location,
 		int shift, unsigned char *arena, int mod)
 {
 	short int		value;

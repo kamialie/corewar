@@ -54,8 +54,8 @@ void				lldi_op(t_info *info, t_processes **prs, t_sdl *sdl)
 		value += get_arg((code_arg >> 4) & 0x3, &shift, info->arena, prs);
 	if (shift + 1 == get_bytes_to_skip(9, code_arg))
 	{
-		arg_reg = *((info->arena) + (current_location + shift) % MEM_SIZE) - 1;
-		if (arg_reg >= 0 && arg_reg < REG_NUMBER)
+		if ((arg_reg = *((info->arena) + (current_location + shift) % MEM_SIZE)
+				- 1) >= 0 && arg_reg < REG_NUMBER)
 		{
 			value = get_address(current_location + value);
 			read_card((*prs)->reg + arg_reg, info->arena, value, REG_SIZE);
@@ -69,18 +69,17 @@ void				lldi_op(t_info *info, t_processes **prs, t_sdl *sdl)
 void				lfork_op(t_info *info, t_processes **prs, t_sdl *sdl)
 {
 	short int		current_location;
-	short int		new_location;
 	short int		num_player;
 	short int		arg;
 	int				i;
 
 	current_location = (*prs)->index;
 	num_player = ((*prs)->reg)[0];
-	arg = get_address(get_t_ind(current_location, 1, info->arena, 0));
+	arg = get_address(current_location +
+			get_t_ind(current_location, 1, info->arena, 0));
 	add_elem(&(info->processes), arg, num_player);
 	info->processes->carry = (*prs)->carry;
 	(info->processes)->cc_live = (*prs)->cc_live;
-	new_location = get_address(current_location + arg);
 	i = -1;
 	while (++i < REG_NUMBER)
 		(info->processes)->reg[i] = (*prs)->reg[i];
@@ -91,7 +90,7 @@ void				lfork_op(t_info *info, t_processes **prs, t_sdl *sdl)
 		Mix_PlayChannel(-1, sdl->birth_effect, 0);
 	}
 	(*prs)->index = get_address((current_location + 1 + IND_SIZE));
-	info->processes->index = new_location;
+	info->processes->index = arg;
 	++info->count_process;
 }
 

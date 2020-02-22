@@ -80,11 +80,7 @@ void				st_op(t_info *info, t_processes **prs, t_sdl *sdl)
 				% MEM_SIZE) - 1) >= 0 && arg_reg < REG_NUMBER)
 		{
 			if (code_arg == 80)
-			{
-				shift = (*prs)->carry;
-				set_t_reg((*prs)->reg[arg_reg], 3, info->arena, prs);
-				(*prs)->carry = shift;
-			}
+				save_carry(prs, info->arena, arg_reg);
 			else
 			{
 				shift = get_address(get_t_ind(current_location + 3,
