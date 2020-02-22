@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoyette <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/09 18:48:15 by jgoyette          #+#    #+#             */
-/*   Updated: 2018/12/09 18:48:17 by jgoyette         ###   ########.fr       */
+/*   Created: 2018/11/25 12:59:42 by rgyles            #+#    #+#             */
+/*   Updated: 2019/01/29 14:42:32 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,28 @@
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	size_t	len;
-	char	*result;
+	int		i;
+	int		lens1;
+	int		lens2;
+	char	*str;
 
-	result = NULL;
-	if (s1 && s2)
+	if (s1 == NULL || s2 == NULL)
+		return (NULL);
+	i = 0;
+	lens1 = ft_strlen((char*)s1);
+	lens2 = ft_strlen((char*)s2);
+	if (!(str = (char *)malloc(sizeof(*str) * (lens1 + lens2 + 1))))
+		return (NULL);
+	while (lens1-- > 0)
 	{
-		len = ft_strlen((char *)s1) + ft_strlen((char *)s2);
-		result = ft_strnew(len);
-		if (result)
-		{
-			ft_strcpy(result, s1);
-			ft_strcat(result, s2);
-		}
+		str[i++] = *s1;
+		s1++;
 	}
-	return (result);
+	while (lens2-- > 0)
+	{
+		str[i++] = *s2;
+		s2++;
+	}
+	str[i] = '\0';
+	return (str);
 }

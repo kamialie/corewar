@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strclr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoyette <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/09 18:48:37 by jgoyette          #+#    #+#             */
-/*   Updated: 2018/12/09 18:48:39 by jgoyette         ###   ########.fr       */
+/*   Created: 2018/11/25 12:17:11 by rgyles            #+#    #+#             */
+/*   Updated: 2018/11/29 18:39:26 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 
 void	ft_strclr(char *s)
 {
-	if (s && *s)
-		ft_bzero((void *)s, ft_strlen(s));
+	if (s == NULL)
+		return ;
+	while (*s != '\0')
+	{
+		*s = '\0';
+		s++;
+	}
 }

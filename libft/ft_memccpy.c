@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memccpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoyette <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/09 18:55:37 by jgoyette          #+#    #+#             */
-/*   Updated: 2018/12/09 18:55:38 by jgoyette         ###   ########.fr       */
+/*   Created: 2018/12/04 12:48:04 by rgyles            #+#    #+#             */
+/*   Updated: 2018/12/04 12:48:06 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,21 @@
 
 void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
 {
-	size_t			i;
-	unsigned char	*ptr_dst;
-	unsigned char	*ptr_src;
+	unsigned char	ch;
+	unsigned char	*tmp_src;
+	unsigned char	*tmp_dst;
 
-	i = 0;
-	ptr_dst = (unsigned char *)dst;
-	ptr_src = (unsigned char *)src;
-	while (i < n)
+	tmp_src = (unsigned char *)src;
+	tmp_dst = (unsigned char *)dst;
+	ch = (unsigned char)c;
+	while (n > 0)
 	{
-		ptr_dst[i] = ptr_src[i];
-		if (ptr_dst[i] == (unsigned char)c)
-			return ((void *)&ptr_dst[i + 1]);
-		i += 1;
+		*tmp_dst = *tmp_src;
+		if (*tmp_src == ch)
+			return (tmp_dst + 1);
+		tmp_dst++;
+		tmp_src++;
+		n--;
 	}
 	return (NULL);
 }

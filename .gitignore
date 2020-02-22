@@ -52,9 +52,23 @@ Mkfile.old
 dkms.conf
 
 # Project execs
-vm/corewar
+virtual_machine/corewar
+corewar
+
+# SDL, SDL_TTF, freetype libs and header files
+virtual_machine/include/mad.h
+virtual_machine/include/SDL2
+virtual_machine/include/freetype2
+virtual_machine/include/ft2build.h
+virtual_machine/lib
 
 # Clion
 .idea
 CMakeLists.txt
 cmake-build-debug
+
+# Vim
+*.swp
+
+#mac
+*DS_Store*

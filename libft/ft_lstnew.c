@@ -3,35 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoyette <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/11 14:29:59 by jgoyette          #+#    #+#             */
-/*   Updated: 2018/12/11 14:30:01 by jgoyette         ###   ########.fr       */
+/*   Created: 2018/11/28 16:23:23 by rgyles            #+#    #+#             */
+/*   Updated: 2018/12/02 18:42:24 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstnew(void const *content, size_t content_size)
+static char	*ft_write_word(char *str, size_t content_size)
 {
-	t_list	*lst_elem;
+	size_t	i;
+	char	*s;
 
-	lst_elem = (t_list *)ft_memalloc(sizeof(t_list));
-	if (lst_elem)
+	i = 0;
+	if (str == NULL || !(s = (char *)malloc(sizeof(*s) * content_size)))
+		return (NULL);
+	while (i < content_size)
 	{
-		if (content)
-		{
-			lst_elem->content = (t_list *)ft_memdup(content, content_size);
-			if (lst_elem->content == NULL)
-			{
-				ft_memdel((void *)lst_elem);
-				return (NULL);
-			}
-		}
-		else
-			lst_elem->content = NULL;
-		lst_elem->content_size = (content) ? content_size : 0;
-		lst_elem->next = NULL;
+		s[i] = str[i];
+		i++;
 	}
-	return (lst_elem);
+	s[i] = '\0';
+	return (s);
+}
+
+t_list		*ft_lstnew(void const *content, size_t content_size)
+{
+	t_list	*p;
+
+	p = NULL;
+	if (!(p = (t_list *)malloc(sizeof(*p))))
+		return (NULL);
+	p->content = ft_write_word((char*)content, content_size);
+	if (content == NULL)
+		p->content_size = 0;
+	else
+		p->content_size = content_size;
+	p->next = NULL;
+	return (p);
 }
