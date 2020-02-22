@@ -3,32 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoyette <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/09 18:55:23 by jgoyette          #+#    #+#             */
-/*   Updated: 2018/12/09 18:55:24 by jgoyette         ###   ########.fr       */
+/*   Created: 2018/10/22 09:54:24 by rgyles            #+#    #+#             */
+/*   Updated: 2020/02/22 16:46:17 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *str)
+static int	ft_limit_check(int flag)
 {
-	int result;
-	int sign;
+	if (flag)
+		return (1);
+	else
+		return (-1);
+}
 
-	result = 0;
-	sign = 1;
-	while (ft_isspace((int)*str))
-		str += 1;
+int			ft_atoi(const char *str)
+{
+	size_t	i;
+	int		flag;
+
+	flag = 0;
+	i = 0; 
+	while (*str == '\n' || *str == '\t' || *str == ' '
+			|| *str == '\v' || *str == '\f' || *str == '\r')
+		str++;
 	if (*str == '-')
-		sign = -1;
-	if (*str == '-' || *str == '+')
-		str += 1;
-	while (*str >= '0' && *str <= '9')
+		flag++;
+	if (*str == '+' || *str == '-')
+		str++;
+	while (*str != '\0' && *str >= '0' && *str <= '9')
 	{
-		result = (result * 10) + (*str - '0');
-		str += 1;
+		if ((i = i * 10 + (*str - 48)) > 9223372036854775807)
+			return (ft_limit_check(flag));
+		str++;
 	}
-	return (result * sign);
+	if (flag)
+		return (-i);
+	else
+		return (i);
 }

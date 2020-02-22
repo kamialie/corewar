@@ -1,16 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isupper.c                                       :+:      :+:    :+:   */
+/*   ft_lstaddlast.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoyette <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/09 18:37:23 by jgoyette          #+#    #+#             */
-/*   Updated: 2018/12/09 18:37:25 by jgoyette         ###   ########.fr       */
+/*   Created: 2018/12/01 12:17:32 by rgyles            #+#    #+#             */
+/*   Updated: 2018/12/09 13:47:05 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isupper(int c)
+#include "libft.h"
+
+void	ft_lstaddlast(t_list **alst, t_list *new)
 {
-	return (c >= 65 && c <= 90);
+	t_list *cur;
+
+	cur = *alst;
+	if (*alst == NULL)
+	{
+		*alst = new;
+		return ;
+	}
+	while (cur->next != NULL)
+		cur = cur->next;
+	cur->next = new;
 }

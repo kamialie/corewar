@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoyette <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/29 09:06:13 by jgoyette          #+#    #+#             */
-/*   Updated: 2018/11/29 09:08:07 by jgoyette         ###   ########.fr       */
+/*   Created: 2018/11/22 18:10:00 by rgyles            #+#    #+#             */
+/*   Updated: 2018/11/29 16:53:35 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 int	ft_toupper(int c)
 {
-	if (ft_islower(c))
+	if (c >= 'a' && c <= 'z')
 		return (c - 32);
-	else
-		return (c);
+	return (c);
 }

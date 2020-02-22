@@ -1,24 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strclr.c                                        :+:      :+:    :+:   */
+/*   ft_swapuni.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/25 12:17:11 by rgyles            #+#    #+#             */
-/*   Updated: 2018/11/29 18:39:26 by rgyles           ###   ########.fr       */
+/*   Created: 2018/12/01 14:42:26 by rgyles            #+#    #+#             */
+/*   Updated: 2018/12/02 19:12:46 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_strclr(char *s)
+void	ft_swapuni(void *a, void *b)
 {
-	if (s == NULL)
-		return ;
-	while (*s != '\0')
+	size_t	size;
+	void	*tmp_b;
+
+	size = sizeof(a);
+	if (!(tmp_b = malloc(size)))
 	{
-		*s = '\0';
-		s++;
+		ft_putstr("sorting not performed: allocation failed");
+		exit(0);
 	}
+	ft_memmove(tmp_b, b, size);
+	ft_memmove(b, a, size);
+	ft_memmove(a, tmp_b, size);
+	free(tmp_b);
 }
