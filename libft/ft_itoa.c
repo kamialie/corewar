@@ -3,49 +3,81 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoyette <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/09 18:52:30 by jgoyette          #+#    #+#             */
-/*   Updated: 2018/12/09 18:54:04 by jgoyette         ###   ########.fr       */
+/*   Created: 2018/11/25 13:40:43 by rgyles            #+#    #+#             */
+/*   Updated: 2018/12/12 20:36:35 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static size_t	get_n_size(int n)
+static int	ft_length(long n)
 {
-	size_t		size;
+	int len;
 
-	size = 1;
-	while (n >= 10 || n <= -10)
-	{
-		n /= 10;
-		size += 1;
-	}
+	len = 0;
+	if (n == 0)
+		return (1);
 	if (n < 0)
-		size += 1;
-	return (size);
+	{
+		n *= -1;
+		len++;
+	}
+	while (n > 0)
+	{
+		len++;
+		n /= 10;
+	}
+	return (len);
 }
 
-char			*ft_itoa(int n)
+static int	power(int n)
 {
-	char	*result;
-	size_t	size;
+	int p;
 
-	size = get_n_size(n);
-	result = ft_strnew(size);
-	if (result)
+	p = 1;
+	if (n == 0)
+		return (1);
+	while (n > 0)
 	{
-		if (n < 0)
-			result[0] = '-';
-		while (n >= 10 || n <= -10)
-		{
-			result[size - 1] = (n < 0) ? (char)(-(n % 10) + 48) :\
-										(char)(n % 10 + 48);
-			n /= 10;
-			size -= 1;
-		}
-		result[size - 1] = (n < 0) ? (char)(-n + 48) : (char)(n + 48);
+		p *= 10;
+		n--;
 	}
-	return (result);
+	return (p);
+}
+
+static void	ft_write(long nb, char **number, int len)
+{
+	int i;
+
+	i = 0;
+	if (nb < 0)
+	{
+		nb *= -1;
+		*(*number + i) = '-';
+		i++;
+		len--;
+	}
+	while (len > 0)
+	{
+		*(*number + i) = '0' + (nb / power(len - 1) % 10);
+		len--;
+		i++;
+	}
+	*(*number + i) = '\0';
+}
+
+char		*ft_itoa(int n)
+{
+	int		len;
+	long	nb;
+	char	*number;
+
+	nb = n;
+	len = ft_length(nb);
+	if (!(number = (char *)malloc(sizeof(*number) * (len + 1))))
+		return (NULL);
+	ft_write(nb, &number, len);
+	return (number);
 }

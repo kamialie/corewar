@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strarr_del.c                                    :+:      :+:    :+:   */
+/*   ft_lstcount.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoyette <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/09 18:52:14 by jgoyette          #+#    #+#             */
-/*   Updated: 2018/12/09 18:52:16 by jgoyette         ###   ########.fr       */
+/*   Created: 2018/12/04 12:59:47 by rgyles            #+#    #+#             */
+/*   Updated: 2018/12/04 14:06:28 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_strarr_del(char **tab, size_t tab_size)
+int	ft_lstcount(t_list *begin_list)
 {
-	char	**tmp_tab;
-	size_t	i;
+	int		count;
+	t_list	*cur;
 
-	tmp_tab = tab;
-	i = 0;
-	while (i < tab_size)
+	count = 0;
+	cur = begin_list;
+	if (begin_list == NULL)
+		return (0);
+	while (cur->next != NULL)
 	{
-		if (tmp_tab[i])
-			ft_strdel(&tmp_tab[i]);
-		i += 1;
+		cur = cur->next;
+		count++;
 	}
-	free(tab);
+	return (count + 1);
 }
